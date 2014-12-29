@@ -156,7 +156,7 @@ module.exports={
 								__render_admin(req,res,results.liste,objet,params);
 							}else{
 								req.sessionStore.flash="L'enregistrement a été correctement effectué;.";
-								res.redirect("/"+params['dir']+"/"+params['schema']);
+								res.redirect("/"+params['dir']+"/"+params['schema']+"/");
 							}//fin si errors
 						});//fin save
 			});//fin async
@@ -192,7 +192,7 @@ module.exports={
 									}catch(msg_err){
 										console.log(msg_err);
 									}
-									res.redirect("/"+params['dir']+"/"+params['schema']);
+									res.redirect("/"+params['dir']+"/"+params['schema']+"/");
 								});//end model find
 		
 	},//end delete
