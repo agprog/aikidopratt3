@@ -1,3 +1,2 @@
 echo "creation lien symbolique vers uploads"
-echo $OPENSHIFT_DATA_DIR
-ln -s $OPENSHIFT_DATA_DIR/uploads $OPENSHIFT_DATA_DIR/app-root/repo/uploads
+ln -s $OPENSHIFT_DATA_DIR/uploads $HOME/app-root/repo/uploads
