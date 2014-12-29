@@ -17,7 +17,7 @@ angular.module('admin.services', [])
   	    var post = function(url,params,objet){
 							var csrf='csrf_test';
 							try{
-								csrf=document.querySelector("input[name='csrf_token']").value;
+								csrf=document.querySelector("#csrf_token").value;
 								if(params !=""){
 									params+='&';
 								}

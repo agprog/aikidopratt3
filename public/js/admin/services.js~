@@ -62,6 +62,7 @@ angular.module('admin.services', [])
 			var post=postSrv('/admin/'+objet+'/add/',"",objet);
 				post.success(function(jdatas){
 					document.querySelector("#id").value=jdatas._id;
+					document.querySelector("#csrf_token").value=jdatas.csrf_token;
 				});
 			}
 			/*this.addForm=function(event,objet){
