@@ -1,0 +1,3 @@
+echo "creation lien symbolique vers uploads"
+
+ln -s uploads /var/lib/openshift/54984897fcf933b259000100/uploads
