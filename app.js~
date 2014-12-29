@@ -27,14 +27,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: './tmp/' }));
 app.use(cookieParser());
-app.use(session({secret:'aUx689',
-				store:new mongoStore({
-					host:config.db[app.get('env')].host,
-					db:config.db[app.get('env')].dbname,
-					user:config.db[app.get('env')].user,
-					pass:config.db[app.get('env')].pass
-				})
-			}));
+app.use(session({	secret:'123456',
+					store:new mongoStore({
+						host:config.db[app.get('env')].host,
+						db:config.db[app.get('env')].dbname,
+						username:config.db[app.get('env')].user,
+						password:config.db[app.get('env')].pass
+						})
+}));
 app.use('/', index);
 app.use('/admin',admin);
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
