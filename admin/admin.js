@@ -62,13 +62,9 @@ app.post('/galerie/photo/update/',function(req,res){
 	}
 });
 app.get('/generalite/',function(req,res){
-	if(commons.csrf_check(req) == false && config.environment != 'dev'){
-		res.status(403).send('Erreur csrf').end();
-	}else{
-		params['title']='éléments généraux';
-		_conf_params('generalite');
-		handlers.inline_show(req,res,params);
-	}
+	params['title']='éléments généraux';
+	_conf_params('generalite');
+	handlers.inline_show(req,res,params);
 });
 app.post('/generalite/add/',function(req,res){
 	params['schema']='general';

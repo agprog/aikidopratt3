@@ -9,7 +9,6 @@ var handlers = require('./handlers');
 var schema  = require('./schema');
 var config  = require('../config');
 /* ************************/
-var router=express.Router();
 var app= express();
 var dir='admin';
 var espace='Administration';
