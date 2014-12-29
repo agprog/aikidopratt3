@@ -1,5 +1,5 @@
 module.exports = {
-	environment:'dev',
+	environment:'production',
 	/*! **** BASE DE DONNNEES *****/
 	db : {dev:
 				{host  : "localhost",
