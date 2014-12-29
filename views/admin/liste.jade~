@@ -3,7 +3,7 @@ table
 		fieldset#action-lot
 			legend Actions par lot
 			div#actions
-				form#form-lot-actions(action="/admin/#{schema}/confirm/" method="POST")
+				form#form-lot-actions(action="/admin/#{schema}/confirm" method="POST")
 					label(for="select-lot-actions") Action
 					select#action-lot-select(name="select-lot-actions")
 						option(value="null") ----
