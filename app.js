@@ -27,8 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: './tmp/' }));
 app.use(cookieParser());
-app.use(session({secret:'aUx689',
-				store:new mongoStore({
+app.use(session({store:new mongoStore({
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
 					user:config.db[app.get('env')].user,

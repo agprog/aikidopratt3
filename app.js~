@@ -11,7 +11,7 @@ var config=require('./config');
 var index = require('./index');
 var admin = require('./admin/admin');
 var users = require('./users/users');
-var app = express.createServer();
+var app = express();
 
 // view engine setup
 app.set('env',config.environment);
