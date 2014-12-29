@@ -8,7 +8,7 @@ if liste
 		div#confirm
 			form#form-no(action="/admin/#{schema}",method="GET")
 				input#no(type="submit",value="Non")
-			form#form-yes(action="/admin/#{schema}/delete/" method="POST")
+			form#form-yes(action="/admin/#{schema}/delete" method="POST")
 				input(type="hidden",name="csrf_token",value="#{context.csrf_token}")
 				input(type="hidden",name="ids",value="#{ids}")
 				input#yes(type="submit", value="Oui")
