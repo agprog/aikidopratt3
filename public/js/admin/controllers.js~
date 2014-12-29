@@ -135,6 +135,7 @@ angular.module('admin.controllers',[])
 				$scope.id=response.id;
 				$scope.addgalerie=false;
 				$("#id").val(response.id);
+				$("#csrf_token").val(response.csrf_token);
 				$scope.objet=response;
 			});
 		};//fin get
@@ -142,8 +143,9 @@ angular.module('admin.controllers',[])
 		$scope.deletePhoto=function($event){
 			$event.preventDefault();
 			var id=$event.target.getAttribute('data-id');
+			var csrf_token=document.querySelector('#csrf_token').value;
 			var name=$event.target.getAttribute('data-name');
-			postSrv('/admin/galerie/photo/delete/','id='+id)
+			postSrv('/admin/galerie/photo/delete/','id='+id+'&csrf_token='+csrf_token)
 			.success(function(response){
 				$scope.msg="La photo a été correctement supprimée."
 				$scope.objet.photos=response;

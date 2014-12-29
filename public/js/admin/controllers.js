@@ -143,8 +143,9 @@ angular.module('admin.controllers',[])
 		$scope.deletePhoto=function($event){
 			$event.preventDefault();
 			var id=$event.target.getAttribute('data-id');
+			var csrf_token=document.querySelector('#csrf_token').value;
 			var name=$event.target.getAttribute('data-name');
-			postSrv('/admin/galerie/photo/delete/','id='+id)
+			postSrv('/admin/galerie/photo/delete/','id='+id+'&csrf_token='+csrf_token)
 			.success(function(response){
 				$scope.msg="La photo a été correctement supprimée."
 				$scope.objet.photos=response;
@@ -157,8 +158,9 @@ angular.module('admin.controllers',[])
 		$scope.updatePhoto=function($event){
 			$event.preventDefault();
 			var id=$event.target.getAttribute('data-id');
+			var csrf_token=document.querySelector('#csrf_token').value;
 			var value=$event.target.value;
-			postSrv('/admin/galerie/photo/update/','id='+id+'&field=legend&value='+value)
+			postSrv('/admin/galerie/photo/update/','id='+id+'&csrf_token='+csrf_token+'&field=legend&value='+value)
 			.success(function(response){
 				$scope.msg="La photo a été mise à jour."
 			})
