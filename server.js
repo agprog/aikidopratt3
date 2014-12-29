@@ -113,7 +113,7 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         /*self.app = express.createServer();*/
-		self.app=application.createServer();
+		self.app=application;
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
             self.app.get(r, self.routes[r]);
