@@ -3,8 +3,9 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var redis=require('redis');
 var session=require('express-session');
-var mongoStore=require('connect-mongo')(session);
+var redisStore=require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var config=require('./config');
@@ -27,14 +28,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: './tmp/' }));
 app.use(cookieParser());
-app.use(session({secret:'aUx689',
-				store:new mongoStore({
-					host:config.db[app.get('env')].host,
-					db:config.db[app.get('env')].dbname,
-					user:config.db[app.get('env')].user,
-					pass:config.db[app.get('env')].pass
+var client=redis.createClient(6379,'localhost');
+client.auth(
+        'localhost:6379',
+        function(err) {
+            if (err) {
+                // impossible de se connecter au serveur Redis
+                console.log(err);
+                throw err;
+            }else{
+				console.log("connecté au serveur redis");
+			}
+        });
+app.use(session({
+			secret:'123456',
+			store: new redisStore({
+				client:client
 				})
-			}));
+		}));
+
 app.use('/', index);
 app.use('/admin',admin);
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
