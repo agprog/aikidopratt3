@@ -1,0 +1,10 @@
+<div id="panel-{{instance}}" class="panels">
+	<ul id="on-panel-{{instance}}" class="on-panel">
+		<li data-index="{{$index}}" ng-class="($index == isSelected)?'label-active':'label-panel'" ng-repeat="item in items">
+			{{item.title}}		
+		</li>
+	</ul>
+	<div id="contener-panel-{{instance}}" class="contener-panel">
+		<div ng-include="template"></div>
+	</div>
+</div>

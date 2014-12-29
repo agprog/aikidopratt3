@@ -1,0 +1,14 @@
+extends ../layout
+block content
+	div#wrapper(ng-app="admin",ng-controller="MainCtl")
+		include ../header
+		section#admin-body.row
+			article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
+				include liste							
+			article#admin-content-form.content.form.col-xs-12.col-sm-12.col-md-6.col-lg-5
+				input(type="hidden",ng-model="schema",value="#{schema}")
+				if(schema == 'actualite')
+					include forms/actualite
+				else if(schema == 'cours')
+					include forms/cours
+		include ../footer

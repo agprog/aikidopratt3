@@ -1,0 +1,30 @@
+extends ../layout
+block content
+	div#wrapper(ng-app="admin",ng-controller="GeneralitesCtl")
+		include ../header
+		section#admin-body.row
+			div#message(ng-show='messageshow') {{msg}}
+			article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
+				table
+					tr
+						fieldset#add-param
+							legend Ajouter un paramètre
+							div#div-add-param
+								label(for="typefield") Action
+								select(ng-model='typefield',ng-init="typefield='none'")
+									option(value="none") ----
+									option(value="input") input
+									option(value="textarea") textarea
+								add-gen-field(typefield="{{typefield}}")
+				input(type="hidden",id="csrf_token",name="csrf_token",value="#{context.csrf_token}")
+				div#liste-generalites
+					for elt in liste
+						if elt.type == 'input'
+							include forms/input_general
+						else
+							include forms/textarea_general
+				div#confirm(ng-show='confirmshow')
+					confirm-window()
+		include ../footer
+					
+					

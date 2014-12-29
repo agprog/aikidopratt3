@@ -1,0 +1,20 @@
+div.actu
+	a(name="{actu._id}") 
+		p.title #{actu.title}
+	if actu.date && actu.start
+		p.rdv Rendez vous le #{actu.date} a partir de #{actu.start}
+		if actu.location && actu.location != ''
+			if actu.coordonnates && actu.coordonnates != ''
+				span.location
+					a(href="http://maps.google.com/maps?q=#{actu.coordonnates}&hl=fr&num=1&t=h&vpsrc=0&z=17",target="_blank") #{actu.location}
+			else
+				span.location &nbsp;&agrave;&nbsp;#{actu.location}
+	div.content #{actu.content}
+	if actu.link_
+		p.link
+			a(href="#{actu.link_}",target='_blank') Vers le lien officiel de la manifestation
+	if actu.file
+		p.file
+			a(href="/uploads/docs/#{actu.file}",target='_blank') Télécharger l'affiche
+	div.metas Publi&eacute;e par Association-Pratt
+		

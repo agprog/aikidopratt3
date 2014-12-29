@@ -1,0 +1,5 @@
+<div id="general-{{id}}" class="ligne-general">
+	<label for="key-{{id}}">clé</label><input type="text"  id="key-{{id}}" class="key" ng-keyup="generaliteUpd($event,'cle')" />
+	<label for="val-{{id}}">valeur</label><input type="text"  id="val-{{id}}" class="value" ng-keyup="generaliteUpd($event,'valeur')" />
+	<a href="/admin/generalites/confirm/{{id}}/" data-id="{{id}}" ng-click="generaliteConfirm($event)">X</a> 
+</div>

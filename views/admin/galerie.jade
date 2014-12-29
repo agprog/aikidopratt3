@@ -1,0 +1,17 @@
+extends ../layout
+block content
+	div#wrapper(ng-app="admin",ng-controller="GaleriesCtl")
+		include ../header
+		section#admin-body.container-fluid
+			div.row
+				div#message(ng-show='messageshow') {{msg}}
+				article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
+					include liste
+				article#admin-content-form.content.form.col-xs-12.col-sm-12.col-md-6.col-lg-5
+					include forms/galerie
+				div(ng-show='addgalerie') Merci de sauvegarder la galerie avant de pouvoir y ajouter des photos.
+				div(class="row",ng-hide='addgalerie')
+					div(ng-include="'/static/js/admin/templates/icon_photo.html'")
+					add_photo
+		include ../footer
+		

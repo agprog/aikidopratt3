@@ -1,0 +1,115 @@
+/*!********************************
+*********00-TABLE DES OBJETS *******/
+/*********************************/
+
+#admin-content table{
+	width:90%;
+	border:solid thin grey;
+}
+.table-admin-head{
+	background-color:#E8B769;
+	
+}
+.table-admin-head th{
+	padding:1%;
+	text-align:center;
+	border-bottom:solid thin grey;
+}
+.table-admin-head .add{
+	padding:1%;
+}
+.table-admin-head .titre-add{
+	font-size:2em;
+}
+.center{
+	text-align:center;
+}
+.left{
+	text-align:justify;
+	margin-left:2%;
+}
+#select{
+	width:5%;
+}
+#created{
+	width:10%;
+}
+#titre{
+	width:60%;
+}
+#actions{
+	width:25%;
+}
+.objet-line td{
+	padding:0.5%;
+}
+.objet-line:nth-child(odd){
+	background-color:#E3CCA2;
+}
+.objet-line:nth-child(even){
+	background-color:#C9C9C9;
+}
+/*!************************************
+***** 01- FORMULAIRE ACTU+COURS ******/
+/*************************************/
+.error{
+	border:solid 4px orange; 
+}
+/*!************************************
+ * *** 02 - GALERIES PHOTOS ***********/
+/* ************************************/
+#content-photos{
+	position:relative;
+	display:block;
+	width:96%;
+	height:400px;
+	margin:4% auto;
+	padding:2%;
+	overflow-x:hidden;
+	overflow-y:auto;
+	border:thin solid #000;
+}
+.icone-photo{
+	display:inline-block;
+	width:200px;
+	height:230px;
+	padding:1px;
+	text-align:center;
+	background-color:#E8B769;
+	margin-bottom:5px;
+	border-radius:5px;
+}
+.p-supp,.p-legende{
+	width:100%;
+	font-size:9pt;
+}
+.p-supp{
+	text-align:right;	
+}
+.a-supp-photo{
+	display:inline-block;
+	text-decoration:none;
+	margin-top:2%;
+	margin-right:2%;
+	width:20px;
+	background-image:url('/static/img/');
+	background-repeat:no-repeat;
+}
+.photo{
+ width:200px;
+	height:150px;
+	vertical-align:middle;
+
+}
+.photo img{
+	width:175px;
+	height:175px;
+	vertical-align:middle;
+	margin:0 auto;
+}
+
+
+.photo-legend input{
+	font-size:9pt;
+	width:175px;
+}

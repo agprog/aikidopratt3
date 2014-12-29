@@ -1,0 +1,6 @@
+p(id="general-#{elt.id}",class="ligne-general")
+	label(for="key-#{elt.id}") clé
+	input(type="text",id="key-#{elt.id}",class="key",value="#{elt.cle}",data-id="#{elt.id}",no-enter-key,ng-keyup="generaliteUpd($event,'cle')")
+	label(for="val-#{elt.id}") valeur
+	input(type="text",id="val-#{elt.id}",class="value",data-id="#{elt.id}",value="#{elt.valeur}",no-enter-key,ng-keyup="generaliteUpd($event,'valeur')")
+	a(href="/admin/generalites/confirm/#{elt.id}",data-id="#{elt.id}",ng-click="generaliteConfirm($event)") X

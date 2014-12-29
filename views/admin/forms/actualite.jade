@@ -1,0 +1,23 @@
+include ../../mixins/widgets.jade
+h2#titre Actualit&eacute;
+div#message 
+	!= context.flash
+form#actualite-form(class="right-form",action="/admin/actualite/put/",enctype="multipart/form-data",method="POST")
+	input(type="hidden",id="csrf_token",name="csrf_token",value="#{context.csrf_token}")
+	input(type="hidden",id="id",name="id",value="#{objet._id}")
+	input(type="hidden",id="spip",name="spip",value="actualite")
+	+input_line_valid('title','Titre :','{{objet.title}}',objet,{})
+	+input_line_valid('slug','Slug :','{{objet.slug}}',objet,{})
+	+text_line('content','Contenu :','{{objet.content}}',{})
+	+text_line('excerpt','Résumé :','{{objet.excerpt}}',{})
+	+input_line('link_','Lien officiel :','{{objet.link_}}',{})
+	+input_file('file','Fichier à inclure :','/uploads/docs','{{objet.file}}',{})
+	+input_line('location','Lieu de la manifestation :','{{objet.location}}',{})
+	+input_line('coordonnates','Coordonnées :','{{objet.coordonnates}}',{})
+	+input_date('date','Date de la manifestation :','{{objet.date}}',{})
+	+input_time('start','Heure :','{{objet.start}}',{})
+	+input_line('duration','Durée :','{{objet.duration}}',{})
+	+input_line('category','Catégorie','{{objet.category}}',{})
+	+input_line('tags','Mots clés :', '{{objet.tags}}',{})
+	p.form-line
+		input(type="submit",id="submit",name="submit",value="Valider")

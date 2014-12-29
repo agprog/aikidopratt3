@@ -1,0 +1,7 @@
+<div id="confirm-window">
+	<p id="confirm-text"> Voulez vous supprimer cette clé {{confirm_key}}</p>
+	<p id="confirm-buttons">
+		<input type="button" value="Non" ng-click="generaliteConfAbort()"/>
+		<input type="button" value="Oui" data-id="{{confirm_id}}" ng-click="generaliteDelete($event)" />
+	</p>
+</div>

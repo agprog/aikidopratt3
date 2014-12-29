@@ -1,0 +1,14 @@
+<div class="carousel-{{defilement}}-{{instance}} zone-{{defilement}}-{{instance}}" ng-repeat="slide in slides">
+	<div ng-class="(slide.file)?'actu-block-pj':'actu-block'">
+		<p class="actu-title"><a href="/actualites/#{{slide._id}}" with-scroll >{{slide.title}}</a></p>
+		<p class="actu-rdv" ng-if="slide.date">Rendez vous le {{slide.date | date : "dd/MM/yyyy" }} {{slide.start}}<br>
+		 à {{slide.location}}</p>
+		<div class="actu-excerpt">{{slide.excerpt}}</div>
+	</div>
+	<div class='actu-pj' ng-if="slide.file">
+		<a href="/uploads/docs/{{slide.file}}">
+			<p><span>Télécharger l'affiche</span></p>
+			<img src='/uploads/docs/thumbnails/{{slide.file.slice(0,-4)}}.png' alt='fichier miniature {{slide.file}}' />
+		</a>
+	</div>
+</div>

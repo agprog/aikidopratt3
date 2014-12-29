@@ -1,0 +1,35 @@
+<div id="calendar-{{instance}}" class="calendar">
+	<p id="calendar-entete-{{instance}}" class="calendar-entete">
+		<input type="button" id="lessone-m-{{instance}}" class="lessone-m" value="<" />
+		<select id="select-m-{{instance}}" ng-model="currentmonth" class="months" >
+			<option value="{{$index}}" ng-selected="$index == currentmonth" ng-repeat="mo in months">{{mo.name}}</option>
+		</select>
+		<input type="button" id="moreone-m-{{instance}}" class="moreone-m" value=">" />
+		<input type="button" id="lessone-y-{{instance}}" class="lessone-y" value="<" />
+		<input type="text"   id="year-{{instance}}"      class="year" ng-model="currentyear"/>
+		<input type="button" id="moreone-y-{{instance}}" class="moreone-y" value=">" />
+	</p>
+	<table id="calendar-table-{{instance}}" class="calendar-table">
+		<tr>
+			<th>Lun</th>
+			<th>Mar</th>
+			<th>Mer</th>
+			<th>Jeu</th>
+			<th>Ven</th>
+			<th>Sam</th>
+			<th>Dim</th>
+		</tr>
+		<tr ng-repeat="week in [0,1,2,3,4,5]">
+			<td ng-repeat="day in [0,1,2,3,4,5,6]" 
+				data-date="{{days[(week*7)+day].search}}" 
+				ng-init="dayindex=$index" id="day-{{(7*week)+day}}" 
+			ng-class="(days[{{(7*week)+day}}].marker)?'marker':(day==5||day==6)?'we':'day'">
+				{{days[(week*7)+day].day}}
+			</td >
+		</tr>
+	</table>
+
+
+
+
+</div>

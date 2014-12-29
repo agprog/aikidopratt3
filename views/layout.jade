@@ -1,0 +1,17 @@
+doctype html
+html(lang="fr")
+	head
+		meta(http-equiv="content-type", content="text/html; charset=utf-8")
+		meta(name="description", content="Ceci est le site de l'association pratt qui pratique l'aikido sur Nancy")
+		title #{title}
+		link(rel="stylesheet",href="/static/css/bootstrap/bootstrap.min.css")
+		link(rel="stylesheet",href="/static/css/style.css")
+		each stylesheet in context.stylesheets
+			link(rel="stylesheet",href="/static/"+stylesheet)
+		script(src="/static/js/bootstrap/jquery.min.js")
+		script(src="/static/js/bootstrap/bootstrap.min.js")
+		script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
+		each script in context.scripts
+			script(src="/static/"+script)
+	body
+			block content

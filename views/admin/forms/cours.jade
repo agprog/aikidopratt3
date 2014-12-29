@@ -1,0 +1,21 @@
+include ../../mixins/widgets.jade
+h2#titre Cours
+div#message 
+	!= context.flash
+form#cours-form(class="right-form",action="/admin/cours/put/",enctype="multipart/form-data",method="POST")
+	input(type="hidden",id="csrf_token",name="csrf_token",value="#{context.csrf_token}")
+	input(type="hidden",id="id",name="id",value="#{objet._id}")
+	input(type="hidden",id="spip",name="spip",ng-model='spip',value="cours")
+	+input_line_valid('title','Titre :','{{objet.title}}',objet,{})
+	+input_line_valid('slug','Slug :','{{objet.slug}}',objet,{})
+	+select_line('day','Jour :',["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"],'{{objet.day}}',{"ng-model":'objet.day'})
+	+input_time('start','Heure début :','{{objet.start}}',{})
+	+input_time('end','Heure fin :','{{objet.end}}',{})
+	+input_line('location','Salle','{{objet.location}}',{})
+	+input_line('adress_1','Adresse 1','{{objet.adress_1}}',{})
+	+input_line('adress_2','Adresse 2','{{objet.adress_2}}',{})
+	+input_line('ville','Ville','{{objet.ville}}',{})
+	+input_line('telephone','Téléphone','{{objet.telephone}}',{})
+	+input_line('coordonnates','Coordonnées :','{{objet.coordonnates}}',{})
+	p.form-line
+		input(type="submit",id="submit",name="submit",value="Valider")

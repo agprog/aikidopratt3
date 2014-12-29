@@ -1,0 +1,13 @@
+<div id="content-photos" >
+	<div id="spinner" ng-show='isloading'>
+		<img src='/static/img/spinner.gif' alt='waiting spinner'/>
+	</div>
+	<div class="icone-photo" id="icone-photo-{{photo._id}}" data-order="{{photo.order-num}}" ng-repeat="photo in objet.photos">
+		<input type="hidden" class="id-photo" id="id-photo-{{photo._id}}" value="{{photo._id}}" />
+		<p id="supp-{{photo._id}}" class="p-supp"><a data-id="{{photo._id}}" data-name="{{photo.name}}" class="a-supp-photo" ng-click="deletePhoto($event)">&nbsp;X</a></p>
+		<table><tr>
+		<td class="photo"><img  src="/uploads/galeries/{{photo._galerie}}/thumbnails/{{photo.name}}" alt="photo de {{photo.legend}}" draggable="false"/></td>
+		</tr></table>
+		<p class="photo-legend"><input type="text" data-id="{{photo._id}}" data-name={{photo.name}} class="legend" name="legend-{{photo._id}}" value='{{photo.legend}}' ng-keyup="updatePhoto($event)"/></p>
+	</div>
+</div>

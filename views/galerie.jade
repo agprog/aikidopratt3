@@ -1,0 +1,57 @@
+extends layout.jade
+
+block content
+	div#wrapper(ng-app="index",ng-controller="GalerieCtl")
+		include header
+		include menu.jade
+		div.gallery
+			article#gallery
+				//-The Bootstrap Image Gallery lightbox, should be a child element of the document body
+				div#blueimp-gallery(class="blueimp-gallery blueimp-gallery-controls")
+					//-The container for the modal slides
+					div.slides
+					//-Controls for the borderless lightbox
+					h3.title
+					a.prev ‹
+					a.next ›
+					a.close ×
+					a(class="play-pause")
+					ol.indicator
+					//-The modal dialog, which will be used to wrap the lightbox content
+					div(class="modal fade")
+						div(class="modal-dialog")
+							div(class="modal-content")
+								div(class="modal-header")
+									button(type="button",class="close",aria-hidden="true") &times
+									h4(class="modal-title")
+								div(class="modal-body next")
+									div(class="modal-footer")
+										button(type="button",class="btn btn-default pull-left prev")
+											i(class="glyphicon glyphicon-chevron-left")
+											span Previous
+										button(type="button",class="btn btn-primary next")
+											span Next
+											i(class="glyphicon glyphicon-chevron-right")
+				p.title
+					a(href="/galeries/#{galery._id}" title="#{galery.title}") #{galery.title}
+				div.content-gallery
+					div#links.links
+						for photo in galery.photos
+							a(href="/uploads/galeries/#{galery._id}/#{photo.name}", title="#{photo.name}",data-gallery)
+								img(src="/uploads/galeries/#{galery._id}/thumbnails/#{photo.name}" alt="photo #{photo.name}")
+				div.footer
+					script(src="/static/js/index/blueimp-gallery.js")
+					script(src="/static/js/index/jquery.blueimp-gallery.js")
+					script
+						|	//<![CDATA[
+						|		document.getElementById('links').onclick = function (event){
+						|			event = event || window.event;
+						|			var target = event.target || event.srcElement,
+						|			link = target.src ? target.parentNode : target,
+						|			options = {index: link, event: event},
+						|			links = this.getElementsByTagName('a');
+						|			blueimp.Gallery(links, options);
+						|		};
+						|	//]]>
+					link(rel="stylesheet",href="/static/css/index/blueimp-gallery.css")
+		include footer

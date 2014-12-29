@@ -1,0 +1,10 @@
+extends layout.jade
+
+block content
+	div#wrapper(ng-app="index",ng-controller="ActualiteCtl")
+		include header
+		include menu.jade
+		section#row1-body.row
+			each actu in actualites
+				include actualite
+		include footer

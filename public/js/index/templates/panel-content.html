@@ -1,0 +1,16 @@
+<div id="content-panel-{{$index}}"  ng-class="($index == isSelected)?'content-panel-active':'content-panel'" ng-repeat="item in items">
+	<div class="adress-block">
+		<p class="adress-titre">Adresse du dojo :</p>
+		<p class="adress-title">{{item.location}}</p>
+		<p class="adress-adress_1" ng-if="item.adress_1">{{item.adress_1}}</p>
+		<p class="adress-adress_2" ng-if="item.adress_2">{{item.adress_2}}</p>
+		<p class="adress-ville"    ng-if="item.ville">   {{item.ville}}</p>
+		<p class="adress-telephone" ng-if="item.telephone">{{item.telephone}}</p>
+		<p class="adress-titre">Horaires du cours :</p>
+		<p class="adress-horaire">Le {{item.day}} de {{item.start}} à {{item.end}}</p>
+	</div>
+	<div class="maps-block">
+		<googlemaps id='googlemap-{{$index}}' class='map' coordonnees=item.coordonnates lieu=item.location></googlemaps>
+		<p class="maps-link"><a href="http://maps.google.com/maps/@{{item.coordonnates}}z?hl=fr/data=!4m2!3m1" target="_blank">Google Maps</a></p>
+	</div>
+</div>
