@@ -26,6 +26,7 @@ module.exports={
 					}//end liste
 				},
 				function(err,results){
+					if(err){results.liste=[];};
 					commons.stop_mongo();
 					params['showform']='add';
 					__render_admin(req,res,results.liste,objet,params);

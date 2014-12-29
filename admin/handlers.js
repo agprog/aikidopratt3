@@ -122,7 +122,11 @@ module.exports={
 		async.parallel({
 			liste:function(cb){
 					model.find().exec(function(error,result){
-								cb(error,result);
+								if(error){
+									cb(error,[]);
+								}else{
+									cb(error,result);
+								}
 					});
 				},
 			getDoc:function(cb){
