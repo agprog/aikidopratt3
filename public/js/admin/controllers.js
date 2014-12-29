@@ -135,6 +135,7 @@ angular.module('admin.controllers',[])
 				$scope.id=response.id;
 				$scope.addgalerie=false;
 				$("#id").val(response.id);
+				$("#csrf_token").val(response.csrf_token);
 				$scope.objet=response;
 			});
 		};//fin get
