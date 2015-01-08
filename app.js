@@ -37,6 +37,20 @@ app.use(session({	secret:'123456',
 }));
 app.use('/', index);
 app.use('/admin',admin);
+app.get('/login/',function(req,res){
+	res.render('login',{title:'Login required',
+							target_url:req.sessionStore.target_url,
+							msg:req.sessionStore.flash,
+							context:commons.contextCreate(req,'admin')
+							});
+});
+app.post('/signin/',function(req,res){
+	users.authentificate(req,res);
+});
+app.get('/logout/',function(req,res){
+	users.log_out(req,res);
+});
+
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
 app.use('/static',express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler
