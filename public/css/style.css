@@ -699,10 +699,10 @@ h1{font-size:2.5em;text-align:center;}
 	margin:2% 5%;
  }
  #login label{
-	width:30%;
+	width:35%;
  }
  #login input[type='text'],#login input[type='password']{
-	width:70%;
+	width:65%;
  }
  #login input[type='submit']{
 	float:right;
