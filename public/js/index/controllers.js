@@ -14,18 +14,32 @@ angular.module('index.controllers',[])
 		$scope.test='index';
 		/*! *** raz scope *** */
 		getSrv('/init/').success(function(response){
+				
+				/*!--- initialisation slides actualites ---*/
+				$scope.actualites=response.actualites;
 				/*! --- initialisation variables ---*/
 				generalites=response.generalites;
 				/*!--- initialisation scope ---*/
 				for(var key in generalites){
 					$scope[key]=$sce.trustAsHtml(generalites[key]);
 				}
-				/*!--- initialisation slides actualites ---*/
-				$scope.actualites=response.actualites;
 				/*!--- initialisation onglets cours ---*/
 				$scope.cours=response.cours;
 				$scope.galeries=response.galeries;
 		});
 		
-	}])//fin mainCtl
+	}])//fin IndexCtl
+	.controller('ActualiteCtl',['$scope','getSrv',function($scope,getSrv){
+		var height=$('.liste-actus')[0].offsetHeight;
+		console.log(height);
+		$('.nav-plugins')[0].style.height=height+"px";
+		getSrv('/init/actualite/').success(function(response){
+			$scope.actualites=response;
+		});
+	}])//fin ActualiteCtl
+	.controller('GalerieCtl',['$scope','getSrv',function($scope,getSrv){
+		getSrv('/init/galerie/').success(function(response){
+			$scope.galeries=response;
+		});
+	}]);//fin GalerieCtl
 

@@ -2,21 +2,22 @@ extends layout.jade
 
 block content
 	div#wrapper(ng-app="index",ng-controller="IndexCtl")
-		include header
+		if context.log
+			connect(log='#{context.log.title}')
 		include menu.jade
+		include header
 		section#row1-body.row
 			div#row1-left-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
-				div#welcome.hpart(ng-bind-html='welcome') {{welcome}}
-				
-				div#cours.hpart 
-					p.titre-rubrique Les différents cours dispensés sont les suivants
-					panel(instance='0',items='cours',template='/static/js/index/templates/panel-content.html')
+				section.hpart
+					p.titre-rubrique Bienvenue
+					div#welcome(ng-bind-html='welcome')
 			div#row1-right-content.content.form.col-xs-12.col-sm-12.col-md-6.col-lg-5
-				div.hpart
-					p.titre-rubrique Manifestations
-					calendar(instance='0',dates='actualites')
-				div.hpart
-					p.titre-rubrique Actualités
+				section.hpart
+					p.titre-rubrique Actualités :
 					carousel(sens='1',defilement='v',instance='0',slides='actualites',template='/static/js/index/templates/carousel-content.html')
+				
+				section.hpart
+					p.titre-rubrique Pour nous rejoindre :
+					panel(instance='0',items='cours',template='/static/js/index/templates/panel-content.html')
 				
 		include footer

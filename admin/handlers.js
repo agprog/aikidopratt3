@@ -26,8 +26,10 @@ module.exports={
 					}//end liste
 				},
 				function(err,results){
-					if(err){results.liste=[];};
 					commons.stop_mongo();
+					if(err){
+						results.liste=[];
+					}
 					params['showform']='add';
 					__render_admin(req,res,results.liste,objet,params);
 				});//fin async
@@ -67,7 +69,7 @@ module.exports={
 						params['showform']='edit';
 						__render_admin(req,res,results.liste,results.objet,params);
 					}else{
-						res.json(__create_datas(req,params,model,results.objet));
+						res.json(__create_datas(req,params,model,results.objet)).end();
 					}
 				}else{
 					message=errors.type+" "+errors.message;
@@ -95,7 +97,7 @@ module.exports={
 		}else{
 			commons.stop_mongo();
 			datas=__create_datas(req,params,model,new model());
-			res.json(datas);
+			res.json(datas).end();
 		}
 	},
 	put:function(req,res,params){
@@ -111,7 +113,6 @@ module.exports={
 				console.log('internal functional field. %s',field); 
 			}
 		}
-		console.log(req.body);
 		/*!************ TRAITE L'UPLOAD *****************/
 		if(req.files){
 			for(file in req.files){
@@ -122,11 +123,7 @@ module.exports={
 		async.parallel({
 			liste:function(cb){
 					model.find().exec(function(error,result){
-								if(error){
-									cb(error,[]);
-								}else{
-									cb(error,result);
-								}
+								cb(error,result);
 					});
 				},
 			getDoc:function(cb){
@@ -139,7 +136,6 @@ module.exports={
 				if(results.getDoc){
 					for(var field in req.body){
 						objet=results.getDoc;
-						console.log(objet);
 						objet[field]=req.body[field];
 					}
 					params['showform']='edit';
@@ -150,9 +146,15 @@ module.exports={
 				}
 				objet.save(function(invalid,doc){
 							commons.stop_mongo();
-							if(invalid){
+							if(invalid || params['errors']){
 								objet=objet.toObject();
+								if(params['errors']){
+									for(var err in params['errors']){
+										invalid.errors[err]=params['errors'][err];
+									}
+								}
 								req.sessionStore.flash=__create_errors(invalid.errors,objet);
+								console.log(invalid.errors);
 								__render_admin(req,res,results.liste,objet,params);
 							}else{
 								req.sessionStore.flash="L'enregistrement a été correctement effectué;.";
@@ -161,7 +163,6 @@ module.exports={
 						});//fin save
 			});//fin async
 	},//fin fonction put
-	
 	confirm:function(req,res,params){
 		commons.start_mongo();
 		var ids=req.body['ids'].split(',');
@@ -199,7 +200,7 @@ module.exports={
 	delete_file:function(req,res){
 		var field=req.body.field;
 		var id=req.body.id;
-		var model=commons.create_model(req.body.spip);
+		var model=commons.create_model(req.body.schema);
 		commons.start_mongo();
 		model.find({_id:req.body.id}).remove().exec(function(err,doc){
 										commons.stop_mongo();
@@ -315,7 +316,7 @@ module.exports={
 				galerie=result;
 				nb_photos=galerie.photos.length-1;
 				async.map(tab_files,AsyncCropAndSave,function(err,results){
-					res.json(galerie.photos).end();
+					res.json(galerie.photos);
 				});
 			});//fin functionfindOne
 			

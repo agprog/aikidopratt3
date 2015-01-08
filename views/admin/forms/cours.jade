@@ -1,11 +1,10 @@
 include ../../mixins/widgets.jade
-h2#titre Cours
+h2#titre {{form_title}}
 div#message 
 	!= context.flash
 form#cours-form(class="right-form",action="/admin/cours/put/",enctype="multipart/form-data",method="POST")
 	input(type="hidden",id="csrf_token",name="csrf_token",value="#{context.csrf_token}")
 	input(type="hidden",id="id",name="id",value="#{objet._id}")
-	input(type="hidden",id="spip",name="spip",ng-model='spip',value="cours")
 	+input_line_valid('title','Titre :','{{objet.title}}',objet,{})
 	+input_line_valid('slug','Slug :','{{objet.slug}}',objet,{})
 	+select_line('day','Jour :',["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"],'{{objet.day}}',{"ng-model":'objet.day'})

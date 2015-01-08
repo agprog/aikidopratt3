@@ -1,11 +1,10 @@
 include ../../mixins/widgets.jade
-h2#titre Galerie photos
+h2#titre {{form_title}}
 div#message 
 	!= context.flash
 form#galerie-form(class="right-form",action="/admin/galerie/put/",enctype="multipart/form-data",method="POST")
 	input(type="hidden",id="csrf_token",name="csrf_token",value="#{context.csrf_token}")
 	input(type="hidden",id="id",name="id",value="#{objet.id}")
-	input(type="hidden",id="spip",name="spip",ng-model='spip',value="galerie")
 	+input_line_valid('title','Titre :','{{objet.title}}','galerie',{})
 	+input_line_valid('slug','Slug :','{{objet.slug}}','galerie',{})
 	+text_line('legend','Légende :','{{objet.legend}}',{})

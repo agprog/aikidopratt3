@@ -4,17 +4,18 @@ table
 			legend Actions par lot
 			div#actions
 				form#form-lot-actions(action="/admin/#{schema}/confirm/" method="POST")
-					label(for="select-lot-actions") Action
-					select#action-lot-select(name="select-lot-actions")
-						option(value="null") ----
-						option(value="delete") Supprimer
-					input(type="hidden",name="ids",value="{{ids}}")
-					input#submit-action(type="submit",name="submit-lot-actions",value="Soumettre")
+					p
+						label(for="select-lot-actions") Action
+						select#action-lot-select(name="select-lot-actions")
+							option(value="null") ----
+							option(value="delete") Supprimer
+						input(type="hidden",name="ids",value="{{ids}}")
+						input#submit-action(type="submit",name="submit-lot-actions",value="Soumettre")
 				p#nb-elt-sel
 					span#nb-elt {{nb_ids}}
 					span#nb-phrase &nbsp;sur&nbsp#{liste.length}&nbsp;&eacute;l&eacute;ments s&eacute;l&eacute;ctionn&eacute;s.
 	tr.table-admin-head
-		td.add.titre-add(colspan="4") Liste des #{schema}s
+		td.add.titre-add(colspan="4") Liste des {{pluralize}}
 		td.add
 			input(type="button",id="addform",value="Ajouter",ng-click="add($event,'#{schema}')")
 	tr.table-admin-head
@@ -33,6 +34,6 @@ table
 				a(href="/admin/#{schema}/#{elt.id}/",ng-click='getObjet($event);') éditer
 			td.action.center
 				form.confirm(action="/admin/#{schema}/confirm/",method="POST")
-					input(type="hidden",name="csrf_token",value="#{context.csrf_token}")
+					input(id="confirm_csrf" type="hidden",name="csrf_token",value="#{context.csrf_token}")
 					input(type="hidden",name="ids",value="#{elt.id}")
 					input(type="submit",value="supprimer")

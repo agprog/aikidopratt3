@@ -1,7 +1,10 @@
 extends ../layout
 
 block content
-	div#wrapper
+	div#admin-wrapper
+		if context.log
+			connect(log="#{context.log.title}")
+		include ../menu
 		include ../header
 		section#admin-body.row
 			aside#admin-left-side.content.col-xs-12.col-sm-3.col-md-2.col-lg-2

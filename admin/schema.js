@@ -56,8 +56,29 @@ var schema={
 								legend  : {type:String,default:''},
 								path    : {type:String,default:''},
 								photos  : [{type:Schema.Types.ObjectId,ref:'photo'}]
- 							})
+ 							}),
+ 	userSchema		: mongoose.Schema({
+							created  : {type:Date,default:Date.now()},
+							firstname: {type:String,required:'Un prénom est requis.'},
+							lastname : {type:String,required:'Un nom est requis.'},
+							pseudo   : {type:String,required:'Un pseudo est requis.'},
+							email    : {type:String,unique:true,required:'Un email est obligatoire.'},
+							password : {type:String,required:'Un mot de passe est obligatoire'},
+							role     : {type:String,default:'membre'}
+							}),
  	};//schema
 schema.actualiteSchema.path('title').validate(function(val){return val != "";},"Un titre est requis.");
 schema.actualiteSchema.path('slug').validate(function(val){return val != "";},"Un slug doit être renseigné.");
+schema.userSchema.path('firstname').validate(function(val){
+									return /^([^0-9]+)+$/.test(val);
+									},"Le format du prénom ne correspond pas.");
+schema.userSchema.path('lastname').validate(function(val){
+									return /^([^0-9]+)+$/.test(val);
+									},"Le format du nom de famille ne correspond pas.");
+schema.userSchema.path('email').validate(function(val){
+									return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/.test(val);
+									},"Le format de l'email est invalide");
+schema.userSchema.virtual('title').get(function () {
+  return this.firstname + ' ' + this.lastname;
+});
 module.exports=schema;

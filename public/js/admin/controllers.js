@@ -15,7 +15,12 @@ angular.module('admin.controllers',[])
 		$scope.nb_ids=0;
 		$scope.ids="";
 		//initialisation de l'objet vide
-		$scope.objet=defaultsSrv[$scope.spip];
+		$scope.showform='add';
+		$scope.schema=document.getElementById("schema").value;
+		$scope.safename=defaultsSrv[$scope.schema].safename;
+		$scope.pluralize=defaultsSrv[$scope.schema].pluralize;
+		$scope.form_title='Ajouter '+$scope.safename;
+		$scope.objet=defaultsSrv[$scope.schema];
 		/*!*** */
 		/*! *** Retour après selection d'un élément pour une action ***/
 		/*! *** en lot. *** */
@@ -30,7 +35,9 @@ angular.module('admin.controllers',[])
 		/*! *** Remplit formulaire avec données  ***  */
 		/*!*** */
 		$scope.add=function($event,objet){
-			$scope.objet=defaultsSrv[$scope.spip];
+			$scope.objet=defaultsSrv[$scope.schema];
+			$scope.showform='add';
+			$scope.form_title='Ajouter '+$scope.safename;
 			fillFormSrv.addForm($event,objet);
 			
 		};// fin remplissage formulaire
@@ -42,6 +49,8 @@ angular.module('admin.controllers',[])
 			$event.preventDefault();
 			getSrv($event.target.getAttribute('href'))
 			.success(function(response){
+				$scope.showform='edit';
+				$scope.form_title='Modifier '+$scope.safename;
 				$scope.id=response.id;
 				$("#id").val(response.id);
 				$("#csrf_token").val(response.csrf_token);
@@ -78,6 +87,9 @@ angular.module('admin.controllers',[])
 			$scope.confirm_id=id;
 			$scope.confirm_key='cle';
 		};
+		$scope.generaliteConfAbort=function(){
+			$scope.confirmshow=false;
+		};
 		$scope.generaliteDelete=function(event){
 			var id=event.target.getAttribute("data-id");
 			var params= "id="+id;
@@ -107,6 +119,10 @@ angular.module('admin.controllers',[])
 		//initialisation de l'objet vide
 		$scope.objet=defaultsSrv['galerie'];
 		$scope.isloading=false;
+		$scope.showform='add';
+		$scope.safename=defaultsSrv['galerie'].safename;
+		$scope.pluralize=defaultsSrv['galerie'].pluralize;
+		$scope.form_title='Ajouter '+$scope.safename;
 		/*!*** */
 		/*! *** Retour après selection d'un élément pour une action ***/
 		/*! *** en lot. *** */
@@ -123,7 +139,10 @@ angular.module('admin.controllers',[])
 		$scope.add=function($event,objet){
 			$scope.id=objet._id;
 			$scope.addgalerie=true;
-			$scope.objet=defaultsSrv[$scope.spip];
+			$scope.objet=defaultsSrv[$scope.schema];
+			$scope.showform='add';
+			$scope.safename=defaultsSrv['galerie'].safename;
+			$scope.form_title='Ajouter '+$scope.safename;
 			fillFormSrv.addForm($event,objet);
 		};// fin remplissage formulaire
 		/*! *** Get recupere un objet *** */
@@ -134,8 +153,11 @@ angular.module('admin.controllers',[])
 			.success(function(response){
 				$scope.id=response.id;
 				$scope.addgalerie=false;
+				$scope.showform='edit';
+				$scope.form_title='Modifier '+$scope.safename;
 				$("#id").val(response.id);
 				$("#csrf_token").val(response.csrf_token);
+				$("#confirm_csrf").val(response.csrf_token);
 				$scope.objet=response;
 			});
 		};//fin get
@@ -143,9 +165,8 @@ angular.module('admin.controllers',[])
 		$scope.deletePhoto=function($event){
 			$event.preventDefault();
 			var id=$event.target.getAttribute('data-id');
-			var csrf_token=document.querySelector('#csrf_token').value;
 			var name=$event.target.getAttribute('data-name');
-			postSrv('/admin/galerie/photo/delete/','id='+id+'&csrf_token='+csrf_token)
+			postSrv('/admin/galerie/photo/delete/','id='+id)
 			.success(function(response){
 				$scope.msg="La photo a été correctement supprimée."
 				$scope.objet.photos=response;
@@ -158,9 +179,8 @@ angular.module('admin.controllers',[])
 		$scope.updatePhoto=function($event){
 			$event.preventDefault();
 			var id=$event.target.getAttribute('data-id');
-			var csrf_token=document.querySelector('#csrf_token').value;
 			var value=$event.target.value;
-			postSrv('/admin/galerie/photo/update/','id='+id+'&csrf_token='+csrf_token+'&field=legend&value='+value)
+			postSrv('/admin/galerie/photo/update/','id='+id+'&field=legend&value='+value)
 			.success(function(response){
 				$scope.msg="La photo a été mise à jour."
 			})

@@ -1,8 +1,0 @@
-<div class="icone-photo" id="icone-photo-#{photo.order_num}">
-	<input type="hidden" class="id-photo" id="id-photo-#{photo.order_num}" value="#{photo.order_num}" />
-	<p id="supp-#{photo.order_num}" class="p-supp"><a id="a-supp-#{photo.order_num}" class="a-supp-photo" href="javascript:void(0);">&nbsp;</a></p>
-	<table><tr>
-	<td class="photo"><img  src="/media/collections/#{galerie._id|default:'tmp'}/thumbnails/thumbnail.#{photo.name}" alt="photo de #{photo.legend}" draggable="false"/></td>
-	</tr></table>
-	<p class="photo-legend"><label for="legend-{{photo.order_num}}">Légende :</label><input type="text" id="legend-{#photo.order_num}" class="legend" name="legend-#{photo.order_num}" value="#{ph.legend}" /></p>
-</div>

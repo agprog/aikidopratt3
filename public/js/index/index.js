@@ -3,11 +3,14 @@
 // Declare app level module which depends on filters, and services
 angular.module('index',[
   'ngRoute',
+  'admin.services',
+  'admin.directives',
   'index.filters',
   'index.services',
-  'index.directives',
   'index.controllers',
-  'admin.services'
+  'index.directives'
+ 
+ 
 ])
 .config(function($httpProvider){
   // Use x-www-form-urlencoded Content-Type

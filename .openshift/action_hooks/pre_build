@@ -1,0 +1,2 @@
+echo "effacement des fichiers temporaires"
+find $HOME/Programmes/Node/aikido -type f -name "*.*~" -exec rm -f {} \;

@@ -20,10 +20,10 @@ angular.module('admin.directives', []).
 			link:function(scope,element,attrs){
 				element.on('click',function(){
 					var id=document.querySelector("#id").value;
-					var spip=document.querySelector("#spip").value;
+					var schema=document.querySelector("#schema").value;
 					var name=scope.name;
 					var params="id="+id+
-							"&spip="+spip+
+							"&schema="+schema+
 							"&field="+scope.name;
 
 					postSrv('/admin/deletefile/',params)
@@ -96,6 +96,33 @@ angular.module('admin.directives', []).
 			}
 		};
 	})
+	.directive('chgPwd',['postSrv',function(postSrv){
+		return{
+			restrict:'A,E',
+			replace:true,
+			templateUrl:'/static/js/admin/templates/chgpwd.html',
+			link:function(scope,element,attrs){
+				scope.error="";
+				element.find('#no').on('click',function(event){
+					scope.chgpwd=false;
+				});
+				element.find('#yes').on('click',function(event){
+					var parametres='id='+document.querySelector('#id').value+
+					'&password='+document.querySelector('#chgpassword').value+
+					'&confirm='+document.querySelector('#chgconfirm').value;
+					postSrv('/admin/user/chgpwd/',parametres).success(function(response){
+						console.log(response);
+						if(response.error == true){
+							scope.error=response.message;
+						}else{
+							scope.chgpwd=false;
+							$("#message").html(response.message);
+						}
+					});
+				});
+			}
+		}
+	}])
 	.directive('addPhoto',['uploadSrv',function(uploadSrv){
 		return{
 			restrict:'A,E',
@@ -127,4 +154,32 @@ angular.module('admin.directives', []).
 				});
 			}
 		}
-		}]);
+		}])
+		.directive('connect',function(){
+			return{
+				restrict:'A,E',
+				scope:{log:'@'},
+				transclude:true,
+				replace:true,
+				templateUrl:"/static/js/admin/templates/connect.html",
+				link:function(scope,element,attrs){
+					var timer;
+					function isLoaded(){
+						try{
+							document.querySelector('#menu-principal').style.top='30px';
+							clearInterval(timer);
+							element.find('#connect-block').on('mouseover',function(event){
+								
+								this.style.height='90px';
+							});
+							element.find('#connect-block').on('mouseleave',function(event){
+								this.style.height='30px';
+							});
+						}catch(error){
+							console.log('connect pending');
+						}
+					}
+					timer=setInterval(isLoaded,10);
+				}
+			}
+		});

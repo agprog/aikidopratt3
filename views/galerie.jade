@@ -32,13 +32,14 @@ block content
 										button(type="button",class="btn btn-primary next")
 											span Next
 											i(class="glyphicon glyphicon-chevron-right")
-				p.title
+				p.titre-rubrique
 					a(href="/galeries/#{galery._id}" title="#{galery.title}") #{galery.title}
-				div.content-gallery
+				div.content
 					div#links.links
 						for photo in galery.photos
-							a(href="/uploads/galeries/#{galery._id}/#{photo.name}", title="#{photo.name}",data-gallery)
+							a(href="/uploads/galeries/#{galery._id}/#{photo.name}",class='content-galery-detail',title="#{photo.name}",data-gallery)
 								img(src="/uploads/galeries/#{galery._id}/thumbnails/#{photo.name}" alt="photo #{photo.name}")
+								p.legend-galery #{photo.legend}
 				div.footer
 					script(src="/static/js/index/blueimp-gallery.js")
 					script(src="/static/js/index/jquery.blueimp-gallery.js")

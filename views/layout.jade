@@ -10,8 +10,10 @@ html(lang="fr")
 			link(rel="stylesheet",href="/static/"+stylesheet)
 		script(src="/static/js/bootstrap/jquery.min.js")
 		script(src="/static/js/bootstrap/bootstrap.min.js")
-		script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
 		each script in context.scripts
 			script(src="/static/"+script)
+		if espace !='admin'
+			script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
+		
 	body
 			block content

@@ -9,9 +9,10 @@ angular.module('admin.services', [])
     .value('version', '0.1')
     .value('application',{})
     .value('defaultsSrv',{
-						'actualite':{title:'',slug:'',content:'',excerpt:'',link_:'',location:'',addres_1:'',addres_2:'',ville:'',date:null,start:null,duration:0,category:'',tags:''},
-						'cours':{title:'',slug:'',content:'',jour:'0',addres_1:'',addres_2:'',ville:''},
-						'galerie':{title:'',slug:'',legend:'',photos:[]}
+						'actualite':{safename:'actualité',pluralize:'actualités',title:'',slug:'',content:'',excerpt:'',link_:'',location:'',addres_1:'',addres_2:'',ville:'',date:null,start:null,duration:0,category:'',tags:''},
+						'cours':{safename:'cours',pluralize:'cours',title:'',slug:'',content:'',jour:'0',addres_1:'',addres_2:'',ville:''},
+						'galerie':{safename:'galerie',pluralize:'galeries photos',title:'',slug:'',legend:'',photos:[]},
+						'user':{safename:'utilisateur',pluralize:'utilisateurs',firstname:'',lastname:'',email:'',role:'membre',password:'',confirm:''}
 	})
     .factory('postSrv',['$http',function($http){
   	    var post = function(url,params,objet){
@@ -61,8 +62,10 @@ angular.module('admin.services', [])
 			event.preventDefault();
 			var post=postSrv('/admin/'+objet+'/add/',"",objet);
 				post.success(function(jdatas){
+					console.log(jdatas);
 					document.querySelector("#id").value=jdatas._id;
 					document.querySelector("#csrf_token").value=jdatas.csrf_token;
+					document.querySelector("#confirm_csrf").value=jdatas.response.csrf_token;
 				});
 			}
 			/*this.addForm=function(event,objet){

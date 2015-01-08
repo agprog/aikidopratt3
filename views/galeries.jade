@@ -2,11 +2,16 @@ extends layout.jade
 
 block content
 	div#wrapper(ng-app="index",ng-controller="GalerieCtl")
-		include header
 		include menu.jade
-		section#row1-body.row
-			div#content
-				for galery in galeries
-					a.content-galery(href="/galeries/#{galery._id}",title="galerie #{galery.title}")
-						img.img-galery(src="/uploads/galeries/#{galery._id}/thumbnails/#{galery.photos[0].name}",alt="galerie photos #{galery.title}")
-						span.title-galery #{galery.title}
+		include header
+		
+		section#row1-body.row.galeries
+			div.content.col-xs-12.col-sm-12.col-md-12.col-lg-12
+				div.galeries
+					p.titre-rubrique Galeries photos
+					div.liste-galeries
+						for galery in galeries
+							a.content-galery(href="/galeries/#{galery._id}",title="galerie #{galery.title}")
+								img.img-galery(src="/uploads/galeries/#{galery._id}/thumbnails/#{galery.photos[0].name}",alt="galerie photos #{galery.title}")
+								span.title-galery #{galery.title}
+		include footer

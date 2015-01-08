@@ -1,9 +1,35 @@
 /*!********************************
 *********00-TABLE DES OBJETS *******/
 /*********************************/
-
+#admin-wrapper{
+	max-width:1115px;
+	background-color:#C9C9C9;
+	top:0;
+	margin:0 auto;
+}
+.form-line>textarea{
+	height:75px;
+}
+#head-site-admin{
+	margin-top:30px;
+	background-color:#C9C9C9;
+}
+#admin-body>h1{
+	font-size:1.7em;
+	width:100%;
+	margin:1% 2%;
+	text-align:left;
+}
+#action-lot{
+	width:95%;
+}
+#action-lot>legend{font-size:1.2em;padding:2%;border:solid thin grey;}
+#action-lot p{
+	margin-top:2%;
+}
+#nb-elt-sel{width:100%;}
 #admin-content table{
-	width:90%;
+	width:95%;
 	border:solid thin grey;
 }
 .table-admin-head{
@@ -38,7 +64,7 @@
 	width:60%;
 }
 #actions{
-	width:25%;
+	width:100%;
 }
 .objet-line td{
 	padding:0.5%;
@@ -50,13 +76,113 @@
 	background-color:#C9C9C9;
 }
 /*!************************************
-***** 01- FORMULAIRE ACTU+COURS ******/
+***** 01- FORMULAIRES ******/
 /*************************************/
+.form>h2{
+	width:80%;
+	margin:2% auto;
+	font-size:1.3em;
+	text-align:center;
+}
+.form>message{
+
+}
+.form-line{
+	margin:2% auto;
+	width:80%;
+}
+.file-line{
+	margin-top:1%;
+	width:100%;
+}
+.form-line>label{
+	width:40%;
+	vertical-align:top;
+}
+.form-line>input,.form-line>textarea{
+	width:60%;
+}
+.form-line #submit{
+	margin-left:40%;
+	width:60%;
+}
 .error{
 	border:solid 4px orange; 
 }
+
+/*! fenetre de confirmation generalites' */
+#confirm-del{
+	position:absolute;
+	top:100px;
+	width:100%;
+	z-index:999;
+}
+#confirm-window{
+	width:300px;
+	height:200px;
+	margin:2% auto;
+	z-index:999;
+	background-color:#C9C9C9;
+}
+#confirm-window>h2{
+	font-size:1.3em;
+	padding:5%;
+	text-align:center;
+}
+#confirm-window>p{
+	text-align:center;
+	margin-top:2%;
+}
+#confirm-buttons{
+	width:90%;
+	margin:0 auto;
+	padding-top:5%;
+	text-align:left;
+}
+#confirm-buttons>input{
+	width:80px;
+	margin-left:1.5em;
+}
+/*! *** fenetre de changement de mot de passe */
+#chgpwd{
+	position:absolute;
+	top:100px;
+	width:100%;
+}
+#chgpwd-window{
+	top:100px;
+	width:300px;
+	height:175px;
+	background-color:#E3CCA2;
+	margin:0 auto;
+	z-index:999;
+}
+#chgpwd-window>p{
+	width:90%;
+	margin:2% auto;
+}
+#chgpwd-window label{
+	width:39%;
+}
+#chgpwd-window input[type='password']{
+	width:60%;
+}
+#chgpwd-window>h2{
+	font-size:1.3em;
+	padding:5%;
+	text-align:center;
+}
+.buttons-line{
+	width:90%;
+	margin:5% auto;
+	text-align:left;
+}
+.buttons-line>input{
+	width:80px;
+	margin-left:1.5em;
+}
 /*!************************************
- * *** 02 - GALERIES PHOTOS ***********/
+ * *** 05 - GALERIES PHOTOS ***********/
 /* ************************************/
 #content-photos{
 	position:relative;
@@ -78,6 +204,7 @@
 	background-color:#E8B769;
 	margin-bottom:5px;
 	border-radius:5px;
+	margin-left:1%;
 }
 .p-supp,.p-legende{
 	width:100%;

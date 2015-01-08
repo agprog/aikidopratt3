@@ -1,10 +1,16 @@
 extends ../layout
 block content
-	div#wrapper(ng-app="admin",ng-controller="GeneralitesCtl")
+	div#admin-wrapper(ng-app="admin",ng-controller="GeneralitesCtl")
+		if context.log
+			connect(log="#{context.log.title}")
+		include ../menu
 		include ../header
 		section#admin-body.row
-			div#message(ng-show='messageshow') {{msg}}
-			article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
+			aside#admin-left-side.content.col-xs-12.col-sm-12.col-md-2.col-lg-2
+				include sidebar
+			article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-10.col-lg-10
+				h1 Administration des valeurs générales du site.
+				div#message(ng-show='messageshow') {{msg}}
 				table
 					tr
 						fieldset#add-param
@@ -23,8 +29,8 @@ block content
 							include forms/input_general
 						else
 							include forms/textarea_general
-				div#confirm(ng-show='confirmshow')
+				div#confirm-del(ng-show='confirmshow')
 					confirm-window()
+				
 		include ../footer
-					
-					
+		

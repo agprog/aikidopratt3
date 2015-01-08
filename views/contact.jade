@@ -1,0 +1,35 @@
+include mixins/widgets.jade
+extends layout
+block content
+	div#wrapper(ng-app="index",ng-controller="IndexCtl")
+		if context.log
+			connect(log='#{context.log.title}')
+		include menu.jade
+		include header
+		section#row1-body.row
+			h2.titre-rubrique Nous contacter
+			div#contact
+				
+				div#texte
+					p.message-content Pour nous contacter, plusieurs solutions s'offrent à vous:
+					p.message-titre En venant assister à une séance en semaine :
+					p.message-content Les horaires et lieu des cours sont consultables en page d'accueil. <br>
+										| Si vous désirez monter sur le tatami, merci de mettre un bas de survêtement
+										| pour vous permettre d'être à l'aise. <br>
+										| Si la séance à lieu pendant les vacances scolaires, vérifiez sur le site ou par
+										| téléphone qu'elle n'est pas annulée.
+					p.message-titre Par téléphone :
+					p.message-content Marie Luce TONNOT :  03.83.40.68.42
+					p.message-titre Par courrier électronique :
+					div#message
+						!= context.flash
+					form#contact-form(action="/send/",enctype="multipart/form-data",method="POST")
+						input(type="hidden",id="csrf_token",name="csrf_token",value='#{context.csrf_token}')
+						+input_line_valid('firstname','Prénom * :',contact.firstname,contact,{})
+						+input_line_valid('lastname','Nom * :',contact.lastname,contact,{})
+						+input_line_valid('email','Email * :',contact.email,contact,{})
+						+input_line('subject','Sujet * :',contact.subject,{})
+						+text_line('content','Message * :',contact.content,{})
+						p#submit-line.form-line
+							input(type="submit",id="submit",name="submit",value="Valider")
+	

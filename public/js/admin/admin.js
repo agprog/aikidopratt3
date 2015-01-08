@@ -5,8 +5,8 @@ angular.module('admin',[
   'ngRoute',
   'admin.filters',
   'admin.services',
-  'admin.directives',
-  'admin.controllers'
+  'admin.controllers',
+  'admin.directives'
 ])
 .config(function($httpProvider){
   // Use x-www-form-urlencoded Content-Type

@@ -1,14 +1,23 @@
 extends ../layout
 block content
-	div#wrapper(ng-app="admin",ng-controller="MainCtl")
+	div#admin-wrapper(ng-app="admin",ng-controller="MainCtl")
+		if context.log
+			connect(log="#{context.log.title}")
+		include ../menu
 		include ../header
-		section#admin-body.row
-			article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
-				include liste							
-			article#admin-content-form.content.form.col-xs-12.col-sm-12.col-md-6.col-lg-5
-				input(type="hidden",ng-model="schema",value="#{schema}")
-				if(schema == 'actualite')
-					include forms/actualite
-				else if(schema == 'cours')
-					include forms/cours
+		div.row
+			aside#admin-left-side.content.col-xs-12.col-sm-3.col-md-2.col-lg-2
+				include sidebar
+			section#admin-body.col-xs-12.col-sm-9.col-md-10.col-lg-10.row
+				h1 Administration de la rubrique #{schema}
+				article#admin-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7
+					include liste							
+				article#admin-content-form.content.form.col-xs-12.col-sm-12.col-md-6.col-lg-5
+					input(id="schema",type="hidden",ng-model="schema",value="#{schema}")
+					if(schema == 'actualite')
+						include forms/actualite
+					else if(schema == 'cours')
+						include forms/cours
+					else if(schema == 'user')
+						include forms/user
 		include ../footer

@@ -23,17 +23,21 @@ mixin input_time(name,label,val,atrbs)
 	+input_model("time",name,label,val,atrbs)
 
 mixin input_file(name,label,dir,val,atrbs)
-	p.form-line
+	div.form-line
 		label(for= name)= label
 		if(val && val != null)
 			p.file-line
 				span Actuellement : 
 				span(id= 'span'+name)= val
-			p.file-line
 				del-file(name= name)
-			input(type='file',name= name,id= name)&attributes(atrbs)
+			p.file-line
+				input(type='file',name= name,id= name)&attributes(atrbs)
 		else
-			input(type='file',name= name,id= name)&attributes(atrbs)
+			p.file-line
+				input(type='file',name= name,id= name)&attributes(atrbs)
+				
+mixin input_pwd(name,label,atrbs)
+	+input_model("password",name,label,"",atrbs)
 	
 mixin text_line(name,label,val,atrbs)
 	p.form-line
@@ -47,3 +51,11 @@ mixin input_line_valid(name,label,val,objet,atrbs)
 			input(type="text",name= name,id= name,value= val)&attributes(atrbs)
 	else
 		+input_line(name,label,val,atrbs)
+
+mixin input_pwd_valid(name,label,objet,atrbs)
+	if(objet.errors && objet.errors.indexOf( name ) > -1)
+		p(class="form-line error")
+			label(for= name)= label
+			input(type="password",name= name,id= name)&attributes(atrbs)
+	else
+		+input_pwd(name,label,atrbs)

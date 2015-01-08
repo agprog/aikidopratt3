@@ -32,22 +32,25 @@ angular.module('index.directives', []).
 					angular.element(document.querySelectorAll('.marker')).on('click',function(event){
 								var date=event.target.getAttribute('data-date');
 								getSrv('/actualites/'+date).success(function(response){
-									actualite=window.location.href='/actualites/#'+response.id;
+									var actualite=window.location.href='/actualites/#'+response.id;
 									/*!--- recuperer la position de l'ancre ---*/
 								});
 								
 					});
 				}
-				$scope.refresh();
+				
 			},	
-			link:function(scope,element,attrs){
+			link:function(scope,element,attrs,controller){
 				var timer;
 				function isLoaded(){
-					var elt=document.querySelector('#lessone-m-'+scope.instance);
-					if(elt != null){
+					var elt=element.find('#lessone-m-'+scope.instance);
+					if(elt != null && scope.dates){
 						clearInterval(timer);
+						scope.refresh();
+						scope.$digest();
+						scope.markerlink();
 						/*--- liste des evenements ---*/
-						angular.element(elt).on('click',function(event){
+						element.find(elt).on('click',function(event){
 							event.preventDefault();
 							if(scope.currentmonth-1<0){
 								scope.currentmonth=11;
@@ -60,7 +63,7 @@ angular.module('index.directives', []).
 							scope.markerlink();
 							
 						});
-						angular.element(document.querySelector('#moreone-m-'+scope.instance)).on('click',function(event){
+						element.find('#moreone-m-'+scope.instance).on('click',function(event){
 							event.preventDefault();
 							if(scope.currentmonth+1>11){
 								scope.currentmonth=0;
@@ -72,11 +75,11 @@ angular.module('index.directives', []).
 							scope.$digest();
 							scope.markerlink();
 						});
-						angular.element(document.querySelector('#select-m-'+scope.instance)).on('change',function(event){
+						element.find('#select-m-'+scope.instance).on('change',function(event){
 							scope.days=calendarSrv.days(scope.currentyear,scope.currentmonth);
 							scope.$digest();
 						});
-						angular.element(document.querySelector('#lessone-y-'+scope.instance)).on('click',function(event){
+						element.find('#lessone-y-'+scope.instance).on('click',function(event){
 							if(scope.currentyear-1 >1900){
 								scope.currentyear-=1;
 							}
@@ -85,11 +88,12 @@ angular.module('index.directives', []).
 							scope.$digest();
 							scope.markerlink();
 						});
-						angular.element(document.querySelector('#year-'+scope.instance)).on('blur',function(event){
+						element.find('#year-'+scope.instance).on('blur',function(event){
 							scope.refresh();
 							scope.$digest();
+							scope.markerlink();
 						});
-						angular.element(document.querySelector('#moreone-y-'+scope.instance)).on('click',function(event){
+						element.find('#moreone-y-'+scope.instance).on('click',function(event){
 							scope.currentyear=parseInt(scope.currentyear)+1;
 							scope.refresh();
 							scope.$digest();
@@ -183,7 +187,7 @@ angular.module('index.directives', []).
 					try{scope.sens}catch(err){scope.sens=1;}
 					try{scope.defilement}catch(err){scope.defilement='v';}
 					try{scope.instance}catch(err){scope.instance=0;}
-					scope.ecart=200;
+					scope.ecart=270;
 					element.on('mouseover',hover);
 					element.on('mouseleave',leave);
 					element.find('.commands-first').on('click',first);
