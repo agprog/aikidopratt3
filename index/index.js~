@@ -252,8 +252,7 @@ app.post('/send/',function(req,res){
 				transporter.sendMail(mailOptions,function(error,info){
 					if(error){
 						var message="Une erreur a été rencontrée lors de l'envoi, \
-									merci de vérifier votre adresse email et réessayer.\n"+
-									error.message;
+									merci de vérifier votre adresse email et réessayer.";
 						req.sessionStore.flash=message;
 						res.render('contact',{title:'Contact',
 									contact:contact,
