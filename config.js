@@ -38,7 +38,14 @@ module.exports = {
 	/*! PAR DEFAULT LE PROGRAMME CHARGE DANS LE CONTEXTE L'ENSEMBLE DES FICHIERS JAVASCRIPTS
 	 * PRESENTS COTE CLIENT DANS L'APPLICATION, POUR AVOIR UN COMPORTEMENT DIFFERENT VOUS POUVEZ
 	 * CONTINUER CE FICHIER */
-	angular_commons:['admin/services.js'
+	angular_commons:['admin/services.js',
+					'admin/directives.js'
 			],
+	/*! CONFIGURATION DU SERVICE SMTP POUR LE FORMULAIRE DE CONTACT */
+	MAIL_SERVICE:'Gmail',
+	MAIL_USER:'agile.prog.54@gmail.com',
+	MAIL_PASS:'wd45q98b',
+	SMTP_PORT:587,
+	
+	};
 
-	}

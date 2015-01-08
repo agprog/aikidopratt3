@@ -3,6 +3,8 @@
 // Declare app level module which depends on filters, and services
 angular.module('index',[
   'ngRoute',
+  'admin.services',
+  'admin.directives',
   'index.filters',
   'index.services',
   'index.controllers',
