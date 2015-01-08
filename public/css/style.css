@@ -292,6 +292,10 @@ h1{font-size:2.5em;text-align:center;}
 	width:25%;
 	margin-right:2%;
  }
+ .error{
+	background-color:orange;
+	border:solid 4px orange; 
+}
 /*//////////////////////////////////////////////////////////////////////
  * /// 07 - ACTUALITES
  * ///////////////////////////////////////////////////////////////////*/
@@ -672,6 +676,7 @@ h1{font-size:2.5em;text-align:center;}
 	width:30%;
 	margin:100px auto;
 	border:thin solid gray;
+	background-color:#fbfcd1;
  }
  #login>header{
 	width:100%;
@@ -679,6 +684,7 @@ h1{font-size:2.5em;text-align:center;}
 	line-height:50px;
 	text-align:center;
 	font-size:1.2em;
+	background-color:#E8B769;
 	border-bottom:thin solid gray;
  }
  #login #msg{
