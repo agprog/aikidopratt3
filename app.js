@@ -7,10 +7,12 @@ var session=require('express-session');
 var mongoStore=require('connect-mongo')(session);
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var commons=require('commons');
 var config=require('./config');
 var index = require('./index');
 var admin = require('./admin/admin');
 var users = require('./users/users');
+
 var app = express();
 
 // view engine setup
