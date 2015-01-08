@@ -43,7 +43,7 @@ angular.module('admin.directives', []).
 			restrict:'A,E',
 			replace:true,
 			transclude: true,
-			template:'templates/input_general.html'
+			templateUrl:'/static/js/admin/templates/input_general.html'
 		}
 	})
 	.directive('addGenText',function(){
@@ -51,7 +51,7 @@ angular.module('admin.directives', []).
 			restrict:'A,E',
 			replace:true,
 			transclude:true,
-			templateUrl:'templates/text_general.html'
+			templateUrl:'/static/js/admin/templates/text_general.html'
 		}
 	})
 	.directive('addGenField',['$http','$compile','postSrv',function($http,$compile,postSrv){
