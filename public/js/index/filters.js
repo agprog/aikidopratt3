@@ -31,7 +31,7 @@ angular.module('index.filters', []).
 				var re=new RegExp('^'+year+'-'+month);
 				try{
 					if(value.date.match(re)){
-						var actudate=[year,month,value.date.split('-')[2].slice(0,2)].join('-');
+						var actudate=[year,("00"+(month+1)).slice(-2),value.date.split('-')[2].slice(0,2)].join('-');
 						console.log(actudate);
 						var duration=parseInt(value.duration);
 						var location=value.location;
