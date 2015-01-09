@@ -32,6 +32,7 @@ angular.module('index.filters', []).
 				try{
 					if(value.date.match(re)){
 						var actudate=[year,month,value.date.split('-')[2].slice(0,2)].join('-');
+						console.log(actudate);
 						var duration=parseInt(value.duration);
 						var location=value.location;
 						var day=0;

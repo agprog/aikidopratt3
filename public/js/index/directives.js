@@ -26,7 +26,7 @@ angular.module('index.directives', []).
 				$scope.refresh=function(){
 					$scope.months=calendarSrv.months($scope.currentyear,$scope.currentmonth);
 					$scope.days=calendarSrv.days($scope.currentyear,$scope.currentmonth);
-					$scope.days=$filter('monthActuFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
+					$scope.days=$filter('setActuMarkersFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
 				}
 				$scope.markerlink=function(){
 					angular.element(document.querySelectorAll('.marker')).on('click',function(event){
@@ -44,7 +44,6 @@ angular.module('index.directives', []).
 				var timer;
 				function isLoaded(){
 					var elt=element.find('#lessone-m-'+scope.instance);
-					
 					if(elt != null && scope.dates){
 						clearInterval(timer);
 						scope.refresh();
