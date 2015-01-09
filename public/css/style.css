@@ -574,7 +574,7 @@ h1{font-size:2.5em;text-align:center;}
 }
 .label-panel,.label-active{
 	display:inline-block;
-	width:150px;
+	width:100px;
 	height:25px;
 	line-height:25px;
 	text-align:center;
