@@ -15,7 +15,11 @@ var users={
 				req.sessionStore.flash=null;
 				commons.start_mongo();
 				var model=commons.create_model('user');
-				(req.body.target_url)?target='/':target=req.body.target_url;
+				if(!req.body.target_url){
+					var target='/';
+				}else{
+					var target=req.body.target_url;
+				}
 				/*!*** trouve le user auquel appartient l'email   ***/
 				model.findOne({$or:[{email:req.body.user,password:commons.create_sha1(req.body.password)},
 									{pseudo:req.body.user,password:commons.create_sha1(req.body.password)}]})
