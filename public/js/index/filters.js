@@ -39,7 +39,7 @@ angular.module('index.filters', []).
 						var day=0;
 						var durate=0;
 						while(day < 42){
-							if([days[day].year,days[day].month,days[day].day].join('-') == actudate){
+							if([days[day].year,('00'+(days[day].month+1)).slice(-2),('00'+(days[day].day)).slice(-2)].join('-') == actudate){
 								while(durate < duration && day<42){
 									days[day].marker=true;
 									days[day].search=days[day].year+"-"+parseInt(days[day].month)+1+"-"+(parseInt(days[day].day)-durate).toString();
