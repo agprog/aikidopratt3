@@ -28,7 +28,7 @@ angular.module('index.filters', []).
 		return function(values,days,year,month){
 			var first_index=calendarSrv.first_index(year,month);
 			angular.forEach(values,function(value,key){
-				var re=new RegExp('^'+year+'-'+('00'+month+1).slice(-2));
+				var re=new RegExp('^'+year+'-'+('00'+(parseInt(month)+1)).slice(-2));
 				try{
 					console.log(year+'-'+('00'+month+1).slice(-2));
 					if(value.date.match(re)){
