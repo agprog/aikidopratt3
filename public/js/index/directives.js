@@ -146,22 +146,25 @@ angular.module('index.directives', []).
 			link:function(scope,element,attrs){
 				var timer;
 				function init(){
-					var x=scope.coordonnees.split(',')[0];
-					var y=scope.coordonnees.split(',')[1];
-					var coordonates=new google.maps.LatLng(x,y);
-					var mapOptions={
-						center:coordonates,
-						zoom:13
-						};
+					
 					/*!--- on cree le marqueur --*/
 					try{
 						var target=document.getElementById(scope.id);
+						clearInterval(timer);
+						var x=scope.coordonnees.split(',')[0];
+						var y=scope.coordonnees.split(',')[1];
+						var coordonates=new google.maps.LatLng(x,y);
+						var mapOptions={
+							center:coordonates,
+							mapTypeId:google.maps.MapTypeId.ROADMAP,
+							zoom:13
+						};
 						new google.maps.Marker({
 							position: coordonates,
 							map:new google.maps.Map(target,mapOptions), 
 							title:scope.lieu
 						});
-						clearInterval(timer);
+						
 					}catch(error){
 						console.log('map is pending');
 					}
