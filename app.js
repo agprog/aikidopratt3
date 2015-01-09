@@ -48,12 +48,12 @@ app.use(session({
 				client:client
 				})
 		}));*/
-app.use(session({
+app.use(session({secret:'aUx689',
 				store:new mongoStore({
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
-					user:config.db[app.get('env')].user,
-					pass:config.db[app.get('env')].pass
+					username:config.db[app.get('env')].user,
+					password:config.db[app.get('env')].pass
 				})
 			}));
 app.use('/', index);

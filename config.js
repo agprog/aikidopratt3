@@ -3,9 +3,9 @@ module.exports = {
 	/*! **** BASE DE DONNNEES *****/
 	db : {dev:
 				{host  : "localhost",
-				user    : "admin",
+				user    : "",
 				port    : "",
-				pass    :"Dgps--mhCgSI",
+				pass    :"",
 				dbname  : "aikido"
 			},
 		production:
