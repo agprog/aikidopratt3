@@ -27,7 +27,7 @@ angular.module('index.directives', []).
 					console.log($scope.dates);
 					$scope.months=calendarSrv.months($scope.currentyear,$scope.currentmonth);
 					$scope.days=calendarSrv.days($scope.currentyear,$scope.currentmonth);
-					$scope.days=$filter('setActuMarkersFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
+					$scope.days=$filter('monthActuFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
 				}
 				$scope.markerlink=function(){
 					angular.element(document.querySelectorAll('.marker')).on('click',function(event){
