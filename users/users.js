@@ -8,7 +8,7 @@ var users={
 				if(req.sessionStore.log){
 					callback();
 				}else{
-					res.redirect("/login/").end();
+					res.redirect("/login/");
 				}
 		},
 		authentificate : function(req,res){
