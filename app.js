@@ -48,7 +48,7 @@ app.use(session({
 				client:client
 				})
 		}));*/
-app.use(session({secret:'123456',
+app.use(session({
 				store:new mongoStore({
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
