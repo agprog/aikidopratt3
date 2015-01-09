@@ -30,6 +30,7 @@ angular.module('index.filters', []).
 			angular.forEach(values,function(value,key){
 				var re=new RegExp('^'+year+'-'+('00'+month+1).slice(-2));
 				try{
+					console.log(year+'-'+('00'+month+1).slice(-2));
 					if(value.date.match(re)){
 						var date_tab=value.date.split('-');
 						var actudate=[date_tab[0],date_tab[1],date_tab[2].slice(0,2)].join('-');
