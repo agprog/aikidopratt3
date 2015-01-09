@@ -24,7 +24,6 @@ angular.module('index.directives', []).
 				$scope.currentmonth=date.getMonth();
 				$scope.currentyear=date.getFullYear();
 				$scope.refresh=function(){
-					console.log($scope.dates);
 					$scope.months=calendarSrv.months($scope.currentyear,$scope.currentmonth);
 					$scope.days=calendarSrv.days($scope.currentyear,$scope.currentmonth);
 					$scope.days=$filter('monthActuFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);

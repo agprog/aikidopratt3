@@ -21,7 +21,6 @@ angular.module('index.filters', []).
 					console.log("l'information %s n'a pas de date de rdv",value._id);
 				}
 			});
-			console.log(temp_tab);
 			return temp_tab;
 		}
 	})
