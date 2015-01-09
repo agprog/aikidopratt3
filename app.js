@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+/*var favicon = require('serve-favicon');*/
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 /*var redis=require('redis');*/
@@ -48,7 +48,7 @@ app.use(session({
 				client:client
 				})
 		}));*/
-app.use(session({secret:'123456',
+app.use(session({secret:'aUx689',
 				store:new mongoStore({
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
