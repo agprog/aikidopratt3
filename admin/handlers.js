@@ -426,7 +426,7 @@ function __create_datas(req,params,model,objet){
 				csrf_token:commons.contextCreate(req,params['dir']).csrf_token};
 	for(var field in objet.toObject()){
 		if(model.schema.paths[field].options.type.name == 'Date'){
-			datas[field]=commons.dateFormat(objet[field]);
+			datas[field]=objet[field];
 		}else{
 			datas[field]=objet[field];
 		}
