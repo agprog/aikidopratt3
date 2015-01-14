@@ -106,9 +106,9 @@
 	margin-left:40%;
 	width:60%;
 }
-.error{
-	border:solid 4px orange; 
-}
+/*!************************************
+***** 02- GENERALITES ******/
+/*************************************/
 
 /*! fenetre de confirmation generalites' */
 #confirm-del{

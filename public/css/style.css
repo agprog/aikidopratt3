@@ -220,6 +220,15 @@ h1{font-size:2.5em;text-align:center;}
 #welcome{
 	background-color:#E1CF92;
 	min-height:605px;
+	padding:2%;
+}
+#welcome>.img{
+	margin:2%;
+}
+#welcome>.text{
+	padding-left:2%;
+	font-size:1.1em;
+	text-indent:5%;
 }
 .hpart{
 		position:relative;
@@ -440,7 +449,7 @@ h1{font-size:2.5em;text-align:center;}
 	display:block;
 	vertical-align:top;
 	width:398px;
-	height:268px;
+	height:270px;
 	overflow:hidden;
 	background-color:#E1CF92;
 	z-index:1;
@@ -663,6 +672,7 @@ h1{font-size:2.5em;text-align:center;}
 	vertical-align:middle;
 	border:thin solid #C98481;}
 #calendar-table-0 th{background-color:#1F3A58;color:#fff;}
+.lessone-m,.months,.moreone-m,.lessone-y,.year,.moreone-y{margin:0;padding:1.5%;}
 #calendar-table-0 .we{background-color:#8BB6BE;}
 #calendar-table-0 #select-m-0{height:30px;}
 .marker{
@@ -704,18 +714,33 @@ h1{font-size:2.5em;text-align:center;}
  #login input[type='text'],#login input[type='password']{
 	width:65%;
  }
- #login input[type='submit']{
+ #login input[type='submmt']{
 	float:right;
 	width:25%;
  }
  #footer{
 	clear:both;
-	-khtml-opacity:.90; 
+	/*-khtml-opacity:.90; 
 	-moz-opacity:.90; 
 	-ms-filter:"alpha(opacity=90)";
 	filter:alpha(opacity=90);
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.9);
 	opacity:.90;
-	padding:2%;
+	padding:2%;*/
+	background-color:#373738;
 	margin:5% 0;
+	padding:3% 0;
+}
+
+#footer>div>ul{
+	margin-left:8%;
+}
+
+#footer>div a{
+	color:#fff;
+}
+
+#footer>div ul{
+	list-style-type:none;
+	
 }

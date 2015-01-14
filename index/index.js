@@ -19,7 +19,7 @@ app.get('/init/:schema/',function(req,res){
 	var model=commons.create_model(req.params['schema']);
 	switch(req.params['schema']){
 		case 'actualite':
-				model.find().exec(function(error,results){
+				model.find().sort({date:'desc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);
@@ -61,7 +61,7 @@ app.get('/init/',function(req,res){
 				},
 				actualites:function(callback){
 					model=commons.create_model('actualite');
-					model.find().exec(function(error,result){
+					model.find().sort({date:'desc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				},
@@ -254,6 +254,7 @@ app.post('/send/',function(req,res){
 						var message="Une erreur a été rencontrée lors de l'envoi, \
 									merci de vérifier votre adresse email et réessayer.\n"+
 									error.message;
+									;
 						req.sessionStore.flash=message;
 						res.render('contact',{title:'Contact',
 									contact:contact,
