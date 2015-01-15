@@ -42,11 +42,11 @@ module.exports = {
 					'admin/directives.js'
 			],
 	/*! CONFIGURATION DU SERVICE SMTP POUR LE FORMULAIRE DE CONTACT */
-	MAIL_SERVICE:'Gmail',
-	MAIL_USE_TLS:true,
-	MAIL_HOST:'smtp.gmail.com',
-	MAIL_USER:'agile.prog.54@gmail.com',
-	MAIL_PASS:'wd45q98b',
-	MAIL_PORT:587
+	MAIL_SERVICE:'free',
+	MAIL_USE_TLS:false,
+	MAIL_HOST:'smtp.free.fr',
+	MAIL_USER:'tn.melin@free.fr',
+	MAIL_PASS:'louise',
+	MAIL_PORT:25
 	};
 
