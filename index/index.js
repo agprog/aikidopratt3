@@ -231,15 +231,10 @@ app.post('/send/',function(req,res){
 				/* **** on envoie le mail  ****/
 				(!req.body.subject)?subject='pas de sujet':subject=req.body.subject;
 				var mail=require('nodemailer');
-				var transporter=mail.createTransport("SMTP",{
+				var transporter=mail.createTransport({
 					host:config.MAIL_HOST,
 					secureConnection:config.MAIL_USE_TLS,
 					port:config.MAIL_PORT,
-					auth:{
-						user:config.MAIL_USER,
-						pass:config.MAIL_PASS
-					}
-					});
 					auth:{
 						user:config.MAIL_USER,
 						pass:config.MAIL_PASS
