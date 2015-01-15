@@ -47,7 +47,6 @@ module.exports = {
 	MAIL_HOST:"smtp.gmail.com",
 	MAIL_USER:'agile.prog.54@gmail.com',
 	MAIL_PASS:'wd45q98b',
-	MAIL_PORT:587,
-	
+	MAIL_PORT:587
 	};
 
