@@ -234,7 +234,7 @@ app.post('/send/',function(req,res){
 				var smtp=require('nodemailer-smtp-transport');
 				var transporter=mail.createTransport(smtp({
 					host:config.MAIL_HOST,
-					secureConnection:config.MAIL_USE_TLS,
+					secure:config.MAIL_USE_TLS,
 					port:config.MAIL_PORT,
 					auth:{
 						user:config.MAIL_USER,
