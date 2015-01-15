@@ -231,7 +231,8 @@ app.post('/send/',function(req,res){
 				/* **** on envoie le mail  ****/
 				(!req.body.subject)?subject='pas de sujet':subject=req.body.subject;
 				var mail=require('nodemailer');
-				var transporter=mail.createTransport('SMTP',{
+				var smtp=require('nodemailer-smtp-transport');
+				var transporter=mail.createTransport(smtp({
 					host:config.MAIL_HOST,
 					secureConnection:config.MAIL_USE_TLS,
 					port:config.MAIL_PORT,
@@ -239,7 +240,7 @@ app.post('/send/',function(req,res){
 						user:config.MAIL_USER,
 						pass:config.MAIL_PASS
 					}
-					});
+					}));
 				var content=req.body.firstname+" "+req.body.lastname+" <"+req.body.email+"> a écrit : \n"+
 							req.body.content;
 							
