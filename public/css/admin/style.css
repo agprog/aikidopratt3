@@ -1,6 +1,9 @@
 /*!********************************
 *********00-TABLE DES OBJETS *******/
 /*********************************/
+.content{
+ min-height:300px;
+}
 #admin-wrapper{
 	max-width:1115px;
 	background-color:#C9C9C9;
@@ -226,6 +229,7 @@
  width:200px;
 	height:150px;
 	vertical-align:middle;
+	text-align:center;
 
 }
 .photo img{

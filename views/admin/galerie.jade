@@ -16,9 +16,22 @@ block content
 						include liste
 					article#admin-content-form.content.form.col-xs-12.col-sm-12.col-md-4.col-lg-4
 						include forms/galerie
-					div(ng-show='addgalerie') Merci de sauvegarder la galerie avant de pouvoir y ajouter des photos.
-					div(class="row",ng-hide='addgalerie')
-						div(ng-include="'/static/js/admin/templates/icon_photo.html'")
+					div#msg-photos Merci de sauvegarder la galerie avant de pouvoir y ajouter des photos.
+					div(class="row")
+						//- div(ng-include="'/static/js/admin/templates/icon_photo.html'")
+						div#content-photos
+							div#spinner(ng-show='isloading')
+								img(src='/static/img/spinner.gif',alt='waiting spinner')
+							div(class="icone-photo",id="icone-photo-{{photo._id}}",data-order="{{photo.order-num}}",ng-repeat='photo in objet.photos')
+								input(type="hidden",class="id-photo",id="id-photo-{{photo._id}}",value="{{photo._id}}")
+								p(id="supp-{{photo._id}}",class="p-supp")
+									a(data-id="{{photo._id}}",data-name="{{photo.name}}",class="a-supp-photo",ng-click="deletePhoto($event)") &nbsp;X
+								table
+									tr
+										td(class="photo")
+											img(src="/uploads/galeries/{{photo._galerie}}/thumbnails/{{photo.name}}",alt="photo de {{photo.legend}}",draggable="false")
+											p(class="photo-legend")
+												input(type="text",data-id="{{photo._id}}",data-name="{{photo.name}}",class="legend",name="legend-{{photo._id}}",value='{{photo.legend}}',ng-keyup="updatePhoto($event)")
 						add_photo
 		include ../footer
 		

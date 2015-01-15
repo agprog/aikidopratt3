@@ -144,12 +144,13 @@ angular.module('admin.directives', []).
 								.success(function(response){
 									scope.isloading=false;
 									scope.objet.photos=response;
+									$("#input-photos").val("");
 								})
 								.error(function(errors){
-									$scope.isloading=false;
+									scope.isloading=false;
 								});
 					}else{
-				
+						return false;
 					}
 				});
 			}

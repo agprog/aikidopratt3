@@ -374,19 +374,18 @@ module.exports={
 									}
 									
 								});//end model find
-						},
-						photos : function(callback){
-							model.find().exec(function(err,list){
-								callback(err,list);
-							});
 						}
 					},function(error,results){
 						if(error){
 							commons.stop_mongo();
 							res.send(error.message);
 						}else{
-							commons.stop_mongo();
-							res.json(results.photos);
+							var id=results['del']._galerie;
+							model.find({_galerie:id}).exec(function(err,list){
+								commons.stop_mongo();
+								res.json(list);
+							});
+							
 						}
 					});
 	}
