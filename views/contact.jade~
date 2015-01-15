@@ -32,5 +32,4 @@ block content
 						+text_line('content','Message * :',contact.content,{})
 						p#submit-line.form-line
 							input(type="submit",id="submit",name="submit",value="Valider")
-		include footer
 	
