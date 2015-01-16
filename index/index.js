@@ -234,10 +234,10 @@ app.post('/send/',function(req,res){
 				var transporter=mail.createTransport({
 					host:config.MAIL_HOST,
 					port:config.MAIL_PORT,
-					/*auth:{
+					auth:{
 						user:config.MAIL_USER,
 						pass:config.MAIL_PASS
-					}*/
+					}
 					});
 				var content=req.body.firstname+" "+req.body.lastname+" <"+req.body.email+"> a écrit : \n"+
 							req.body.content;
