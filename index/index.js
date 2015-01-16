@@ -251,7 +251,7 @@ app.post('/send/',function(req,res){
 						type:'to'
 						}],
 					headers:{
-						Reply-To:req.body.email
+						"Reply-To":req.body.email
 					},
 					subject:subject,
 					text:escape(content),
