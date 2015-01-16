@@ -45,9 +45,9 @@ module.exports = {
 	MAIL_SERVICE:'Gmail',
 	MAIL_USE_TLS:true,
 	MAIL_EMAIL:'agile.prog.54@gmail.com',
-	MAIL_HOST:'smtp.gmail.com',
-	MAIL_USER:'agile.prog.54@gmail.com',
-	MAIL_PASS:'wd45q98b',
+	MAIL_HOST:'smtp.mandrillapp.com',
+	MAIL_USER:'aikidopratt@yahoo.fr',
+	MAIL_PASS:'JSOcpKIZtD369H7RVHK9Sw',
 	MAIL_PORT:587
 	};
 

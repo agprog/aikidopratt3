@@ -234,6 +234,7 @@ app.post('/send/',function(req,res){
 				var transporter=mail.createTransport({
 					host:config.MAIL_HOST,
 					port:config.MAIL_PORT,
+					secure:config.MAIL_USE_TLS,
 					auth:{
 						user:config.MAIL_USER,
 						pass:config.MAIL_PASS
