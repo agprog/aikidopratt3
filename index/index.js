@@ -245,7 +245,7 @@ app.post('/send/',function(req,res){
 							req.body.content;
 							
 				var mailOptions={
-					from:req.body.email,
+					from:req.body.firstname+" "+req.body.lastname+" <"+req.body.email+">",
 					to:config.MAIL_USER,
 					replyTo:req.body.email,
 					subject:subject,
@@ -270,6 +270,7 @@ app.post('/send/',function(req,res){
 												nous y répondrons le plus rapidement possible.";
 						res.redirect('/contact/');
 					}
+					transporter.close();
 				});
 			}
 	}//fin csrf check
