@@ -43,10 +43,10 @@ module.exports = {
 			],
 	/*! CONFIGURATION DU SERVICE SMTP POUR LE FORMULAIRE DE CONTACT */
 	MAIL_SERVICE:'free',
-	MAIL_USE_TLS:true,
+	MAIL_USE_TLS:false,
 	MAIL_HOST:'smtp.free.fr',
 	MAIL_USER:'tn.melin',
 	MAIL_PASS:'12k6epmail',
-	MAIL_PORT:465
+	MAIL_PORT:25
 	};
 
