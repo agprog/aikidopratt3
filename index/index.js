@@ -230,8 +230,9 @@ app.post('/send/',function(req,res){
 			}else{
 				/* **** on envoie le mail  ****/
 				(!req.body.subject)?subject='pas de sujet':subject=req.body.subject;
-				var mail=require('nodemailer');
-				var transporter=mail.createTransport({
+				var mandrill=require('mandrill-api');
+				var mandrill_client=new mandrill.Mandrill(config.MAIL_PASS);
+				/*var transporter=mail.createTransport({
 					host:config.MAIL_HOST,
 					port:config.MAIL_PORT,
 					secure:config.MAIL_USE_TLS,
@@ -239,19 +240,24 @@ app.post('/send/',function(req,res){
 						user:config.MAIL_USER,
 						pass:config.MAIL_PASS
 					}
-					});
+					});*/
 				var content=req.body.firstname+" "+req.body.lastname+" <"+req.body.email+"> a écrit : \n"+
 							req.body.content;
 							
-				var mailOptions={
-					from:req.body.firstname+" "+req.body.lastname+" <"+req.body.email+">",
-					to:"aikido pratt <"+config.MAIL_EMAIL+">",
-					replyTo:req.body.email,
+				var message={
+					from_email:req.body.email,
+					to:[{email:config.MAIL_EMAIL,
+						name:'Administrateur',
+						type:'to'
+						}],
+					headers:{
+						Reply-To:req.body.email
+					}
 					subject:subject,
 					text:escape(content),
 					html:content
 					};
-				transporter.sendMail(mailOptions,function(error,info){
+				mandrill_client.messages.send(message:message,function(error,info){
 					if(error){
 						var message="Une erreur a été rencontrée lors de l'envoi, \
 									merci de vérifier votre adresse email et réessayer.\n"+
