@@ -154,8 +154,9 @@ angular.module('index.directives', []).
 						var x=scope.coordonnees.split(',')[0];
 						var y=scope.coordonnees.split(',')[1];
 						var coordonates=new google.maps.LatLng(x,y);
+						/*center:coordonates,*/
 						var mapOptions={
-							center:coordonates,
+							
 							mapTypeId:google.maps.MapTypeId.ROADMAP,
 							zoom:15
 						};
