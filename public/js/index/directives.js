@@ -157,7 +157,7 @@ angular.module('index.directives', []).
 						var mapOptions={
 							center:coordonates,
 							mapTypeId:google.maps.MapTypeId.ROADMAP,
-							zoom:13
+							zoom:10
 						};
 						new google.maps.Marker({
 							position: coordonates,
