@@ -231,16 +231,14 @@ app.post('/send/',function(req,res){
 				/* **** on envoie le mail  ****/
 				(!req.body.subject)?subject='pas de sujet':subject=req.body.subject;
 				var mail=require('nodemailer');
-				var smtp=require('nodemailer-smtp-transport');
-				var transporter=mail.createTransport(smtp({
+				var transporter=mail.createTransport({
 					host:config.MAIL_HOST,
-					secure:config.MAIL_USE_TLS,
 					port:config.MAIL_PORT,
 					auth:{
 						user:config.MAIL_USER,
 						pass:config.MAIL_PASS
 					}
-					}));
+					});
 				var content=req.body.firstname+" "+req.body.lastname+" <"+req.body.email+"> a écrit : \n"+
 							req.body.content;
 							
