@@ -408,8 +408,8 @@ h1{font-size:2.5em;text-align:center;}
 
 #container-v-0,#container-v-0-hover{
 	position:relative;
-	width:400px;
-	max-width:400px;
+	width:100%;
+	max-width:450px;
 	height:270px;
 	overflow:hidden;
 	margin:0 auto;
@@ -433,7 +433,7 @@ h1{font-size:2.5em;text-align:center;}
 	top:0;
 	margin:0;
 	padding:0;
-	width:400px;
+	/*width:400px;*/
 	height:270px;
 	overflow:hidden;
 	margin:0 auto;
@@ -448,7 +448,8 @@ h1{font-size:2.5em;text-align:center;}
 .zone-v-0{
 	display:block;
 	vertical-align:top;
-	width:398px;
+	/*width:398px;*/
+	padding:6% 1%;
 	height:270px;
 	overflow:hidden;
 	background-color:#E1CF92;
@@ -619,7 +620,7 @@ h1{font-size:2.5em;text-align:center;}
 	opacity:1;
 	width:100%;
 	height:250px;
-	padding:1%;
+	padding:10% 1%;
 	margin:0;
 	float:left;
 	-webkit-transition:opacity 0.5s ease-out;
