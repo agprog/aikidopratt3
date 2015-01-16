@@ -252,12 +252,12 @@ app.post('/send/',function(req,res){
 						}],
 					headers:{
 						Reply-To:req.body.email
-					}
+					},
 					subject:subject,
 					text:escape(content),
 					html:content
 					};
-				mandrill_client.messages.send(message:message,function(error,info){
+				mandrill_client.messages.send({message:message},function(error,info){
 					if(error){
 						var message="Une erreur a été rencontrée lors de l'envoi, \
 									merci de vérifier votre adresse email et réessayer.\n"+
