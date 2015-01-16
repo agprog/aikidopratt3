@@ -45,8 +45,8 @@ module.exports = {
 	MAIL_SERVICE:'free',
 	MAIL_USE_TLS:false,
 	MAIL_HOST:'smtp.free.fr',
-	MAIL_USER:'tn.melin@free.fr',
-	MAIL_PASS:'louise',
+	MAIL_USER:'tn.melin',
+	MAIL_PASS:'12k6epmail',
 	MAIL_PORT:25
 	};
 
