@@ -44,6 +44,7 @@ module.exports = {
 	/*! CONFIGURATION DU SERVICE SMTP POUR LE FORMULAIRE DE CONTACT */
 	MAIL_SERVICE:'free',
 	MAIL_USE_TLS:false,
+	MAIL_EMAIL:'tn.melin@free.fr',
 	MAIL_HOST:'smtp.free.fr',
 	MAIL_USER:'tn.melin',
 	MAIL_PASS:'12k6epmail',

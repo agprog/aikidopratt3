@@ -246,7 +246,7 @@ app.post('/send/',function(req,res){
 							
 				var mailOptions={
 					from:req.body.firstname+" "+req.body.lastname+" <"+req.body.email+">",
-					to:config.MAIL_USER,
+					to:"aikido pratt <"+config.MAIL_EMAIL+">",
 					replyTo:req.body.email,
 					subject:subject,
 					text:escape(content),
