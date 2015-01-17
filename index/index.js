@@ -257,12 +257,14 @@ app.post('/send/',function(req,res){
 					text:escape(content),
 					html:content
 					};
-				mandrill_client.messages.send({message:message},function(error,info){
-					if(error){
+				mandrill_client.messages.send({message:message},function(info){
+						req.sessionStore.flash="Votre message a correctement été envoyé, \
+												nous y répondrons le plus rapidement possible.";
+						res.redirect('/contact/');
+				},function(error){
 						var message="Une erreur a été rencontrée lors de l'envoi, \
 									merci de vérifier votre adresse email et réessayer.\n"+
 									error.message;
-									;
 						req.sessionStore.flash=message;
 						res.render('contact',{title:'Contact',
 									contact:contact,
@@ -270,13 +272,7 @@ app.post('/send/',function(req,res){
 									message:message,
 									context:commons.contextCreate(req,'index')
 									});
-					}else{
-						req.sessionStore.flash="Votre message a correctement été envoyé, \
-												nous y répondrons le plus rapidement possible.";
-						res.redirect('/contact/');
-					}
-					transporter.close();
-				});
+					});
 			}
 	}//fin csrf check
 });
