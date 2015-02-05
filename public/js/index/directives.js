@@ -154,11 +154,10 @@ angular.module('index.directives', []).
 						var x=scope.coordonnees.split(',')[0];
 						var y=scope.coordonnees.split(',')[1];
 						var coordonates=new google.maps.LatLng(x,y);
-						/*center:coordonates,*/
 						var mapOptions={
 							center:coordonates,
 							mapTypeId:google.maps.MapTypeId.ROADMAP,
-							zoom:12
+							zoom:13
 						};
 						new google.maps.Marker({
 							position: coordonates,
@@ -174,7 +173,7 @@ angular.module('index.directives', []).
 			}//end of link
 		};
 	}).
-	directive('carousel',function(){
+directive('carousel',function(){
 		return{
 			scope:{'slides':'=',
 				'sens':'@',
@@ -297,7 +296,6 @@ directive('flexbox',function(){
 				        e.preventDefault();
 				        // check if the carousel is mid-animation
 				        if (!animating) {
-							console.log('move');
 				            // get the event's source element
 				            var target = e.target || e.srcElement;
 				            // find out if we are moving next or previous based on class
@@ -330,7 +328,6 @@ directive('flexbox',function(){
 						
 						    function complete() {
 						        if ( animating ) {
-									console.log('complete');
 						            animating = false;
 						            // this needs to be removed so animation does not occur when the ordinal is changed and the carousel reshuffled
 						            container.classList.remove( 'animate' );
@@ -402,17 +399,17 @@ directive('flexbox',function(){
 				                };
 				            }
 				            // set the initial ordinal values
-				            
-							element.find('a.navigation').bind('click',move);
-							element.find('ul').bind(transitionEnd,complete);
-							changeOrdinal();
+				            changeOrdinal();
+							element.find('a.navigation').bind('mouseover',move);
+							element.find('#flexbox-ul').bind(transitionEnd,complete);
+							
 							
 						}catch(error){
 							console.log('pending init');
 						}
 						
 					}//end of _init_
-			var interval=setInterval(init,50);
+			var interval=setInterval(init,100);
 		}//end of link
 	};//end of return
 });//end directive
