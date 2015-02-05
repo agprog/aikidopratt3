@@ -410,7 +410,7 @@ directive('flexbox',function(){
 							console.log(error);
 						}
 					}//end of _init_
-			var interval=setInterval(init,150);
+			var interval=setInterval(init,20);
 		}//end of link
 	};//end of return
 });//end directive

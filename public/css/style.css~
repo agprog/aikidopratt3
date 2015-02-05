@@ -735,7 +735,7 @@ h1{font-size:2.5em;text-align:center;}
 	opacity:.90;
 	padding:2%;*/
 	background-color:#373738;
-	margin:15px 0;
+	margin:30px 0;
 	padding:3% 0;
 }
 
@@ -762,7 +762,7 @@ h1{font-size:2.5em;text-align:center;}
     overflow:hidden;
     padding:0;
     position:relative;
-    width:90%;
+    width:56%;
     background-color:#fbfcd1;
     z-index:0;
 }

@@ -407,7 +407,6 @@ directive('flexbox',function(){
 							
 						}catch(error){
 							console.log('pending init');
-							console.log(error);
 						}
 					}//end of _init_
 			var interval=setInterval(init,20);
