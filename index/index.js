@@ -104,7 +104,7 @@ app.get('/actualites/:date',function(req,res){
 app.get('/actualites/',function(req,res){
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	actualite.find().exec(function(error,results){
+	actualite.find().sort({date:'desc'}).exec(function(error,results){
 		if(error){
 			res.send(500);
 		}else{

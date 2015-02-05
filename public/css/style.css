@@ -208,15 +208,13 @@ h1{font-size:2.5em;text-align:center;}
 			padding:0%;
 			background-color:transparent;
 			text-align:center;}
-.content,.row{
-		/*background-color:#fbfcd1*/;
+.content{
+		/*background-color:#fbfcd1;*/
+		margin:5px auto;
+		min-height:605px;
 		opacity:0.9;
 		}
-.content{
-	margin-top:3%;
-	margin-bottom:5%;
-	min-height:605px;
-}
+
 #welcome{
 	background-color:#E1CF92;
 	min-height:605px;
@@ -224,6 +222,7 @@ h1{font-size:2.5em;text-align:center;}
 }
 #welcome>.img{
 	margin:2%;
+	padding:2%;
 }
 #welcome>.text{
 	padding-left:2%;
@@ -408,8 +407,8 @@ h1{font-size:2.5em;text-align:center;}
 
 #container-v-0,#container-v-0-hover{
 	position:relative;
-	width:95%;
-	max-width:450px;
+	width:400px;
+	max-width:400px;
 	height:270px;
 	overflow:hidden;
 	margin:0 auto;
@@ -433,7 +432,7 @@ h1{font-size:2.5em;text-align:center;}
 	top:0;
 	margin:0;
 	padding:0;
-	width:100%;
+	width:400px;
 	height:270px;
 	overflow:hidden;
 	margin:0 auto;
@@ -448,8 +447,7 @@ h1{font-size:2.5em;text-align:center;}
 .zone-v-0{
 	display:block;
 	vertical-align:top;
-	/*width:398px;*/
-	padding:6% 1%;
+	width:398px;
 	height:270px;
 	overflow:hidden;
 	background-color:#E1CF92;
@@ -534,20 +532,27 @@ h1{font-size:2.5em;text-align:center;}
 	border:3px solid #fff;
 	border-radius:10px;
  }
+ .content-flex{
+	position:relative;
+	display:inline-block;
+	width:200px;
+	height:200px;
+	z-index:0;
+ }
  .content-galery-detail{
 	height:230px;
  }
- .img-galery{
+ .img-galery,.img-flex{
 	position:absolute;
 	display:block;
 	z-index:0;
 	border-radius:10px;
  }
 .content-galery a,.content-galery-detail a,.content-galery-detail a:hover,.content-galery a:hover{color:#fff;text-decoration:none;}
-.title-galery{position:absolute;
+.title-galery,.title-flex{position:absolute;
 			display:block;
 			width:95%;
-			z-index:1;
+			z-index:0;
 			margin:40% 2.5%;
 			font-size:1.2em;
 			padding:2%;
@@ -558,6 +563,7 @@ h1{font-size:2.5em;text-align:center;}
 			filter : alpha(opacity=0);
 			opacity : 0;
 			transition:opacity 1s ease-in;}
+.content-flex:hover .title-flex{filter : alpha(opacity=1);opacity:1;}
 .content-galery:hover .title-galery{filter : alpha(opacity=1);opacity:1;}
 /*!**** galeries details ******/
 .titre-rubrique>a{color:#fff;}
@@ -646,6 +652,8 @@ h1{font-size:2.5em;text-align:center;}
 .map{
 	display:block;
 	margin:2% auto;
+	width:95%;
+	height:200px;
 	border:thin solid gray;
 	border-radius:2px;
 }
@@ -727,7 +735,7 @@ h1{font-size:2.5em;text-align:center;}
 	opacity:.90;
 	padding:2%;*/
 	background-color:#373738;
-	margin:5% 0;
+	margin:15px 0;
 	padding:3% 0;
 }
 
@@ -743,3 +751,96 @@ h1{font-size:2.5em;text-align:center;}
 	list-style-type:none;
 	
 }
+/*//////////////////////////////////////////////////////////////////////
+ * /// 15 - FLEXBOX
+ * ///////////////////////////////////////////////////////////////////*/
+#flexbox {
+    border:solid 1px rgba(0,0,0,0.3);
+    border-radius:4px;
+    box-shadow:0 0 0 4px rgba(125,125,125,0.1);
+    margin:5px auto;
+    overflow:hidden;
+    padding:0;
+    position:relative;
+    width:56%;
+    background-color:#fbfcd1;
+    z-index:0;
+}
+
+/* navigation items */
+#flexbox .navigation {
+    background:rgba(0,0,0,0.1);
+    color:rgba(255,255,255,0.1);
+    display:block;
+    font-family:verdana,sans-serif;
+    font-size:3em;
+    height:220px;
+    padding-top:80px;
+    position:absolute;
+    text-align:center;
+   /*text-shadow:rgba(0,0,0,0.1); 0 0 2px;*/
+    width:50px;
+    -moz-transition:all 0.4s;
+    -ms-transition:all 0.4s;
+    -webkit-transition:all 0.4s;
+    -o-transition:all 0.4s;
+    transition:all 0.4s;
+    z-index:4;
+}
+
+#flexbox:hover .navigation {
+    background:rgba(0,0,0,0.3);
+    color:rgba(255,255,255,0.8);
+    text-shadow:rgba(0,0,0,0.7); 0 0 2px;
+}
+
+#flexbox .navigation:hover {
+    background:rgba(0,0,0,0.5);
+}
+
+#flexbox .previous {
+    left:0;
+}
+
+#flexbox .next {
+    right:0;
+}
+
+/* carousel container */
+#flexbox ul {
+    -moz-box-orient:horizontal;
+    -ms-box-orient:horizontal;
+    -webkit-box-orient:horizontal;
+    -o-box-orient:horizontal;
+    box-orient:horizontal;
+
+    display:-moz-box;
+    display:-ms-box;
+    display:-webkit-box;
+    display:-o-box;
+    display:box;
+    list-style-type:none;
+    margin-top:5px;
+    margin-left:-200px;
+    padding:0;
+    z-index:0;
+}
+
+/* standard width and height for the carousel items */
+#flexbox li {
+	position:relative;
+    height:200px;
+    margin-right:10px;
+    width:200px;
+    z-index:0;
+}
+
+/* animation properties for the carousel */
+.animate ul {
+    -moz-transition:margin 1s;
+    -ms-transition:margin 1s;
+    -webkit-transition:margin 1s;
+    -o-transition:margin 1s;
+    transition:margin 1s;
+}
+

@@ -4,11 +4,17 @@
 .content{
  min-height:300px;
 }
+#admin-wrapper a{
+	color:#0056F0;
+}
 #admin-wrapper{
 	max-width:1115px;
 	background-color:#C9C9C9;
 	top:0;
 	margin:0 auto;
+}
+#admin-wrapper #head-site{
+	margin-top:80px;
 }
 .form-line>textarea{
 	height:75px;
@@ -79,7 +85,19 @@
 	background-color:#C9C9C9;
 }
 /*!************************************
-***** 01- FORMULAIRES ******/
+ * ** 01- MENU ASIDE
+ * ************************************/
+ #admin-left-side{
+	font-size:1.2em;
+	margin-top:125px;
+	margin-left:1.5em;
+	padding:2%;
+ }
+ #admin-left-side>ul>li{
+	margin-top:1em;
+ }
+/*!************************************
+***** 02- FORMULAIRES ******/
 /*************************************/
 .form>h2{
 	width:80%;
@@ -104,6 +122,7 @@
 }
 .form-line>input,.form-line>textarea{
 	width:60%;
+	font-size:0.9em;
 }
 .form-line #submit{
 	margin-left:40%;
