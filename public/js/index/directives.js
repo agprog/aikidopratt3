@@ -402,8 +402,8 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							element.find('a.navigation').bind('mouseover',move);
-							element.find('#flexbox-ul').bind(transitionEnd,complete);
+							$('a.navigation').on('mouseover',move);
+							$('#flexbox-ul').on(transitionEnd,complete);
 							
 							
 						}catch(error){
@@ -411,7 +411,7 @@ directive('flexbox',function(){
 						}
 						
 					}//end of _init_
-			var interval=setInterval(init,100);
+			var interval=setInterval(init,50);
 		}//end of link
 	};//end of return
 });//end directive
