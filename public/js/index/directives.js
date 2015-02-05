@@ -402,8 +402,8 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							$('navigation').on('mouseover',move);
-							$('#flexbox-ul').on(transitionEnd,complete);
+							element.find('a.navigation').on('mouseover',move);
+							element.find('#flexbox-ul').on(transitionEnd,complete);
 							
 							
 						}catch(error){
