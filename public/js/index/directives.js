@@ -377,7 +377,6 @@ directive('flexbox',function(){
 						try{
 							container = document.getElementById('flexbox');
 							items = document.getElementById('flexbox-ul');
-							clearInterval(interval);
 							active = 0; // the active item (sits far left)
 							properties = {}; // used to calculate scroll distance
 								 // whether the carousel is currently animating
@@ -402,14 +401,14 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							element.find('a.navigation').on('mouseover',move);
-							element.find('#flexbox-ul').on(transitionEnd,complete);
-							
+							element.find('a.navigation').bind('mouseover',move);
+							element.find('#flexbox-ul').bind(transitionEnd,complete);
+							clearInterval(interval);
 							
 						}catch(error){
 							console.log('pending init');
+							console.log(error);
 						}
-						
 					}//end of _init_
 			var interval=setInterval(init,150);
 		}//end of link
