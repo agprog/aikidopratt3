@@ -90,8 +90,8 @@
  #admin-left-side{
 	font-size:1.2em;
 	margin-top:125px;
-	margin-left:1em;
-	padding:2%;
+	margin-left:0;
+	padding:1em;
  }
  #admin-left-side>ul>li{
 	margin-top:1em;

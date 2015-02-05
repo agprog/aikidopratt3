@@ -90,7 +90,7 @@
  #admin-left-side{
 	font-size:1.2em;
 	margin-top:125px;
-	margin-left:1.5em;
+	margin-left:1em;
 	padding:2%;
  }
  #admin-left-side>ul>li{
