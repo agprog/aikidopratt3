@@ -402,7 +402,7 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							$('a.navigation').on('mouseover',move);
+							$('navigation').on('mouseover',move);
 							$('#flexbox-ul').on(transitionEnd,complete);
 							
 							
