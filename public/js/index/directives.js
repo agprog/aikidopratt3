@@ -411,7 +411,7 @@ directive('flexbox',function(){
 						}
 						
 					}//end of _init_
-			var interval=setInterval(init,50);
+			var interval=setInterval(init,150);
 		}//end of link
 	};//end of return
 });//end directive
