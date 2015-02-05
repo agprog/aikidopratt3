@@ -9,7 +9,6 @@ html(lang="fr")
 		link(rel="stylesheet",href="/static/css/style.css")
 		each stylesheet in context.stylesheets
 			link(rel="stylesheet",href="/static/"+stylesheet)
-		script(src="/static/js/bootstrap/modernizr.js")
 		script(src="/static/js/bootstrap/jquery.min.js")
 		script(src="/static/js/bootstrap/bootstrap.min.js")
 		each script in context.scripts
