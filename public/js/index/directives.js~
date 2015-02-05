@@ -292,7 +292,6 @@ directive('flexbox',function(){
 					var active=0;
 					var container,items,properties,boxOrdinalGroup;
 					function move(e){
-						console.log('move');
 						// prevent the click action
 				        e.preventDefault();
 				        // check if the carousel is mid-animation
@@ -328,7 +327,6 @@ directive('flexbox',function(){
 						    }//end of move
 						
 						    function complete() {
-						    	console.log('complete');
 						        if ( animating ) {
 						            animating = false;
 						            // this needs to be removed so animation does not occur when the ordinal is changed and the carousel reshuffled
