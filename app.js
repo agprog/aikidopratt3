@@ -53,7 +53,9 @@ app.use(session({secret:'aUx689',
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
 					username:config.db[app.get('env')].user,
-					password:config.db[app.get('env')].pass
+					password:config.db[app.get('env')].pass,
+					ttl: 1 * 24 * 60 * 60,
+					autoRemove:'native'
 				})
 			}));
 app.use('/', index);
