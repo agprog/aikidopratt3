@@ -186,26 +186,66 @@ directive('carousel',function(){
 			templateUrl:'/static/js/index/templates/carousel.html',
 			link:function(scope,element,attrs){
 					var prefixs=['-o-','-moz-','-webkit-'];
-					scope.current=0;
-					try{scope.sens}catch(err){scope.sens=1;}
+					var animating=false;
+					try{scope.sens=parseInt(scope.sens);}catch(err){scope.sens=1;}
 					try{scope.defilement}catch(err){scope.defilement='v';}
 					try{scope.instance}catch(err){scope.instance=0;}
-					scope.ecart=270;
-					element.on('mouseover',hover);
-					element.on('mouseleave',leave);
-					element.find('.commands-first').on('click',first);
-					element.find('.commands-less-one').on('click',less_one);
-					element.find('.commands-play').on('click',play);
-					element.find('.commands-plus-one').on('click',plus_one);
-					element.find('.commands-last').on('click',last);
-					scope.interval=setInterval(change,3000);
+					var animateClass='animate';
+					var liste_slides_id=["#list-slides",scope.defilement,scope.instance].join("-");
+					function init(){
+						try{
+							scope.current=0;
+							scope.times=-1;
+							scope.counter=0;
+							scope.ecart=270;
+							scope.reverse=false;
+							element.on('mouseover',hover);
+							element.on('mouseleave',leave);
+							element.find('.commands-first').on('click',first);
+							element.find('.commands-less-one').on('click',less_one);
+							element.find('.commands-play').on('click',play);
+							element.find('.commands-plus-one').on('click',plus_one);
+							element.find('.commands-last').on('click',last);
+							element.find(liste_slides_id).bind('webkitTransitionEnd',complete);
+							scope.interval=setInterval(change,3000);
+							clearInterval(pend);
+						}catch(error){
+							console.log('pending');
+						}
+					}
 					
+					var pend=setInterval(init,20);
+					/*! attention la fonction switchdiv peut etre appelee a partir de change() ou complete() */
+					function switchdiv(dep){
+						var target=document.querySelectorAll(".zone-v-0");
+						if(dep == 0){
+							document.querySelector(liste_slides_id+">div").appendChild(target[0]);
+						}else{
+							document.querySelector(liste_slides_id+">div").insertBefore(target[dep],target[0]);
+						}		
+					};
+					function complete(){
+						//retire la classe animate
+						if(animating){
+							document.querySelector(liste_slides_id).classList.remove(animateClass);
+							document.querySelector(liste_slides_id).removeAttribute('style');
+							if(parseInt(scope.sens) == 1){
+								switchdiv(0);
+							}else{
+								switchdiv(scope.slides.length-1);
+							}
+							if(scope.times == -1 || (scope.counter > scope.times)){
+								(scope.reverse)?scope.sens=(-1*parseInt(scope.sens)).toString():false;
+								scope.reverse=false;
+							}
+							if(scope.times != -1){
+								scope.counter+=1;
+							}
+							animating=false;
+						}
+					};//end of complete
 					function hover(){
 						try{
-							document.querySelector(["#container",scope.defilement,scope.instance].join('-')).setAttribute("id",["container",scope.defilement,scope.instance,"hover"].join('-'));
-							document.querySelector(["#screen",scope.defilement,scope.instance].join('-')).setAttribute("id",["screen",scope.defilement,scope.instance,"hover"].join('-'));
-							/*document.querySelector(["#less-command",scope.defilement,scope.instance].join('-')).setAttribute("id",["less-command",scope.defilement,scope.instance,"hover"].join('-'));
-							document.querySelector(["#plus-command",scope.defilement,scope.instance].join('-')).setAttribute("id",["plus-command",scope.defilement,scope.instance,"hover"].join('-'));*/
 							document.querySelector(["#carousel-commands",scope.defilement,scope.instance].join('-')).setAttribute("id",["carousel-commands",scope.defilement,scope.instance,"hover"].join('-'));
 						}catch(error){
 							console.log("pending hover");
@@ -213,65 +253,106 @@ directive('carousel',function(){
 					};//end of hover
 					function leave(){
 						try{
-							document.querySelector(["#container",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["container",scope.defilement,scope.instance].join('-'));
-							document.querySelector(["#screen",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["screen",scope.defilement,scope.instance].join('-'));
-							/*document.querySelector(["#less-command",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["less-command",scope.defilement,scope.instance].join('-'));
-							document.querySelector(["#plus-command",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["plus-command",scope.defilement,scope.instance].join('-'));*/
 							document.querySelector(["#carousel-commands",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["carousel-commands",scope.defilement,scope.instance].join('-'));
 						}catch(error){
 							console.log("pending leave");
 						}
 					};//end of leave
 					function change(){
-						if(scope.current<0){scope.current=scope.slides.length-1}
-						if(scope.current>scope.slides.length-1){scope.current=0}
-						/*clearInterval(this.interval);*/
-						var styleTab=Array();
-						if(scope.defilement == 'h'){
-							for(var prefix in prefixs){
-								styleTab.push(prefixs[prefix]+"transform:translateX("+scope.current*-scope.ecart+"px)");
+						if(!animating){
+							if(scope.times == -1 || (scope.counter<scope.times && scope.times != 0)){
+								var styleTab=Array();
+								if(scope.defilement == 'h'){
+									styleTab.push('margin-left:'+parseInt(scope.sens) * scope.ecart+'px;');
+								}else{	
+									styleTab.push('margin-top:'+ -1*parseInt(scope.sens) * scope.ecart+'px;');
+								}
+								var liste_slides=document.querySelector(liste_slides_id);
+								liste_slides.classList.add(animateClass);
+								liste_slides.setAttribute('style',styleTab.join(';'));
+								scope.current+=parseInt(scope.sens);
+								if(scope.current<0){scope.current=scope.slides.length-1}
+								if(scope.current>scope.slides.length-1){scope.current=0}
+								animating=true;
+							}else{
+								animating=false;
+								scope.counter=0;
+								scope.times = -1;
+								(scope.reverse)?scope.sens=(-1*parseInt(scope.sens)).toString():false;
+								scope.reverse=false;
+								clearInterval(scope.interval);
+								scope.interval=null;
 							}
-						}else{
-							for(var prefix in prefixs){
-								styleTab.push(prefixs[prefix]+"transform:translateY("+scope.current*-scope.ecart+"px)");
-							}
-						}
-						var liste_slides_id=["#list-slides",scope.defilement,scope.instance].join("-");
-						document.querySelectorAll(liste_slides_id)[0].setAttribute('style',styleTab.join(';'));
-						if(scope.interval != null){
-							scope.current+=parseInt(scope.sens);
+							
 						}
 					};//end of change
 					function less_one(){
-						(scope.current-1<0)?scope.current=scope.slides.length-1:scope.current-=1;
+						scope.sens=(-1*parseInt(scope.sens)).toString();
+						change();
 						clearInterval(scope.interval);
 						scope.interval=null;
-						change();
+						scope.reverse=true;
 					};//end of less one
+					
 					function plus_one(){
-						(scope.current+1<scope.slides.length)?scope.current+=1:scope.current=0;
-						clearInterval(scope.interval);
-						scope.interval=null;
 						change();
+						clearInterval(scope.interval);
+						scope.interval=null;	
 					};//end of plus_one
+					
 					function last(){
-						scope.current=scope.slides.length-1;
+						animateClass='animate-multi';
 						clearInterval(scope.interval);
-						scope.interval=null;
-						change();
+						var centrum=Math.ceil(scope.slides.length / 2)-1;
+						//selon la position dans le tableau on utilise deux façons de le parcourir.
+						if((scope.current) <= centrum){
+							scope.times=scope.current+1;
+							if(scope.sens == '1'){
+								scope.sens=-1*parseInt(scope.sens);
+								scope.reverse=true;
+							}
+						}else{
+							if(scope.sens == '-1'){
+								scope.sens=-1*parseInt(scope.sens);
+								scope.reverse=true;
+							}
+							scope.times=(scope.slides.length-1)-scope.current;
+						}
+						scope.interval=setInterval(change,500);
 					};//end of last
+					
 					function first(){
-						scope.current=0;
+						animateClass='animate-multi';
 						clearInterval(scope.interval);
 						scope.interval=null;
-						change();
+						//calcul de l'ecart jusqu'au premier element
+						var centrum=Math.ceil(scope.slides.length / 2)-1;
+						//selon la position dans le tableau on utilise deux façons de le parcourir.
+						if(scope.current <= centrum){
+							if(scope.sens == '1'){
+								scope.sens=-1*parseInt(scope.sens);
+								scope.reverse=true;
+							}
+							scope.times=scope.current;
+						}else{
+							if(scope.sens == '-1'){
+								scope.sens=-1*parseInt(scope.sens);
+								scope.reverse=true;
+							}
+							scope.times=scope.slides.length-scope.current;
+						}
+						scope.interval=setInterval(change,500);
+						
 					};//end of first
+					
 					function play(){
 						if(scope.interval != null){
 							clearInterval(scope.interval);
 							scope.interval=null;
 						}else{
+							
 							scope.interval=setInterval(change,3000);
+							
 							
 						}
 					};//end of play
@@ -292,7 +373,6 @@ directive('flexbox',function(){
 					var active=0;
 					var container,items,properties,boxOrdinalGroup;
 					function move(e){
-						console.log('move');
 						// prevent the click action
 				        e.preventDefault();
 				        // check if the carousel is mid-animation
@@ -328,7 +408,6 @@ directive('flexbox',function(){
 						    }//end of move
 						
 						    function complete() {
-						    	console.log('complete');
 						        if ( animating ) {
 						            animating = false;
 						            // this needs to be removed so animation does not occur when the ordinal is changed and the carousel reshuffled
@@ -401,15 +480,15 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							element.find('a.navigation').bind('mouseover',move);
-							element.find('#flexbox-ul').bind(transitionEnd,complete);
+							element.find('a.navigation').on('mouseover',move);
+							element.find('#flexbox-ul').on(transitionEnd,complete);
 							clearInterval(interval);
-							
 						}catch(error){
 							console.log('pending init');
 						}
+						
 					}//end of _init_
-			var interval=setInterval(init,20);
+			var interval=setInterval(init,50);
 		}//end of link
 	};//end of return
 });//end directive

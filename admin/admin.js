@@ -171,16 +171,54 @@ app.post('/:schema/put/',function(req,res){
 						req.body.password=commons.create_sha1(req.body.password);
 					}
 				}else if(req.params.schema=='galerie'){
-					var rep=config.UPLOADS_DIR+'galeries/'+req.body.id;
-					commons.create_dir(rep);
-				}
-				handlers.put(req,res,params);
+					/*! verification de la presence de la vignette dans le bon format */
+							try{
+								if(/^image\/(png|PNG|jpg|JPG|jpeg|JPEG)$/.test(req.files['thumbnail'].mimetype)){
+									/*! copie le thumbnail dans la galerie avec un convert en jpg */
+									var name=req.files['thumbnail'].originalname;
+									var rep='/galeries/'+req.body.id;
+									var src=config.UPLOADS_DIR+rep+"/"+name;
+									var dest=config.UPLOADS_DIR+rep+"/thumbnail.jpg";
+									commons.create_dir(config.UPLOADS_DIR+"/"+rep);
+									commons.upload(req.files.thumbnail,rep);
+									var img=require('imagemagick');
+									img.crop({srcPath:src,dstPath:dest,width:200,height:200,quality:1,gravity:'center',},function(err,stdOut,stdErr){
+																								if(err){
+																									console.log(err);
+																									console.log('Le thumbnail na pas pu etre cree');
+																								}else{
+																									console.log('le thumbnail %s a correctement ete cree',dest);
+																									req.body['thumbnail']="thumbnail.jpg";
+																									fs.unlinkSync(config.UPLOADS_DIR+rep+'/'+req.files['thumbnail'].originalname);
+																									handlers.put(req,res,params);
+																								}
+																							});
+								}else{
+									var error_thumbnail={message:'Le format de la vignette est invalide.',
+													name:'ValidatorError',
+													path:'thumbnail',
+													type:'format',
+													value:''
+												};
+									params['errors']={thumbnail:error_thumbnail};
+								}
+							}catch(error){
+								var error_thumbnail={message:'Il faut une vignette pour illustrer la galerie.',
+													name:'ValidatorError',
+													path:'thumbnail',
+													type:'required',
+													value:''
+												};
+								params['errors']={thumbnail:error_thumbnail};
+							}
+				}else{
+					handlers.put(req,res,params);
 			}
-		});
+		}
+	});
 });
 app.post('/user/chgpwd/',function(req,res){
 	users.is_login(req,res,function(){
-		console.log(req.body);
 		users.chgpwd(req,res);
 	});
 });

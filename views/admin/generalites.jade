@@ -23,6 +23,7 @@ block content
 									option(value="textarea") textarea
 								add-gen-field(typefield="{{typefield}}")
 				input(type="hidden",id="csrf_token",name="csrf_token",value="#{context.csrf_token}")
+				hr(id="limit")
 				div#liste-generalites
 					for elt in liste
 						if elt.type == 'input'

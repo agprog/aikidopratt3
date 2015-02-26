@@ -114,7 +114,7 @@ module.exports={
 			}
 		}
 		/*!************ TRAITE L'UPLOAD *****************/
-		if(req.files){
+		if(req.files && params['schema']!='galerie'){
 			for(file in req.files){
 				commons.upload(req.files[file],'docs');
 				req.body.file=req.files[file].originalname;
@@ -328,7 +328,9 @@ module.exports={
 							callback(null,"upload reussi");
 							},
 						function(callback){
-							commons.imageCrop(name,rep,index,200,200,callback);
+							var src=config.UPLOADS_DIR+"/"+rep+"/"+name;
+							var dest=config.UPLOADS_DIR+"/"+rep+"/thumbnails/"+name;
+							commons.imageCrop(name,src,dest,index,200,200,callback);
 						},
 						function(callback){
 							photo=new Photo({name:name,order_num:nb_photos+index,legend:name,_galerie:id});
@@ -425,11 +427,11 @@ function __create_datas(req,params,model,objet){
 	var datas={id:objet._id,
 				csrf_token:commons.contextCreate(req,params['dir']).csrf_token};
 	for(var field in objet.toObject()){
-		if(model.schema.paths[field].options.type.name == 'Date'){
+		/*if(model.schema.paths[field].options.type.name == 'Date'){
 			datas[field]=commons.datetostr(objet[field]);
-		}else{
+		}else{*/
 			datas[field]=objet[field];
-		}
+		//}
 	}
 	return datas;
 }

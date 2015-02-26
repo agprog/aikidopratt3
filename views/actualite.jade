@@ -4,7 +4,7 @@ div.actu
 	if actu.file
 		div.actu-block-pj
 			if actu.date && actu.start
-				p.rdv Rendez vous le #{actu.date} a partir de #{actu.start}
+				p.rdv Rendez vous le #{commons.datefr(actu.date)} a partir de #{actu.start}
 				if actu.location && actu.location != ''
 					p.location &nbsp;&agrave;&nbsp;#{actu.location}
 				if actu.coordonnates && actu.coordonnates != ''
@@ -12,7 +12,7 @@ div.actu
 						a(href="http://maps.google.com/maps?q=#{actu.coordonnates}&hl=fr&num=1&t=h&vpsrc=0&z=17",target="_blank") voir #{actu.location} sur google maps
 						
 			div.actu-content #{actu.content}
-			if actu.link_
+			if actu.link_ != '/'
 				p.link
 					a(href="#{actu.link_}",target='_blank') Vers le lien officiel de la manifestation
 		div.actu-pj
@@ -20,11 +20,11 @@ div.actu
 				p
 					span Télécharger l'affiche
 				img(src='/uploads/docs/thumbnails/#{actu.file.slice(0,-4)}.png' alt='fichier miniature #{actu.file}')
-		div.metas Publi&eacute;e par Association-Pratt le #{actu.created}
+		div.metas Publi&eacute;e par Association-Pratt le #{commons.datefr(actu.created)}
 	else
 		div.actu-block
 			if actu.date && actu.start
-				p.rdv Rendez vous le #{actu.date} a partir de #{actu.start}
+				p.rdv Rendez vous le #{commons.datefr(actu.date)} a partir de #{actu.start}
 				if actu.location && actu.location != ''
 					p.location &nbsp;&agrave;&nbsp;#{actu.location}
 				if actu.coordonnates && actu.coordonnates != ''
@@ -32,10 +32,10 @@ div.actu
 						a(href="http://maps.google.com/maps?q=#{actu.coordonnates}&hl=fr&num=1&t=h&vpsrc=0&z=17",target="_blank") voir #{actu.location} sur google maps
 						
 			div.actu-content #{actu.content}
-			if actu.link_
+			if actu.link_ != '/'
 				p.link
 					a(href="#{actu.link_}",target='_blank') Vers le lien officiel de la manifestation
-			div.metas Publi&eacute;e par Association-Pratt le #{actu.created}
+			div.metas Publi&eacute;e par Association-Pratt le #{commons.datefr(actu.created)}
 		
 
 		

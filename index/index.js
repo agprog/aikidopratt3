@@ -6,7 +6,7 @@ var async=require('async');
 var app=express();
 
 /* GET home page. */
-
+app.locals.commons = require('commons');
 app.get('/', function(req, res) {
   debugger;
   res.render('index', {title: 'Association Pratt Nancy',
@@ -25,13 +25,12 @@ app.get('/init/:schema/',function(req,res){
 						res.send(500);
 					}else{
 						res.json(results);
-						
 					}
 				});
 					break;
 		case 'galerie':
 				var Photo=commons.create_model('photo');
-				model.find().populate('photos').exec(function(error,results){
+				model.find().populate('photos').sort({date:'desc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);
@@ -61,7 +60,7 @@ app.get('/init/',function(req,res){
 				},
 				actualites:function(callback){
 					model=commons.create_model('actualite');
-					model.find().sort({date:'desc'}).exec(function(error,result){
+					model.find().sort({date:'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				},
@@ -74,7 +73,7 @@ app.get('/init/',function(req,res){
 				galeries:function(callback){
 					model=commons.create_model('galerie');
 					Photo=commons.create_model('photo');
-					model.find().populate('photos').exec(function(error,result){
+					model.find().sort({created:'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				}},
@@ -138,7 +137,6 @@ app.get('/galeries/:id',function(req,res){
 		if(error){
 			res.send(500);
 		}else{
-			console.log(result);
 			res.render('galerie',{title:'Galeries photos',
 									galery:result,
 									context:commons.contextCreate(req,'index')
@@ -153,10 +151,7 @@ app.get('/contact/',function(req,res){
 				subject:'',
 				content:''
 			};
-	var texte="<div><p>Pour nous contacter, plusieurs solutions : et pouvoir appréhender notre travail, le mieux est de venir nous \
-	voir pendant les séances qui sont dispensées à Nancy, Laxou et Saulxures lès Nancy. (Voir les onglets \
-	cours sur la page d'accueil.)</p><p>Si vous voulez monter sur le tatami pour essayer, merci de venir \
-	en bas de survêtement pour être à votre aise lors de l'execution des mouvements.</p>"
+	var texte="";
 	res.render('contact',{title:'Contact',
 						contact:contact,
 						texte:texte,
@@ -246,6 +241,7 @@ app.post('/send/',function(req,res){
 							
 				var message={
 					from_email:req.body.email,
+					from_name:req.body.firstname+" "+req.body.lastname,
 					to:[{email:config.MAIL_EMAIL,
 						name:'Administrateur',
 						type:'to'
@@ -262,9 +258,10 @@ app.post('/send/',function(req,res){
 												nous y répondrons le plus rapidement possible.";
 						res.redirect('/contact/');
 				},function(error){
-						var message="Une erreur a été rencontrée lors de l'envoi, \
+					var message="Une erreur a été rencontrée lors de l'envoi, \
 									merci de vérifier votre adresse email et réessayer.\n"+
 									error.message;
+									;
 						req.sessionStore.flash=message;
 						res.render('contact',{title:'Contact',
 									contact:contact,
@@ -272,7 +269,7 @@ app.post('/send/',function(req,res){
 									message:message,
 									context:commons.contextCreate(req,'index')
 									});
-					});
+				});
 			}
 	}//fin csrf check
 });

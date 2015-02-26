@@ -1,6 +1,13 @@
+
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
+
+function dateToStr(value){
+	var commons=require('commons');
+	return commons.datetostr(value);
+}
 var schema={
+	
 	generalSchema   : mongoose.Schema({
 								cle    : {type:String,default:''},
 								type   : {type:String,default:'input'},
@@ -18,7 +25,7 @@ var schema={
 								file     : {type:String,default:''},
 								location : {type:String,default:''},
 								coordonnates : {type:String,default:''},
-								date     : {type:Date,date:true},
+								date     : {type:Date,get:dateToStr,date:true},
 								start    : {type:String},
 								duration : {type:Number,default:1},
 								category : {type:String,default:''},
@@ -53,6 +60,7 @@ var schema={
 								title   : {type:String,default:''},
 								theme   : {type:String,default:''},
 								slug    : {type:String,default:''},
+								thumbnail: {type:String,default:''},
 								legend  : {type:String,default:''},
 								path    : {type:String,default:''},
 								photos  : [{type:Schema.Types.ObjectId,ref:'photo'}]
@@ -67,8 +75,20 @@ var schema={
 							role     : {type:String,default:'membre'}
 							}),
  	};//schema
+
 schema.actualiteSchema.path('title').validate(function(val){return val != "";},"Un titre est requis.");
 schema.actualiteSchema.path('slug').validate(function(val){return val != "";},"Un slug doit être renseigné.");
+schema.actualiteSchema.set('toObject',{getters:true});
+schema.actualiteSchema.set('toJSON',{getters:true});
+schema.coursSchema.set('toJSON',{getters:true});
+schema.coursSchema.set('toObject',{getters:true});
+schema.userSchema.set('toObject',{getters:true});
+schema.userSchema.set('toJSON',{getters:true});
+schema.galerieSchema.path('thumbnail').validate(function(val){return val !=""},"Une vignette est requise pour illustrer la galerie.");
+schema.galerieSchema.set('toObject',{getters:true});
+schema.galerieSchema.set('toJSON',{getters:true});
+
+
 schema.userSchema.path('firstname').validate(function(val){
 									return /^([^0-9]+)+$/.test(val);
 									},"Le format du prénom ne correspond pas.");
