@@ -27,7 +27,7 @@ table
 		tr.objet-line
 			td.center
 				input.check(id="check-#{elt.id}",name="check-#{elt.id}",type="checkbox",ng-click="select_elt('#{elt.id}');")
-			td.center #{elt.created.getDate()}/#{elt.created.getMonth()+1}/#{elt.created.getFullYear()}
+			td.center #{commons.datefr(elt.created)}&nbsp;
 			td.left 
 				a(href="/admin/#{schema}/#{elt.id}/",ng-click='getObjet($event);') #{elt.title}
 			td.action.center

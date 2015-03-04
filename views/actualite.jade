@@ -20,7 +20,7 @@ div.actu
 				p
 					span Télécharger l'affiche
 				img(src='/uploads/docs/thumbnails/#{actu.file.slice(0,-4)}.png' alt='fichier miniature #{actu.file}')
-		div.metas Publi&eacute;e par Association-Pratt le #{commons.datefr(actu.created)}
+		div.metas Publi&eacute;e par Association-Pratt le #{actu.created}
 	else
 		div.actu-block
 			if actu.date && actu.start
