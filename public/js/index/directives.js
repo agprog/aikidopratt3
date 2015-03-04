@@ -32,6 +32,7 @@ angular.module('index.directives', []).
 					angular.element(document.querySelectorAll('.marker')).on('click',function(event){
 								var date=event.target.getAttribute('data-date');
 								getSrv('/actualites/'+date).success(function(response){
+									console.log(response);
 									var actualite=window.location.href='/actualites/#'+response.id;
 									/*!--- recuperer la position de l'ancre ---*/
 								});
@@ -237,7 +238,7 @@ directive('carousel',function(){
 							}else{
 								switchdiv(scope.slides.length-1);
 							}
-							if(scope.times == -1 || (scope.counter > scope.times)){
+							if(scope.times == -1 || (scope.counter == scope.times)){
 								(scope.reverse)?scope.sens=(-1*parseInt(scope.sens)).toString():false;
 								scope.reverse=false;
 							}

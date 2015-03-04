@@ -14,7 +14,7 @@ var schema={
 								valeur : {type:String,default:''}
 						}),
 	actualiteSchema : mongoose.Schema({
-								created  : {type:Date,default:Date.now()},
+								created  : {type:Date,default:Date.now(),get:dateToStr},
 								title    : {type:String,default:"",
 											required:'Un titre est requis pour une actualité'},
 								slug     : {type:String,default:"",
@@ -33,7 +33,7 @@ var schema={
 								}),
 
 	coursSchema     : mongoose.Schema({
-								created : {type:Date,default:Date.now()},
+								created : {type:Date,default:Date.now(),get:dateToStr},
 								title   : {type:String,default:''},
 								slug    : {type:String,default:''},
 								day     : {type:String,default:'lundi'},
@@ -56,7 +56,7 @@ var schema={
 									_galerie : {type:Schema.Types.ObjectId,ref:'galerie'}
 								}),
  	galerieSchema	: mongoose.Schema({
-								created : {type:Date,default:Date.now()},
+								created : {type:Date,default:Date.now(),get:dateToStr},
 								title   : {type:String,default:''},
 								theme   : {type:String,default:''},
 								slug    : {type:String,default:''},
@@ -67,7 +67,7 @@ var schema={
 								photos  : [{type:Schema.Types.ObjectId,ref:'photo'}]
  							}),
  	userSchema		: mongoose.Schema({
-							created  : {type:Date,default:Date.now()},
+							created  : {type:Date,default:Date.now(),get:dateToStr},
 							firstname: {type:String,required:'Un prénom est requis.'},
 							lastname : {type:String,required:'Un nom est requis.'},
 							pseudo   : {type:String,required:'Un pseudo est requis.'},
