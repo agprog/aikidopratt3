@@ -54,7 +54,6 @@ angular.module('admin.controllers',[])
 				$scope.id=response.id;
 				$("#id").val(response.id);
 				$("#csrf_token").val(response.csrf_token);
-				$scope.objet=response;
 			});
 		};
 		
@@ -73,7 +72,6 @@ angular.module('admin.controllers',[])
 			var post=postSrv('/admin/generalite/update/',params,'general');
 			post.success(function(response){
 					$scope.resp=response;
-					console.log(response);
 				})
 				.error(function(error){
 					$scope.resp='erreur';
@@ -157,7 +155,6 @@ angular.module('admin.controllers',[])
 				$("#csrf_token").val(response.csrf_token);
 				$("#confirm_csrf").val(response.csrf_token);
 				$scope.objet=response;
-				
 			});
 			
 		};//fin get

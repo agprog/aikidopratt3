@@ -172,45 +172,50 @@ app.post('/:schema/put/',function(req,res){
 					}
 				}else if(req.params.schema=='galerie'){
 					/*! verification de la presence de la vignette dans le bon format */
-							try{
-								if(/^image\/(png|PNG|jpg|JPG|jpeg|JPEG)$/.test(req.files['thumbnail'].mimetype)){
-									/*! copie le thumbnail dans la galerie avec un convert en jpg */
-									var name=req.files['thumbnail'].originalname;
-									var rep='/galeries/'+req.body.id;
-									var src=config.UPLOADS_DIR+rep+"/"+name;
-									var dest=config.UPLOADS_DIR+rep+"/thumbnail.jpg";
-									commons.create_dir(config.UPLOADS_DIR+"/"+rep);
-									commons.upload(req.files.thumbnail,rep);
-									var img=require('imagemagick');
-									img.crop({srcPath:src,dstPath:dest,width:200,height:200,quality:1,gravity:'center',},function(err,stdOut,stdErr){
-																								if(err){
-																									console.log(err);
-																									console.log('Le thumbnail na pas pu etre cree');
-																								}else{
-																									console.log('le thumbnail %s a correctement ete cree',dest);
-																									req.body['thumbnail']="thumbnail.jpg";
-																									fs.unlinkSync(config.UPLOADS_DIR+rep+'/'+req.files['thumbnail'].originalname);
-																									handlers.put(req,res,params);
-																								}
-																							});
-								}else{
-									var error_thumbnail={message:'Le format de la vignette est invalide.',
-													name:'ValidatorError',
-													path:'thumbnail',
-													type:'format',
-													value:''
-												};
-									params['errors']={thumbnail:error_thumbnail};
-								}
-							}catch(error){
-								var error_thumbnail={message:'Il faut une vignette pour illustrer la galerie.',
-													name:'ValidatorError',
-													path:'thumbnail',
-													type:'required',
-													value:''
-												};
-								params['errors']={thumbnail:error_thumbnail};
+					var rep='/galeries/'+req.body.id;
+					var dest=config.UPLOADS_DIR+rep+"/thumbnail.jpg";
+					try{
+						if(/^image\/(png|PNG|jpg|JPG|jpeg|JPEG)$/.test(req.files['thumbnail'].mimetype)){
+							/*! copie le thumbnail dans la galerie avec un convert en jpg */
+							var name=req.files['thumbnail'].originalname;
+							var src=config.UPLOADS_DIR+rep+"/"+name;
+							commons.create_dir(config.UPLOADS_DIR+"/"+rep);
+							commons.upload(req.files.thumbnail,rep);
+							var img=require('imagemagick');
+							img.crop({srcPath:src,dstPath:dest,width:200,height:200,quality:1,gravity:'center',},function(err,stdOut,stdErr){
+																						if(err){
+																							console.log(err);
+																							console.log('Le thumbnail na pas pu etre cree');
+																						}else{
+																							console.log('le thumbnail %s a correctement ete cree',dest);
+																							req.body['thumbnail']="thumbnail.jpg";
+																							/*fs.unlinkSync(config.UPLOADS_DIR+rep+'/'+req.files['thumbnail'].originalname);*/
+																							handlers.put(req,res,params);
+																						}
+																					});
+						}else{
+							var error_thumbnail={message:'Le format de la vignette est invalide.',
+												name:'ValidatorError',
+												path:'thumbnail',
+												type:'format',
+												value:''
+											};
+							params['errors']={thumbnail:error_thumbnail};
+						}
+					}catch(error){
+						fs.readFile(dest,function(error,result){
+							if(result){
+								handlers.put(req,res,params);
+							}else{
+								params['errors']={message:'Il faut une vignette pour illustrer la galerie.',
+												name:'ValidatorError',
+												path:'thumbnail',
+												type:'required',
+												value:''
+											};
 							}
+						});
+					}
 				}else{
 					handlers.put(req,res,params);
 			}

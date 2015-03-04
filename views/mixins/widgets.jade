@@ -29,7 +29,8 @@ mixin input_file(name,label,dir,val,atrbs)
 			p.file-line
 				span Actuellement : 
 				span(id= 'span'+name)= val
-				del-file(name= name)
+				if(name != 'thumbnail')
+					del-file(name= name)
 			p.file-line
 				input(type='file',name= name,id= name)&attributes(atrbs)
 		else
@@ -59,3 +60,9 @@ mixin input_pwd_valid(name,label,objet,atrbs)
 			input(type="password",name= name,id= name)&attributes(atrbs)
 	else
 		+input_pwd(name,label,atrbs)
+		
+mixin check_line(name,label,val,atrbs)
+	p.form_line
+		label(for= name)= label
+		input(type='checkbox',name= name,id= name,ng-model= val)&attributes(atrbs)
+

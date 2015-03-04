@@ -185,7 +185,7 @@ directive('carousel',function(){
 			replace:true,
 			templateUrl:'/static/js/index/templates/carousel.html',
 			link:function(scope,element,attrs){
-					var prefixs=['-o-','-moz-','-webkit-'];
+					var prefixs=['o','moz','webkit'];
 					var animating=false;
 					try{scope.sens=parseInt(scope.sens);}catch(err){scope.sens=1;}
 					try{scope.defilement}catch(err){scope.defilement='v';}
@@ -206,7 +206,10 @@ directive('carousel',function(){
 							element.find('.commands-play').on('click',play);
 							element.find('.commands-plus-one').on('click',plus_one);
 							element.find('.commands-last').on('click',last);
-							element.find(liste_slides_id).bind('webkitTransitionEnd',complete);
+							for(var i=0; i<prefixs.length;i++){
+								element.find(liste_slides_id).bind(prefixs[i]+'TransitionEnd',complete);
+							}
+							element.find(liste_slides_id).bind('transitionend',complete);
 							scope.interval=setInterval(change,3000);
 							clearInterval(pend);
 						}catch(error){

@@ -26,13 +26,12 @@ angular.module('index.controllers',[])
 				/*!--- initialisation onglets cours ---*/
 				$scope.cours=response.cours;
 				$scope.galeries=response.galeries;
-				console.log($scope.galeries);
+				console.log($scope.actualites);
 		});
 		
 	}])//fin IndexCtl
 	.controller('ActualiteCtl',['$scope','getSrv',function($scope,getSrv){
 		var height=$('.liste-actus')[0].offsetHeight;
-		console.log(height);
 		$('.nav-plugins')[0].style.height=height+"px";
 		getSrv('/init/actualite/').success(function(response){
 			$scope.actualites=response;

@@ -8,10 +8,10 @@
 07 - Slideshow
 08 - Carousel
 09 - Sidebar
-10 - Widgets
-11 - Comments
-12- Pagination
-13- Login
+10 - Mentions Legales
+11 - Licences
+12 - Panel
+13 - Login
 14 - Footer
 15 - Media Queries
 */
@@ -210,7 +210,7 @@ h1{font-size:2.5em;text-align:center;}
 			text-align:center;}
 .content{
 		/*background-color:#fbfcd1;*/
-		margin:5px auto;
+		margin:0 auto;
 		min-height:605px;
 		opacity:0.9;
 		}
@@ -231,9 +231,9 @@ h1{font-size:2.5em;text-align:center;}
 }
 .hpart{
 		position:relative;
-		margin:0;padding:1%;
+		margin:0;
 		/*border:thin solid #000;*/}
-.titre-rubrique{padding:1%;font-family:ubuntu;text-align:center;font-size:2em;color:#fbfcd1;}
+.titre-rubrique{margin:0;font-family:ubuntu;text-align:center;font-size:2em;color:#fbfcd1;}
 /*//////////////////////////////////////////////////////////////////////
  * /// 04 - MENU BOOTSTRAP
  * ///////////////////////////////////////////////////////////////////*/
@@ -253,6 +253,41 @@ h1{font-size:2.5em;text-align:center;}
 	margin:0 30%;
 	text-align:center;
  }
+ .dropdown-menu{
+	margin-top:0;
+	padding-top:0;
+	background-color:#B08B61;
+	font-size:0.9em;
+	color:#333;
+ }
+ .dropdown-menu>li>a:hover{
+	background-color:#fbfcd1;
+ }
+ .dropdown-toggle{
+	height:50px;
+	line-height:50px;
+	background-color:transparent;
+	font-size:1em;
+	border:none;
+	color:#333;
+ }
+ .dropdown-toggle:hover{
+	background-color:transparent;
+ }
+ .btn-default{
+	background-color:transparent;
+	padding:0 5px;
+  }
+ .btn-default:hover{
+	background-color:transparent;
+	color:#333;
+ }
+ .open>.dropdown-toggle.btn-default{
+	background-color:#B08B61;
+}
+ .open>.dropdown-toggle.btn-default:focus{
+	background-color:#B08B61;
+	}
  /*/////////////////////////////////////////////////////////////////////
   * // 06 - FORMULAIRE DE CONTACT
   * //////////////////////////////////////////////////////////////////*/
@@ -425,7 +460,7 @@ h1{font-size:2.5em;text-align:center;}
 	height:270px;
 	overflow:hidden;
 	margin:0 auto;
-	border:2px solid #C98481;
+	border:1px solid #574C43;
 	margin-bottom:2%;
 	/*-moz-box-shadow: 10px 10px 5px 0px #c0c0c0;
 	-webkit-box-shadow: 10px 10px 5px 0px #c0c0c0;
@@ -436,8 +471,8 @@ h1{font-size:2.5em;text-align:center;}
 }
 #container-v-0-hover{
 	height:270px;
-	border-right:1px solid #4C4B38;
-	border-bottom:1px solid #4C4B38;
+	border-right:1px solid #574C43;
+	border-bottom:1px solid #574C43;
 	z-index:10;
 }
 #screen-v-0,.screen-v-0-hover{
@@ -525,7 +560,7 @@ h1{font-size:2.5em;text-align:center;}
 .actu-pj>img{width:99%;margin:2% auto;}
 .actu-pj{font-size:1em;text-align:center;}
 .actu-pj>a{margin-top:2%;text-align:center;}
-.actu-pj img{padding:2%;border:thin solid #efdfa0;}
+.actu-pj img{padding:2%;border:thin solid #fff;}
 /*//////////////////////////////////////////////////////////////////////
  * /// 09 - GALERIES PHOTOS
  * ///////////////////////////////////////////////////////////////////*/
@@ -588,7 +623,59 @@ h1{font-size:2.5em;text-align:center;}
 	padding:1%;
 }
 /*//////////////////////////////////////////////////////////////////////
- * /// 10 - PANEL
+ * /// 10 - MENTIONS LEGALES PLAN DU SITE ET LICENCES
+ * ///////////////////////////////////////////////////////////////////*/
+.mentions,.licence,.sitemap{
+	margin:2% 0;
+	padding:2%;
+	background-color:#fbfcd1;
+}
+.licence{
+	margin:0 5%;
+}
+.mentions#title,.licence#title{
+	font-size:2em;
+	text-align:center;
+}
+.mentions h2,.licence h2{
+	font-size:1.5em;
+	font-weight:700;
+	padding:2% 0;
+}
+.mentions div{
+}
+.mentions p,.licence p{
+	font-size:1em;
+	text-align:justify;
+	text-indent:5%;
+	line-height:1.5em;
+}
+.licence table{
+	position:relative;
+	width:90%;
+	margin:0 auto;
+}
+.licence table th{
+	font-size:1.2em;
+	font-weight:700;
+}
+.sitemap h2{
+	line-height:1.5em;
+	font-size:1.2em;
+	font-weight:500;
+}
+.sitemap h2>a{
+	color:#000;
+}
+.sitemap li{
+	line-height:1.5em;
+	margin-left:5%;
+}
+.sitemap li>a{
+
+}
+/*//////////////////////////////////////////////////////////////////////
+ * /// 12 - PANEL
  * ///////////////////////////////////////////////////////////////////*/
 .panels{
 	width:95%;
@@ -612,7 +699,7 @@ h1{font-size:2.5em;text-align:center;}
 	border-collapse:collapse;
 	border-top-right-radius:5px;
 	border-top-left-radius:5px;
-	border-bottom:thin solid #C98481;
+	border-bottom:thin solid #574C43;
 }
 .label-active{
 	border-bottom:thin solid #efdfa0;;
@@ -673,7 +760,7 @@ h1{font-size:2.5em;text-align:center;}
 }
 
 /*//////////////////////////////////////////////////////////////////////
- * /// 10 - CALENDRIER
+ * /// 13 - CALENDRIER
  * ///////////////////////////////////////////////////////////////////*/
 
 #calendar-0{
@@ -701,7 +788,7 @@ h1{font-size:2.5em;text-align:center;}
 		cursor:pointer;
 	}
 /*//////////////////////////////////////////////////////////////////////
- * /// 13 - LOGIN
+ * /// 14 - LOGIN
  * ///////////////////////////////////////////////////////////////////*/
  #login{
 	width:30%;
@@ -749,7 +836,7 @@ h1{font-size:2.5em;text-align:center;}
 	opacity:.90;
 	padding:2%;*/
 	background-color:#373738;
-	margin:30px 0;
+	margin-top:60px;
 	padding:3% 0;
 }
 
@@ -764,6 +851,23 @@ h1{font-size:2.5em;text-align:center;}
 #footer>div ul{
 	list-style-type:none;
 	
+}
+
+#footer-arrow>a{
+	display:inline-block;
+	width:60px;
+	height:80px;
+	background-image:url('../img/totop.png');
+	text-decoration:none;
+	background-size:100%;
+	background-repeat:no-repeat;
+}
+#footer-arrow>a:hover{
+	text-decoration:none;
+}
+#footer-arrow-legend{
+	color:#fff;
+	text-align:center;
 }
 /*//////////////////////////////////////////////////////////////////////
  * /// 15 - FLEXBOX

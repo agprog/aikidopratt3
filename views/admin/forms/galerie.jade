@@ -9,5 +9,6 @@ form#galerie-form(class="right-form",action="/admin/galerie/put/",enctype="multi
 	+input_line_valid('slug','Slug :','{{objet.slug}}','galerie',{})
 	+input_file('thumbnail','Vignette galerie :','/uploads/galeries','{{objet.thumbnail}}',{})
 	+text_line('legend','Légende :','{{objet.legend}}',{})
+	+check_line('show','Page accueil : ','objet.show',{})
 	p.form-line
 		input(type="submit",id="submit",name="submit",value="Valider")

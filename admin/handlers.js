@@ -20,7 +20,7 @@ module.exports={
 		objet=new model();
 		async.parallel({
 					liste:function(cb){
-						model.find().exec(function(err,result){
+						model.find().sort().exec(function(err,result){
 												cb(err,result);
 											});
 					}//end liste

@@ -30,7 +30,7 @@ app.get('/init/:schema/',function(req,res){
 					break;
 		case 'galerie':
 				var Photo=commons.create_model('photo');
-				model.find().populate('photos').sort({date:'desc'}).exec(function(error,results){
+				model.find({show:true}).populate('photos').sort({date:'desc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);
@@ -73,7 +73,7 @@ app.get('/init/',function(req,res){
 				galeries:function(callback){
 					model=commons.create_model('galerie');
 					Photo=commons.create_model('photo');
-					model.find().sort({created:'asc'}).exec(function(error,result){
+					model.find({show:true}).sort({date:'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				}},
@@ -118,7 +118,8 @@ app.get('/galeries/',function(req,res){
 	commons.start_mongo();
 	var Galerie=commons.create_model('galerie');
 	var Photo=commons.create_model('photo');
-	Galerie.find().populate('photos').exec(function(error,results){
+	Galerie.find({show:true}).sort({date:'asc'}).populate('photos').exec(function(error,results){
+		console.log(results);
 		if(error){
 			res.send(500);
 		}else{
@@ -142,6 +143,22 @@ app.get('/galeries/:id',function(req,res){
 									context:commons.contextCreate(req,'index')
 									});
 		}
+	});
+});
+app.get('/presse/',function(req,res){
+	commons.start_mongo();
+	var Galerie=commons.create_model('galerie');
+	var Photo=commons.create_model('photo');
+	Galerie.findOne({slug:'presse'}).populate('photos').exec(function(error,result){
+		if(error){
+			res.send(500).end();
+		}else{
+			res.render('galerie',{title:'Articles de presse',
+									galery:result,
+									context:commons.contextCreate(req,'index')
+									});
+		}
+		
 	});
 });
 app.get('/contact/',function(req,res){
@@ -272,5 +289,20 @@ app.post('/send/',function(req,res){
 				});
 			}
 	}//fin csrf check
+});
+app.get('/mentions/',function(req,res){
+	res.render('mentions',{title:'Mentions légales',
+							context:commons.contextCreate(req,'index')
+							});
+});
+app.get('/licence/',function(req,res){
+	res.render('licence',{title:'Informations de licence',
+						context:commons.contextCreate(req,'index')
+					});
+});
+app.get('/sitemap/',function(req,res){
+	res.render('sitemap',{title:'Plan du site',
+						context:commons.contextCreate(req,'index')
+					});
 });
 module.exports=app;

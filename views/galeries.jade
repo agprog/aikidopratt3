@@ -12,6 +12,9 @@ block content
 					div.liste-galeries
 						for galery in galeries
 							a.content-galery(href="/galeries/#{galery._id}",title="galerie #{galery.title}")
-								img.img-galery(src="/uploads/galeries/#{galery._id}/thumbnails/#{galery.photos[0].name}",alt="galerie photos #{galery.title}")
-								span.title-galery #{galery.title}
+								if galery.photos.length > 0
+									img.img-galery(src="/uploads/galeries/#{galery._id}/thumbnails/#{galery.photos[0].name}",alt="galerie photos #{galery.title}")
+									span.title-galery #{galery.title}
+								else
+									span "la galerie ne contient actuellement aucune photo."
 		include footer

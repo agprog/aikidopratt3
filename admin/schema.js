@@ -63,6 +63,7 @@ var schema={
 								thumbnail: {type:String,default:''},
 								legend  : {type:String,default:''},
 								path    : {type:String,default:''},
+								show    : {type:Boolean,default:false},
 								photos  : [{type:Schema.Types.ObjectId,ref:'photo'}]
  							}),
  	userSchema		: mongoose.Schema({

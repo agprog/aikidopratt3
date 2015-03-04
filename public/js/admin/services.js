@@ -11,7 +11,7 @@ angular.module('admin.services', [])
     .value('defaultsSrv',{
 						'actualite':{safename:'actualité',pluralize:'actualités',title:'',slug:'',content:'',excerpt:'',link_:'',location:'',addres_1:'',addres_2:'',ville:'',date:null,start:null,duration:0,category:'',tags:''},
 						'cours':{safename:'cours',pluralize:'cours',title:'',slug:'',content:'',jour:'0',addres_1:'',addres_2:'',ville:''},
-						'galerie':{safename:'galerie',pluralize:'galeries photos',title:'',slug:'',legend:'',photos:[]},
+						'galerie':{safename:'galerie',pluralize:'galeries photos',title:'',slug:'',legend:'',photos:[],thumbnail:'thumbnail.png',show:false},
 						'user':{safename:'utilisateur',pluralize:'utilisateurs',firstname:'',lastname:'',email:'',role:'membre',password:'',confirm:''}
 	})
     .factory('postSrv',['$http',function($http){
