@@ -54,6 +54,7 @@ angular.module('admin.controllers',[])
 				$scope.id=response.id;
 				$("#id").val(response.id);
 				$("#csrf_token").val(response.csrf_token);
+				$scope.objet=response;
 			});
 		};
 		

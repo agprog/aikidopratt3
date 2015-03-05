@@ -69,7 +69,8 @@ module.exports={
 						params['showform']='edit';
 						__render_admin(req,res,results.liste,results.objet,params);
 					}else{
-						res.json(__create_datas(req,params,model,results.objet)).end();
+						console.log(__create_datas(req,params,model,results.objet));
+						res.json(__create_datas(req,params,model,results.objet));
 					}
 				}else{
 					message=errors.type+" "+errors.message;
@@ -427,11 +428,15 @@ function __create_datas(req,params,model,objet){
 	var datas={id:objet._id,
 				csrf_token:commons.contextCreate(req,params['dir']).csrf_token};
 	for(var field in objet.toObject()){
-		/*if(model.schema.paths[field].options.type.name == 'Date'){
-			datas[field]=commons.datetostr(objet[field]);
-		}else{*/
+		try{
+			if(model.schema.paths[field].options.type.name == 'Date'){
+				datas[field]=objet[field];
+			}else{
+				datas[field]=objet[field];
+			}
+		}catch(err){
 			datas[field]=objet[field];
-		//}
+		}
 	}
 	return datas;
 }
