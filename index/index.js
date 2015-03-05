@@ -91,7 +91,7 @@ app.get('/actualites/:date',function(req,res){
 	var date=req.params.date;
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	actualite.find({date:new Date(date)}).exec(function(error,results){
+	actualite.find({date:{'$gte':new Date(date)}},'first').exec(function(error,results){
 		if(error){
 			console.log(error);
 			res.json({id:'error'});
