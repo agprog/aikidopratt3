@@ -48,13 +48,13 @@ app.use(session({
 				client:client
 				})
 		}));*/
-app.use(session({secret:'aUx689',
+app.use(session({secret:'123456',
 				store:new mongoStore({
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
 					username:config.db[app.get('env')].user,
 					password:config.db[app.get('env')].pass,
-					ttl: 1 * 24 * 60 * 60,
+					ttl: 14 * 24 * 60 * 60,
 					autoRemove:'native'
 				})
 			}));
@@ -65,6 +65,7 @@ app.get('/login/',function(req,res){
 		res.render('login',{title:'Login required',
 								target_url:req.sessionStore.target_url,
 								msg:req.sessionStore.flash,
+								espace:'admin',
 								context:commons.contextCreate(req,'admin')
 								});
 	}else{
@@ -83,7 +84,7 @@ app.use('/static',express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
-    next(err);
+    res.send(err);
 });
 
 // error handlers
@@ -104,12 +105,9 @@ if (app.get('env') === 'dev') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-	res.render('error', {
-			message: err.message,
-			context:{stylesheets:[],scripts:[]},
-			error: {}
-		});
+	res.status(err.status || 500);
+	err.status=404
+    res.send(err);
 });
 
 

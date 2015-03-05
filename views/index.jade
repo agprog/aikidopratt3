@@ -1,5 +1,4 @@
-extends layout.jade
-
+extends layout
 block content
 	div#wrapper(ng-app="index",ng-controller="IndexCtl")
 		if context.log
@@ -17,7 +16,7 @@ block content
 					carousel(sens='1',defilement='v',instance='0',slides='actualites',template='/static/js/index/templates/carousel-content.html')
 				
 				section.hpart
-					p.titre-rubrique Pour nous rejoindre
+					p.titre-rubrique Adresses &amp; Horaires
 					panel(instance='0',items='cours',template='/static/js/index/templates/panel-content.html')
 		section#row2-body.row
 			p.titre-rubrique Galeries photos
