@@ -91,11 +91,12 @@ app.get('/actualites/:date',function(req,res){
 	var date=req.params.date;
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	actualite.find({date:date}).exec(function(error,results){
+	actualite.find({date:date},'first').exec(function(error,results){
 		if(error){
 			console.log(error);
 			res.json({id:'error'});
 		}else{
+			console.log(results);
 			res.json({id:results[0]._id});
 		}
 	});
