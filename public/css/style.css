@@ -855,8 +855,8 @@ h1{font-size:2.5em;text-align:center;}
 
 #footer-arrow>a{
 	display:inline-block;
-	width:60px;
-	height:80px;
+	width:40px;
+	height:60px;
 	background-image:url('../img/totop.png');
 	text-decoration:none;
 	background-size:100%;
@@ -866,6 +866,7 @@ h1{font-size:2.5em;text-align:center;}
 	text-decoration:none;
 }
 #footer-arrow-legend{
+	width:40px;
 	color:#fff;
 	text-align:center;
 }
@@ -961,4 +962,87 @@ h1{font-size:2.5em;text-align:center;}
     -o-transition:margin 1s;
     transition:margin 1s;
 }
-
+/*!*********************************************************************
+ * *** -15-PAGE 404
+ * ********************************************************************/
+#error-block{
+	margin-top:3%;
+	padding:3%;
+	background-color:#D2C18A;
+	opacity:0.9;
+	font-size:1.2em;
+}
+#text-404{
+	margin-left:5%;
+	line-height:1.5em;
+}
+#text-404>h2{
+	font-size:1.5em;
+	text-align:center;
+	padding:2%;
+}
+#text-404>ul{
+	list-style-type:disc;
+	padding-left:5%;
+}
+#banner{
+	width:100%;
+	height:60px;
+	margin:0;
+	padding:0;
+}
+.titre-404{
+	padding-top:50px;
+	width:100%;
+	text-align:center;
+	height:50px;
+	line-height:50px;
+	font-size:36pt;
+}
+#text-404{
+	margin-left:3%;
+}
+#colons{
+	margin-top:3%;
+}
+#left-content{
+	margin-left:3%;
+}
+#left-content>img{
+	margin:0 auto;
+	border:solid 4px #fff;
+	border-radius:2px;
+	text-align:center;
+	width:50%;
+	height:50%;
+}
+#right-content{
+	vertical-align:middle;
+}
+.button{
+	text-align:center;
+	width:100%;
+	height:40px;
+	line-height:40px;
+	margin-top:2%;
+}
+.a-button{
+	display:block;
+	width:80%;
+	height:40px;
+	line-height:40px;
+	margin-left:10%;
+	margin-right:10%;
+	font-size:11pt;
+	text-decoration:none;
+	text-align:center;
+	background-color:#5D4C45;
+	color:#D2C18A;
+	border-style:none;
+}
+.a-button:hover{
+	background-color:#353534;
+	color:#D2C18A;
+	cursor:pointer;
+	text-decoration:none;
+}

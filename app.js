@@ -81,17 +81,17 @@ app.get('/logout/',function(req,res){
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
 app.use('/static',express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     res.send(err);
-});
+});*/
 
 // error handlers
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'dev') {
+/*if (app.get('env') === 'dev') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -100,15 +100,17 @@ if (app.get('env') === 'dev') {
             error: err
         });
     });
-}
+}*/
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-	res.status(err.status || 500);
-	err.status=404
-    res.send(err);
-});
+app.use(function(req, res) {
+		var err = new Error('Not Found');
+		console.log(err);
+		res.status(404);
+		res.render('404');
+	}
+);
 
 
 

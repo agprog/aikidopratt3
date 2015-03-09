@@ -3,7 +3,7 @@ block content
 	div#wrapper(ng-app="index",ng-controller="IndexCtl")
 		if context.log
 			connect(log='#{context.log.title}')
-		include menu.jade
+		include menu
 		include header
 		section#row1-body.row
 			div#row1-left-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-7

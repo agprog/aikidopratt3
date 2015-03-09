@@ -27,12 +27,12 @@ angular.module('index.directives', []).
 					$scope.months=calendarSrv.months($scope.currentyear,$scope.currentmonth);
 					$scope.days=calendarSrv.days($scope.currentyear,$scope.currentmonth);
 					$scope.days=$filter('setActuMarkersFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
+					console.log($scope.days);
 				}
 				$scope.markerlink=function(){
 					angular.element(document.querySelectorAll('.marker')).on('click',function(event){
 								var date=event.target.getAttribute('data-date');
 								getSrv('/actualites/'+date).success(function(response){
-									console.log(response);
 									var actualite=window.location.href='/actualites/#'+response.id;
 									/*!--- recuperer la position de l'ancre ---*/
 								});
@@ -77,8 +77,9 @@ angular.module('index.directives', []).
 							scope.markerlink();
 						});
 						element.find('#select-m-'+scope.instance).on('change',function(event){
-							scope.days=calendarSrv.days(scope.currentyear,scope.currentmonth);
+							scope.refresh();
 							scope.$digest();
+							scope.markerlink();
 						});
 						element.find('#lessone-y-'+scope.instance).on('click',function(event){
 							if(scope.currentyear-1 >1900){
