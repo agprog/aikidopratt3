@@ -404,10 +404,10 @@ h1{font-size:2.5em;text-align:center;}
 	width:100%;
 	height:30px;
 	text-align:center;
-	-moz-transition:height 0.5s linear;
-	-webkit-transition:height 0.5s linear;
-	-o-transition:height 0.5s linear;
-	transition:height 0.5s linear;
+	-moz-transition:height 1s linear;
+	-webkit-transition:height 1s linear;
+	-o-transition:height 1s linear;
+	transition:height 1s linear;
 	z-index:999;
 	background-color:none;
 }
@@ -440,18 +440,18 @@ h1{font-size:2.5em;text-align:center;}
 }
 /*! *** carrousel vertical *** */
 .animate{
-    -moz-transition:margin 1.5s;
-    -ms-transition:margin 1.5s;
-    -webkit-transition:margin 1.5s;
-    -o-transition:margin 1.5s;
-    transition:margin 1.5s;
+    -moz-transition:margin 2s;
+    -ms-transition:margin 2s;
+    -webkit-transition:margin 2s;
+    -o-transition:margin 2s;
+    transition:margin 2s;
 }
 .animate-multi{
-	-moz-transition:margin 0.5s;
-    -ms-transition:margin 0.5s;
-    -webkit-transition:margin 0.5s;
-    -o-transition:margin 0.5s;
-    transition:margin 0.5s;
+	-moz-transition:margin 0.2s;
+    -ms-transition:margin 0.2s;
+    -webkit-transition:margin 0.2s;
+    -o-transition:margin 0.2s;
+    transition:margin 0.2s;
 }
 #container-v-0,#container-v-0-hover{
 	position:relative;

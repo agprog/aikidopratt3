@@ -241,8 +241,10 @@ directive('carousel',function(){
 								switchdiv(scope.slides.length-1);
 							}
 							if(scope.times == -1 || (scope.counter == scope.times)){
-								(scope.reverse)?scope.sens=(-1*parseInt(scope.sens)).toString():false;
-								scope.reverse=false;
+								if(scope.reverse == true){
+									scope.sens=(-1*parseInt(scope.sens)).toString();
+									scope.reverse=false;
+								}
 							}
 							if(scope.times != -1){
 								scope.counter+=1;
@@ -266,7 +268,7 @@ directive('carousel',function(){
 					};//end of leave
 					function change(){
 						if(!animating){
-							if(scope.times == -1 || (scope.counter<scope.times && scope.times != 0)){
+							if(scope.times == -1 || (scope.counter < scope.times && scope.times != 0)){
 								var styleTab=Array();
 								if(scope.defilement == 'h'){
 									styleTab.push('margin-left:'+parseInt(scope.sens) * scope.ecart+'px;');
@@ -281,13 +283,17 @@ directive('carousel',function(){
 								if(scope.current>scope.slides.length-1){scope.current=0}
 								animating=true;
 							}else{
+								animateClass="animate";
 								animating=false;
+								clearInterval(scope.interval);
 								scope.counter=0;
 								scope.times = -1;
-								(scope.reverse)?scope.sens=(-1*parseInt(scope.sens)).toString():false;
-								scope.reverse=false;
-								clearInterval(scope.interval);
+								if(scope.reverse == true){
+									scope.sens=(-1*parseInt(scope.sens)).toString();
+									scope.reverse=false;
+								}
 								scope.interval=null;
+								
 							}
 							
 						}
@@ -303,28 +309,28 @@ directive('carousel',function(){
 					function plus_one(){
 						change();
 						clearInterval(scope.interval);
-						scope.interval=null;	
+						scope.interval=null;
 					};//end of plus_one
 					
 					function last(){
-						animateClass='animate-multi';
 						clearInterval(scope.interval);
+						animateClass='animate-multi';
 						var centrum=Math.ceil(scope.slides.length / 2)-1;
 						//selon la position dans le tableau on utilise deux façons de le parcourir.
 						if((scope.current) <= centrum){
-							scope.times=scope.current+1;
 							if(scope.sens == '1'){
-								scope.sens=-1*parseInt(scope.sens);
+								scope.sens='-1';
 								scope.reverse=true;
 							}
+							scope.times=scope.current+1;
 						}else{
 							if(scope.sens == '-1'){
-								scope.sens=-1*parseInt(scope.sens);
+								scope.sens='1';
 								scope.reverse=true;
 							}
 							scope.times=(scope.slides.length-1)-scope.current;
 						}
-						scope.interval=setInterval(change,500);
+						scope.interval=setInterval(change,300);
 					};//end of last
 					
 					function first(){
@@ -336,18 +342,18 @@ directive('carousel',function(){
 						//selon la position dans le tableau on utilise deux façons de le parcourir.
 						if(scope.current <= centrum){
 							if(scope.sens == '1'){
-								scope.sens=-1*parseInt(scope.sens);
+								scope.sens='-1';
 								scope.reverse=true;
 							}
 							scope.times=scope.current;
 						}else{
 							if(scope.sens == '-1'){
-								scope.sens=-1*parseInt(scope.sens);
+								scope.sens='1';
 								scope.reverse=true;
 							}
 							scope.times=scope.slides.length-scope.current;
 						}
-						scope.interval=setInterval(change,500);
+						scope.interval=setInterval(change,300);
 						
 					};//end of first
 					
