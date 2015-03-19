@@ -44,7 +44,7 @@ module.exports = {
 	/*! CONFIGURATION DU SERVICE SMTP POUR LE FORMULAIRE DE CONTACT */
 	MAIL_SERVICE:'Gmail',
 	MAIL_USE_TLS:true,
-	MAIL_EMAIL:'agile.prog.54@gmail.com',
+	MAIL_EMAIL:'aikidopratt@yahoo.fr',
 	MAIL_HOST:'smtp.mandrillapp.com',
 	MAIL_USER:'aikidopratt@yahoo.fr',
 	MAIL_PASS:'JSOcpKIZtD369H7RVHK9Sw',
