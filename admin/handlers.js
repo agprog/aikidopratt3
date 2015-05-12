@@ -335,8 +335,8 @@ module.exports={
 							callback(null,"upload reussi");
 							},
 						function(callback){
-							var src=config.UPLOADS_DIR+"/"+rep+"/"+name;
-							var dest=config.UPLOADS_DIR+"/"+rep+"/thumbnails/"+name;
+							var src=config.UPLOADS_DIR+rep+"/"+name;
+							var dest=config.UPLOADS_DIR+rep+"/thumbnails/"+name;
 							commons.imageCrop(name,src,dest,index,200,200,callback);
 						},
 						function(callback){
