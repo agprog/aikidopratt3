@@ -20,9 +20,15 @@ module.exports={
 		objet=new model();
 		async.parallel({
 					liste:function(cb){
-						model.find().sort().exec(function(err,result){
+						if(params['schema']=='galerie'){
+							model.find().sort({'order_num':'asc'}).exec(function(err,result){
 												cb(err,result);
 											});
+						}else{
+							model.find().sort().exec(function(err,result){
+												cb(err,result);
+											});
+						}
 					}//end liste
 				},
 				function(err,results){

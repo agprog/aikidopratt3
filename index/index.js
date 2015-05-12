@@ -30,7 +30,7 @@ app.get('/init/:schema/',function(req,res){
 					break;
 		case 'galerie':
 				var Photo=commons.create_model('photo');
-				model.find({show:true}).populate('photos').sort({date:'desc'}).exec(function(error,results){
+				model.find({show:true}).populate('photos').sort({order_num:'asc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);
@@ -73,7 +73,7 @@ app.get('/init/',function(req,res){
 				galeries:function(callback){
 					model=commons.create_model('galerie');
 					Photo=commons.create_model('photo');
-					model.find({show:true}).sort({date:'asc'}).exec(function(error,result){
+					model.find({show:true}).sort({order_num:'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				}},
@@ -119,7 +119,7 @@ app.get('/galeries/',function(req,res){
 	commons.start_mongo();
 	var Galerie=commons.create_model('galerie');
 	var Photo=commons.create_model('photo');
-	Galerie.find({show:true}).sort({date:'asc'}).populate('photos').exec(function(error,results){
+	Galerie.find({show:true}).sort({order_num:'asc'}).populate('photos').exec(function(error,results){
 		console.log(results);
 		if(error){
 			res.send(500);

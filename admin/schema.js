@@ -57,6 +57,7 @@ var schema={
 								}),
  	galerieSchema	: mongoose.Schema({
 								created : {type:Date,default:Date.now(),get:dateToStr},
+								order_num:{type:Number,default:0},
 								title   : {type:String,default:''},
 								theme   : {type:String,default:''},
 								slug    : {type:String,default:''},
