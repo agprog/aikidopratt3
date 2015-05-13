@@ -11,7 +11,7 @@ div.actu
 					p.coordonnees
 						a(href="http://maps.google.com/maps?q=#{actu.coordonnates}&hl=fr&num=1&t=h&vpsrc=0&z=17",target="_blank") voir #{actu.location} sur google maps
 						
-			div.actu-content #{actu.content}
+			div.actu-content !{actu.content}
 			if actu.link_ != '/'
 				p.link
 					a(href="#{actu.link_}",target='_blank') Vers le lien officiel de la manifestation
@@ -31,7 +31,7 @@ div.actu
 					p.coordonnees
 						a(href="http://maps.google.com/maps?q=#{actu.coordonnates}&hl=fr&num=1&t=h&vpsrc=0&z=17",target="_blank") voir #{actu.location} sur google maps
 						
-			div.actu-content #{actu.content}
+			div.actu-content !{actu.content}
 			if actu.link_ != '/'
 				p.link
 					a(href="#{actu.link_}",target='_blank') Vers le lien officiel de la manifestation
