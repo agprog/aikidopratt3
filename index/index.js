@@ -9,9 +9,18 @@ var app=express();
 app.locals.commons = require('commons');
 app.get('/', function(req, res) {
   debugger;
-  res.render('index', {title: 'Association Pratt Nancy',
-					   context:commons.contextCreate(req,'index')
-						});
+  commons.start_mongo();
+  var model=commons.create_model('general');
+  model.find({cle :{$in:['description','keywords']}}).exec(function(error,results){
+					datas={title:'Association Pratt Nancy',
+						context:commons.contextCreate(req,'index')
+						};
+					for(var occ in results){
+						datas[results[occ].cle]=results[occ].valeur;
+					}
+					res.render('index',datas);
+	});
+  
   
 });
 app.get('/init/:schema/',function(req,res){
