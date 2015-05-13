@@ -5,7 +5,7 @@ html(lang="fr")
 		meta(name="description", content="#{description}")
 		meta(name="keywords",content="#{keywords}")
 		meta(name="viewport",content="width=device-width, initial-scale=1")
-		if espace =='admin'
+		if context.espace == 'admin'
 			meta(name="robots",content="none")
 		else
 			meta(name="robots",content="all")
@@ -19,7 +19,7 @@ html(lang="fr")
 		script(src="/static/js/bootstrap/bootstrap.min.js")
 		each script in context.scripts
 			script(src="/static/"+script)
-		if espace !='admin'
+		if context.espace != 'admin'
 			script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
 		
 	body
