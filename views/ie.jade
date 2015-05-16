@@ -1,12 +1,12 @@
 extends layout
 block content
-	div#wrapper
+	div#wrapper-ie
 		include header
 		section#row1-body.row
-			div#row1-left.content-left.hidden-xs.hidden-sm.col-md-3.col-lg-3
-			div#row1-middle-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-6
+			div#row1-left.content-left
+			div#row1-middle-content.content.liste
 				div#content-browsers
-					h1 Navigateur obsolète
+					h1(style="color:#18181C;") Navigateur obsolète
 					br
 					p 	Le contenu du site ne s'affichera pas correctement en utilisant une version d'internet explorer inférieure à la version 9.
 					p	Ce navigateur est obsolète et présente des failles de sécurité. Merci de le mettre à jour vers explorer 11 ou utiliser un navigateur alternatif 
@@ -29,5 +29,19 @@ block content
 								a(id="a-chrome",class="a-browser",href="http://www.google.com/chrome/browser/desktop/",target="__blank")
 									span(class="navigator") Chrome
 									span(class="brand") Google
-				div#row1-right.content-right.hidden-xs.hidden-sm.col-md-3.col-lg-3
-		include footer
+				div#row1-right.content-right
+				style(rel="stylesheet").
+					html{
+						width:100%;
+					}
+					#wrapper-ie h1{
+						color:#fff;
+					}
+					#titre-nav-obs{
+						color:#18181C;
+					}
+					body{
+						background-position:50%;
+						width:80%;
+						margin:0 10%;
+					}

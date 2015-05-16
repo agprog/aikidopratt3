@@ -1,8 +1,9 @@
 include mixins/conditions.jade
 doctype html
 +ie('if lt IE 9')
-	script(type="text/javascript").
-		window.location.href("/ie");
+	if espace != 'browser'
+		script(type="text/javascript").
+			window.location.href("/ie");
 	
 html(lang="fr")
 	head
@@ -36,4 +37,4 @@ html(lang="fr")
 		if context.espace != 'admin'
 			script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
 	body
-			block content
+		block content

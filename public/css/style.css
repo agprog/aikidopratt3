@@ -689,6 +689,12 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 /* /////////////////////////////////////////////////////////////////////
  * /// 11 - BROWSERS UPDATE
  * /////////////////////////////////////////////////////////////////////*/
+
+#wrapper-ie{
+	width:800px;
+	margin:0 auto;
+}
+
 #row1-body{
 	margin-top:2%;
 }
@@ -708,6 +714,12 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 	padding:2%;
 	background-color:#efdfa0;
 	border-radius:10px;
+}
+.content-middle{
+	width:20%;
+}
+.content-left,.content-right{
+	width:40%;
 }
 
 .a-browser{
