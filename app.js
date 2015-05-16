@@ -78,6 +78,12 @@ app.post('/signin/',function(req,res){
 app.get('/logout/',function(req,res){
 	users.log_out(req,res);
 });
+app.get('/ie/',function(req,res){
+	res.render('ie',{title:'mise à jour du navigateur',
+					espace:'browser',
+					context:commons.contextCreate(req,'index')
+				});
+});
 app.use('/uploads',express.static(path.join(__dirname, 'uploads')));
 app.use('/static',express.static(path.join(__dirname, 'public')));
 // catch 404 and forward to error handler
