@@ -1,4 +1,9 @@
+include mixins/conditions.jade
 doctype html
++ie('if lt IE 9')
+	script(type="text/javascript").
+		window.location.href("/ie");
+	
 html(lang="fr")
 	head
 		meta(http-equiv="content-type", content="text/html; charset=utf-8")
@@ -19,8 +24,16 @@ html(lang="fr")
 		script(src="/static/js/bootstrap/bootstrap.min.js")
 		each script in context.scripts
 			script(src="/static/"+script)
+		script(type="text/javascript").
+			var $buoop = {c:2}; 
+			function $buo_f(){ 
+				var e = document.createElement("script"); 
+				e.src = "//browser-update.org/update.js"; 
+				document.body.appendChild(e);
+			};
+			try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+			catch(e){window.attachEvent("onload", $buo_f)}
 		if context.espace != 'admin'
 			script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
-		
 	body
 			block content

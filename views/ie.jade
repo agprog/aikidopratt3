@@ -1,0 +1,33 @@
+extends layout
+block content
+	div#wrapper
+		include header
+		section#row1-body.row
+			div#row1-left.content-left.hidden-xs.hidden-sm.col-md-3.col-lg-3
+			div#row1-middle-content.content.liste.col-xs-12.col-sm-12.col-md-6.col-lg-6
+				div#content-browsers
+					h1 Navigateur obsolète
+					br
+					p 	Le contenu du site ne s'affichera pas correctement en utilisant une version d'internet explorer inférieure à la version 9.
+					p	Ce navigateur est obsolète et présente des failles de sécurité. Merci de le mettre à jour vers explorer 11 ou utiliser un navigateur alternatif 
+						| gratuit comme mozilla firefox, google chrome ou opéra.
+					table#browsers
+						tr
+							td
+								a(id="a-ie",class='a-browser',href="http://windows.microsoft.com/fr-fr/internet-explorer/download-ie",target="__blank")
+									span(class="navigator") Explorer
+									span(class="brand") Microsoft
+							td
+								a(id="a-firefox",class="a-browser",href="http://www.mozilla.com/firefox/",target="__blank")
+									span(class="navigator") Firefox
+									span(class="brand") Mozilla Foundation
+							td
+								a(id="a-opera",class="a-browser",href="http://www.opera.com/browser/",target="__blank")
+									span(class="navigator") Opéra
+									span(class="brand") Opera software
+							td
+								a(id="a-chrome",class="a-browser",href="http://www.google.com/chrome/browser/desktop/",target="__blank")
+									span(class="navigator") Chrome
+									span(class="brand") Google
+				div#row1-right.content-right.hidden-xs.hidden-sm.col-md-3.col-lg-3
+		include footer

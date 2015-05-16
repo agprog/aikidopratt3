@@ -572,7 +572,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 .actu-pj>img{width:99%;margin:2% auto;}
 .actu-pj{font-size:1em;text-align:center;}
 .actu-pj>a{margin-top:2%;text-align:center;}
-.actu-pj img{padding:2%;border:thin solid #fff;}
+.actu-pj img{padding:2%;border:thin solid #fff;margin:0 auto;}
 /*//////////////////////////////////////////////////////////////////////
  * /// 09 - GALERIES PHOTOS
  * ///////////////////////////////////////////////////////////////////*/
@@ -685,6 +685,70 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 .sitemap li>a{
 
+}
+/* /////////////////////////////////////////////////////////////////////
+ * /// 11 - BROWSERS UPDATE
+ * /////////////////////////////////////////////////////////////////////*/
+#row1-body{
+	margin-top:2%;
+}
+#browsers{
+	margin-top:2%;
+	border-collapse:collapse;
+	border:solid thin #gray;
+	width:100%;
+}
+#browsers td{
+	width:33%;
+	height:200px;
+	text-align:center;
+	
+}
+#content-browsers{
+	padding:2%;
+	background-color:#efdfa0;
+	border-radius:10px;
+}
+
+.a-browser{
+	display:block;
+	width:110px;
+	height:110px;
+	vertical-align:top;
+	margin:0 auto;
+}
+.a-browser:hover{
+	text-decoration:none;
+}
+.navigator{
+	position:relative;
+	vertical-align:bottom;
+	display:block;
+	padding-top:110px;
+	font-size:1.3em;
+	font-weight:600;
+}
+.brand{
+	position:relative;
+	vertical-align:bottom;
+	display:block;
+	color:gray;
+}
+#a-ie{
+	background-image:url('/static/img/ie.png');
+	background-repeat:no-repeat;
+}
+#a-firefox{
+	background-image:url('/static/img/ff.png');
+	background-repeat:no-repeat;
+}
+#a-opera{
+	background-image:url('/static/img/op.png');
+	background-repeat:no-repeat;
+}
+#a-chrome{
+	background-image:url('/static/img/ch.png');
+	background-repeat:no-repeat;
 }
 /*//////////////////////////////////////////////////////////////////////
  * /// 12 - PANEL
