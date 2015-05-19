@@ -973,7 +973,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
     overflow:hidden;
     padding:0;
     position:relative;
-    width:65%;
+    width:66%;
     background-color:#fbfcd1;
     z-index:0;
 }
@@ -1018,7 +1018,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 
 /* carousel container */
-#flexbox ul {
+#flexbox-ul {
     -moz-box-orient:horizontal;
     -ms-box-orient:horizontal;
     -webkit-box-orient:horizontal;
@@ -1040,7 +1040,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 
 /* standard width and height for the carousel items */
-#flexbox li {
+#flexbox-li {
 	position:relative;
 	display:inline-table;
     height:200px;
