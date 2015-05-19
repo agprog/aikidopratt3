@@ -832,7 +832,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 	display:inline-block;
 }
 .adress-block{
-	padding:2%;
+	padding:10%;
 	font-size:1em;
 }
 .adress-titre{
@@ -841,7 +841,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 	text-decoration:underline;
 	font-weight:700;
 }
-.adress-horaire{text-align:center;}
+.adress-horaire{}
 .maps-link{text-align:right;margin:1% 7%;}
 .map{
 	display:block;
