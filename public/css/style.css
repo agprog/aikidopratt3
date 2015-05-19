@@ -255,8 +255,9 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
  }
  #menu-principal a{color:#000;}
  .navbar-nav{
-	width:75%;
-	margin:0 30%;
+	width:84%;
+	margin-top:0;
+	margin-left: 15%;
 	text-align:center;
  }
  .dropdown-menu{
@@ -972,7 +973,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
     overflow:hidden;
     padding:0;
     position:relative;
-    width:56%;
+    width:65%;
     background-color:#fbfcd1;
     z-index:0;
 }
@@ -1034,11 +1035,14 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
     margin-left:-200px;
     padding:0;
     z-index:0;
+    height:205px;
+	overflow:hidden;
 }
 
 /* standard width and height for the carousel items */
 #flexbox li {
 	position:relative;
+	display:inline-table;
     height:200px;
     margin-right:10px;
     width:200px;
@@ -1053,6 +1057,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
     -o-transition:margin 1s;
     transition:margin 1s;
 }
+
 /*!*********************************************************************
  * *** -15-PAGE 404
  * ********************************************************************/
@@ -1136,4 +1141,26 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 	color:#D2C18A;
 	cursor:pointer;
 	text-decoration:none;
+}
+@media (max-width: 992px) {
+	#admin-banner h1{
+		color:#fff;
+	}
+	.navbar-nav li{
+		font-size:0.8em;
+	}
+}
+@media (max-width: 768px){
+	.navbar-nav{
+		margin:0;
+		width:100%;
+	}
+	.navbar-nav li{
+		margin:0;
+		width:100%;
+		font-size:1.2em;
+	}
+	.navbar-brand{
+		margin-left:15px;
+	}
 }

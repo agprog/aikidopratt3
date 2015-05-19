@@ -1,6 +1,6 @@
 extends layout
 block content
-	div#wrapper(ng-app="index",ng-controller="IndexCtl")
+	div#wrapper(ng-controller="IndexCtl")
 		if context.log
 			connect(log='#{context.log.title}')
 		include menu

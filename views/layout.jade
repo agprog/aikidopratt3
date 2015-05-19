@@ -1,40 +1,43 @@
 include mixins/conditions.jade
 doctype html
-+ie('if lt IE 9')
-	if espace != 'browser'
-		script(type="text/javascript").
-			window.location.href("/ie");
+|<!--[if lt IE 9]>
+|	if espace != 'browser'
+|		script(type="text/javascript").
+|		window.location.href("/ie");
+<![endif]-->
+|<!--[if !IE]><!-->
+html(class="no-js",lang="fr-FR")
+|<!--<![endif]-->
+head
+	meta(http-equiv="content-type", content="text/html; charset=utf-8")
+	meta(name="description", content="#{description}")
+	meta(name="keywords",content="#{keywords}")
+	meta(name="viewport",content="width=device-width, initial-scale=1")
+	if context.espace == 'admin'
+		meta(name="robots",content="none")
+	else
+		meta(name="robots",content="all")
+	title #{title}
+	link(rel="stylesheet",href="/static/css/bootstrap/bootstrap.min.css")
+	link(rel="stylesheet",href="/static/css/style.css")
+	each stylesheet in context.stylesheets
+		link(rel="stylesheet",href="/static/"+stylesheet)
+	script(src="/static/js/bootstrap/modernizr.js")
+	script(src="/static/js/bootstrap/jquery.min.js")
+	script(src="/static/js/bootstrap/bootstrap.min.js")
 	
-html(lang="fr")
-	head
-		meta(http-equiv="content-type", content="text/html; charset=utf-8")
-		meta(name="description", content="#{description}")
-		meta(name="keywords",content="#{keywords}")
-		meta(name="viewport",content="width=device-width, initial-scale=1")
-		if context.espace == 'admin'
-			meta(name="robots",content="none")
-		else
-			meta(name="robots",content="all")
-		title #{title}
-		link(rel="stylesheet",href="/static/css/bootstrap/bootstrap.min.css")
-		link(rel="stylesheet",href="/static/css/style.css")
-		each stylesheet in context.stylesheets
-			link(rel="stylesheet",href="/static/"+stylesheet)
-		script(src="/static/js/bootstrap/modernizr.js")
-		script(src="/static/js/bootstrap/jquery.min.js")
-		script(src="/static/js/bootstrap/bootstrap.min.js")
-		each script in context.scripts
-			script(src="/static/"+script)
-		script(type="text/javascript").
-			var $buoop = {c:2}; 
-			function $buo_f(){ 
-				var e = document.createElement("script"); 
-				e.src = "//browser-update.org/update.js"; 
-				document.body.appendChild(e);
-			};
-			try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
-			catch(e){window.attachEvent("onload", $buo_f)}
-		if context.espace != 'admin'
-			script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
-	body
-		block content
+	each script in context.scripts
+		script(src="/static/"+script)
+	script(type="text/javascript").
+		var $buoop = {c:2}; 
+		function $buo_f(){ 
+			var e = document.createElement("script"); 
+			e.src = "//browser-update.org/update.js"; 
+			document.body.appendChild(e);
+		};
+		try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+		catch(e){window.attachEvent("onload", $buo_f)}
+	if context.espace != 'admin'
+		script(type="text/javascript",src="https://maps.googleapis.com/maps/api/js?key=#{context.google_api_key}&sensor=true")
+body
+	block content
