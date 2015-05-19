@@ -223,7 +223,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 
 #welcome{
 	background-color:#E1CF92;
-	min-height:635px;
+	min-height:645px;
 	padding:2%;
 }
 #welcome>.img{
@@ -468,11 +468,11 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 #container-v-0,#container-v-0-hover{
 	position:relative;
-	width:95%;
-	max-width:432px;
+	width:inherit;
+	/*max-width:432px;*/
 	height:270px;
 	overflow:hidden;
-	margin:1%
+	margin:1% auto;
 	border:1px solid #574C43;
 	margin-bottom:2%;
 	/*-moz-box-shadow: 10px 10px 5px 0px #c0c0c0;
@@ -555,7 +555,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 .actu-pj,.actu-block-pj{
 	display:inline-block;
 	vertical-align:top;
-	font-size:1.1em;
+	font-size:1.2em;
 }
 .actu-block-pj{width:65%;border-top-left-radius:10px;border-bottom-left-radius:10px;}
 .actu-block{width:100%;border-radius:10px;}
@@ -767,8 +767,8 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
  * /// 12 - PANEL
  * ///////////////////////////////////////////////////////////////////*/
 .panels{
-	width:95%;
-	margin:1%;
+	width:inherit;
+	margin:1% auto;
 	background-color:transparent;
 }
 .on-panel{
@@ -801,7 +801,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 .contener-panel{
 	width:100%;
-	max-width:425px;
+	/*max-width:425px;*/
 	/*margin-top:-1px;*/
 	overflow:hidden;
 	background-color:#efdfa0;
@@ -833,6 +833,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 .adress-block{
 	padding:2%;
+	font-size:1em;
 }
 .adress-titre{
 	padding:2%;
