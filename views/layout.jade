@@ -1,12 +1,10 @@
 include mixins/conditions.jade
 doctype html
-|<!--[if lt IE 9]>
-	if espace != 'browser'		script(type="text/javascript").
-			window.location.href("/ie");
-|<![endif]-->
-|<!--[if !IE]><!-->
++ie('if lt IE 9')
+	if espace != 'browser'
+		script(type="text/javascript").
+			window.location.href="/ie";
 html(class="no-js",lang="fr-FR")
-|<!--<![endif]-->
 head
 	meta(http-equiv="content-type", content="text/html; charset=utf-8")
 	meta(name="description", content="#{description}")
