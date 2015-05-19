@@ -466,7 +466,6 @@ directive('flexbox',function(){
 						try{
 							container = document.getElementById('flexbox');
 							items = document.getElementById('flexbox-ul');
-							active = 0; // the active item (sits far left)
 							properties = {}; // used to calculate scroll distance
 								 // whether the carousel is currently animating
 								// use Modernizr.prefixed to get the prefixed version of boxOrdinalGroup
@@ -490,7 +489,7 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							element.find('a.navigation').on('mouseover',move);
+							element.find('a.navigation').on('click',move);
 							element.find('#flexbox-ul').on(transitionEnd,complete);
 							clearInterval(interval);
 						}catch(error){
