@@ -1,10 +1,9 @@
 include mixins/conditions.jade
 doctype html
 |<!--[if lt IE 9]>
-|	if espace != 'browser'
-|		script(type="text/javascript").
-|		window.location.href("/ie");
-<![endif]-->
+	if espace != 'browser'		script(type="text/javascript").
+			window.location.href("/ie");
+|<![endif]-->
 |<!--[if !IE]><!-->
 html(class="no-js",lang="fr-FR")
 |<!--<![endif]-->
