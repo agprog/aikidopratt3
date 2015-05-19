@@ -26,7 +26,7 @@ angular.module('index.controllers',[])
 				/*!--- initialisation onglets cours ---*/
 				$scope.cours=response.cours;
 				$scope.galeries=response.galeries;
-				console.log($scope.actualites);
+				/*console.log($scope.actualites);*/
 		});
 		
 	}])//fin IndexCtl

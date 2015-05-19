@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('index',[
+var app=angular.module('index',[
   'ngRoute',
   'admin.services',
   'admin.directives',
@@ -22,5 +22,24 @@ angular.module('index',[
 .config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{{'); 
     $interpolateProvider.endSymbol('}}');
-    });
-
+    })
+/*!------------ ROUTAGE INTERNE ------------------*/
+/*.config(function($routeProvider){
+$routeProvider
+.when('/galeries-photos',{
+      templateUrl:'/templates/galeries.html',
+      controller:'GalerieCtl'
+    })
+.when('/actualites',{
+	templateUrl:'/templates/actualites.html',
+	controller:'ActualitesCtl'
+	})
+.when('/cours',{
+	templateUrl:'/templates/cours.html',
+	controller:'CoursCtl'
+	})
+.otherwise({redirect_to:'/'});
+});*/
+angular.element(document).ready(function(){
+		angular.bootstrap(document, ['index']);
+});

@@ -27,7 +27,6 @@ angular.module('index.directives', []).
 					$scope.months=calendarSrv.months($scope.currentyear,$scope.currentmonth);
 					$scope.days=calendarSrv.days($scope.currentyear,$scope.currentmonth);
 					$scope.days=$filter('setActuMarkersFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
-					console.log($scope.days);
 				}
 				$scope.markerlink=function(){
 					angular.element(document.querySelectorAll('.marker')).on('click',function(event){
@@ -299,23 +298,23 @@ directive('carousel',function(){
 						}
 					};//end of change
 					function less_one(){
+						clearInterval(scope.interval);
 						scope.sens=(-1*parseInt(scope.sens)).toString();
 						change();
-						clearInterval(scope.interval);
 						scope.interval=null;
 						scope.reverse=true;
 					};//end of less one
 					
 					function plus_one(){
-						change();
 						clearInterval(scope.interval);
 						scope.interval=null;
+						change();
 					};//end of plus_one
 					
 					function last(){
 						clearInterval(scope.interval);
 						animateClass='animate-multi';
-						var centrum=Math.ceil(scope.slides.length / 2)-1;
+						var centrum=Math.floor(scope.slides.length / 2);
 						//selon la position dans le tableau on utilise deux façons de le parcourir.
 						if((scope.current) <= centrum){
 							if(scope.sens == '1'){
@@ -328,7 +327,7 @@ directive('carousel',function(){
 								scope.sens='1';
 								scope.reverse=true;
 							}
-							scope.times=(scope.slides.length-1)-scope.current;
+							scope.times=(scope.slides.length)-scope.current;
 						}
 						scope.interval=setInterval(change,300);
 					};//end of last
@@ -336,9 +335,8 @@ directive('carousel',function(){
 					function first(){
 						animateClass='animate-multi';
 						clearInterval(scope.interval);
-						scope.interval=null;
 						//calcul de l'ecart jusqu'au premier element
-						var centrum=Math.ceil(scope.slides.length / 2)-1;
+						var centrum=Math.floor(scope.slides.length / 2);
 						//selon la position dans le tableau on utilise deux façons de le parcourir.
 						if(scope.current <= centrum){
 							if(scope.sens == '1'){

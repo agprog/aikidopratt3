@@ -8,7 +8,7 @@
 	<div class='actu-pj' ng-if="slide.file">
 		<a href="/uploads/docs/{{slide.file}}">
 			<p><span>Télécharger l'affiche</span></p>
-			<img src='/uploads/docs/thumbnails/{{slide.file.slice(0,-4)}}.png' alt='fichier miniature {{slide.file}}' />
+			<img ng-src='/uploads/docs/thumbnails/{{slide.file.slice(0,-4)}}.png' alt='fichier miniature {{slide.file}}' />
 		</a>
 	</div>
 </div>
