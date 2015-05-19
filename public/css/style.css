@@ -1040,9 +1040,9 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 }
 
 /* standard width and height for the carousel items */
-#flexbox-li {
+#flexbox li {
 	position:relative;
-	display:inline-table;
+	/*display:inline-table;*/
     height:200px;
     margin-right:10px;
     width:200px;
