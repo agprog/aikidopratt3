@@ -1027,7 +1027,7 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
     box-orient:horizontal;
 
     display:-moz-box;
-    display:-ms-box;
+    display:-ms-flexbox;
     display:-webkit-box;
     display:-o-box;
     display:box;
