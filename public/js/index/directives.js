@@ -187,7 +187,7 @@ directive('carousel',function(){
 			replace:true,
 			templateUrl:'/static/js/index/templates/carousel.html',
 			link:function(scope,element,attrs){
-					var prefixs=['o','moz','webkit'];
+					var prefixs=['o','ms','moz','webkit'];
 					var animating=false;
 					try{scope.sens=parseInt(scope.sens);}catch(err){scope.sens=1;}
 					try{scope.defilement}catch(err){scope.defilement='v';}
@@ -469,7 +469,12 @@ directive('flexbox',function(){
 							properties = {}; // used to calculate scroll distance
 								 // whether the carousel is currently animating
 								// use Modernizr.prefixed to get the prefixed version of boxOrdinalGroup
-							boxOrdinalGroup = Modernizr.prefixed( 'boxOrdinalGroup' );
+							boxOrdinalGroup = Modernizr.prefixed( "BoxOrdinalGroup" );
+							console.log("bOG="+boxOrdinalGroup);
+							if(boxOrdinalGroup==false){
+								boxOrdinalGroup="msFlexOrder";
+							}
+							console.log("bOG="+boxOrdinalGroup);
 							var transEndEventNames = {
 													'WebkitTransition' : 'webkitTransitionEnd',
 													'MozTransition'    : 'transitionend',
