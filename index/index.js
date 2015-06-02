@@ -28,7 +28,7 @@ app.get('/init/:schema/',function(req,res){
 	var model=commons.create_model(req.params['schema']);
 	switch(req.params['schema']){
 		case 'actualite':
-				model.find().sort({date:'desc'}).exec(function(error,results){
+				model.find({date:{$gte:Date.now()}}).sort({date:'desc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);
@@ -69,7 +69,7 @@ app.get('/init/',function(req,res){
 				},
 				actualites:function(callback){
 					model=commons.create_model('actualite');
-					model.find({date:{$gte:new Date.now()}}).sort({date:'asc'}).exec(function(error,result){
+					model.find({date:{$gte:Date.now()}}).sort({date:'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				},
@@ -113,7 +113,7 @@ app.get('/actualites/:date',function(req,res){
 app.get('/actualites/',function(req,res){
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	actualite.find({date:{$gte:Date.now()}}).sort({date:'asc'}).exec(function(error,results){
+	actualite.find({date:{'$gte':Date.now()}}).sort({date:'asc'}).exec(function(error,results){
 		if(error){
 			res.send(500);
 		}else{
