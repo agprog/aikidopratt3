@@ -17,6 +17,8 @@ angular.module('index.controllers',[])
 				
 				/*!--- initialisation slides actualites ---*/
 				$scope.actualites=response.actualites;
+				var last_actu=$scope.actualites.pop();
+				$scope.actualites=[last_actu].concat($scope.actualites),
 				/*! --- initialisation variables ---*/
 				generalites=response.generalites;
 				/*!--- initialisation scope ---*/

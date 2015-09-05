@@ -189,6 +189,8 @@ directive('carousel',function(){
 			link:function(scope,element,attrs){
 					var prefixs=['o','ms','moz','webkit'];
 					var animating=false;
+					var reverse=false; // indication de sens
+					var action="else"; // choice of last, first or else
 					try{scope.sens=parseInt(scope.sens);}catch(err){scope.sens=1;}
 					try{scope.defilement}catch(err){scope.defilement='v';}
 					try{scope.instance}catch(err){scope.instance=0;}
@@ -197,10 +199,7 @@ directive('carousel',function(){
 					function init(){
 						try{
 							scope.current=0;
-							scope.times=-1;
-							scope.counter=0;
 							scope.ecart=270;
-							scope.reverse=false;
 							element.on('mouseover',hover);
 							element.on('mouseleave',leave);
 							element.find('.commands-first').on('click',first);
@@ -231,25 +230,52 @@ directive('carousel',function(){
 					};
 					function complete(){
 						//retire la classe animate
+						
 						if(animating){
-							document.querySelector(liste_slides_id).classList.remove(animateClass);
-							document.querySelector(liste_slides_id).removeAttribute('style');
 							if(parseInt(scope.sens) == 1){
 								switchdiv(0);
 							}else{
 								switchdiv(scope.slides.length-1);
 							}
-							if(scope.times == -1 || (scope.counter == scope.times)){
-								if(scope.reverse == true){
-									scope.sens=(-1*parseInt(scope.sens)).toString();
-									scope.reverse=false;
-								}
+							scope.current+=parseInt(scope.sens);
+							/* Mise a jour du flag action  */
+							switch(action){
+								case "first":
+									if(scope.current == 0){
+										clearInterval(scope.interval);
+										scope.interval = null;
+										action="else";
+										if(reverse == true){
+											scope.sens=(-1*parseInt(scope.sens)).toString();
+											reverse=false;
+										}
+									}
+									break;
+								case "last":
+									if(scope.current==scope.slides.length-1){
+										clearInterval(scope.interval);
+										scope.interval = null;
+										action="else";
+									}
+									break;
+								default:
+									if(reverse == true){
+										scope.sens=(-1*parseInt(scope.sens)).toString();
+										reverse=false;
+									}
 							}
-							if(scope.times != -1){
-								scope.counter+=1;
-							}
+							
+							
+							document.querySelector(liste_slides_id).classList.remove(animateClass);
+							document.querySelector(liste_slides_id).removeAttribute('style');
 							animating=false;
+							/* Mise a jour de la valeur current */
+							
+							if(scope.current<0){scope.current=scope.slides.length-1}
+							if(scope.current>scope.slides.length-1){scope.current=0}
+							
 						}
+						console.log('complete');
 					};//end of complete
 					function hover(){
 						try{
@@ -267,92 +293,58 @@ directive('carousel',function(){
 					};//end of leave
 					function change(){
 						if(!animating){
-							if(scope.times == -1 || (scope.counter < scope.times && scope.times != 0)){
 								var styleTab=Array();
+								if(animateClass != "animate-multi"){animateClass="animate";};
+								
+								var liste_slides=document.querySelector(liste_slides_id);
 								if(scope.defilement == 'h'){
 									styleTab.push('margin-left:'+parseInt(scope.sens) * scope.ecart+'px;');
-								}else{	
+								}else{
 									styleTab.push('margin-top:'+ -1*parseInt(scope.sens) * scope.ecart+'px;');
 								}
-								var liste_slides=document.querySelector(liste_slides_id);
 								liste_slides.classList.add(animateClass);
 								liste_slides.setAttribute('style',styleTab.join(';'));
-								scope.current+=parseInt(scope.sens);
-								if(scope.current<0){scope.current=scope.slides.length-1}
-								if(scope.current>scope.slides.length-1){scope.current=0}
 								animating=true;
-							}else{
-								animateClass="animate";
-								animating=false;
-								clearInterval(scope.interval);
-								scope.counter=0;
-								scope.times = -1;
-								if(scope.reverse == true){
-									scope.sens=(-1*parseInt(scope.sens)).toString();
-									scope.reverse=false;
-								}
-								scope.interval=null;
-								
 							}
-							
-						}
 					};//end of change
 					function less_one(){
 						clearInterval(scope.interval);
-						scope.sens=(-1*parseInt(scope.sens)).toString();
-						change();
 						scope.interval=null;
-						scope.reverse=true;
+						scope.sens=(-1*parseInt(scope.sens)).toString();
+						reverse=true;
+						action="else";
+						change();
+						
+						
 					};//end of less one
 					
 					function plus_one(){
 						clearInterval(scope.interval);
 						scope.interval=null;
+						action="else";
 						change();
 					};//end of plus_one
 					
 					function last(){
-						clearInterval(scope.interval);
-						animateClass='animate-multi';
-						var centrum=Math.floor(scope.slides.length / 2);
-						//selon la position dans le tableau on utilise deux façons de le parcourir.
-						if((scope.current) <= centrum){
-							if(scope.sens == '1'){
-								scope.sens='-1';
-								scope.reverse=true;
-							}
-							scope.times=scope.current+1;
-						}else{
-							if(scope.sens == '-1'){
-								scope.sens='1';
-								scope.reverse=true;
-							}
-							scope.times=(scope.slides.length)-scope.current;
+						if(scope.current<scope.slides.length-1){
+							clearInterval(scope.interval);
+							scope.interval = null;
+							animateClass='animate-multi';
+							action="last";
+							scope.interval=setInterval(change,500);
 						}
-						scope.interval=setInterval(change,300);
 					};//end of last
 					
 					function first(){
-						animateClass='animate-multi';
-						clearInterval(scope.interval);
-						//calcul de l'ecart jusqu'au premier element
-						var centrum=Math.floor(scope.slides.length / 2);
-						//selon la position dans le tableau on utilise deux façons de le parcourir.
-						if(scope.current <= centrum){
-							if(scope.sens == '1'){
-								scope.sens='-1';
-								scope.reverse=true;
-							}
-							scope.times=scope.current;
-						}else{
-							if(scope.sens == '-1'){
-								scope.sens='1';
-								scope.reverse=true;
-							}
-							scope.times=scope.slides.length-scope.current;
+						if(scope.current > 0){
+							clearInterval(scope.interval);
+							scope.interval=null;
+							animateClass='animate-multi';
+							action="first";
+							reverse=true;
+							scope.sens=(-1*parseInt(scope.sens)).toString();
+							scope.interval=setInterval(change,500);
 						}
-						scope.interval=setInterval(change,300);
-						
 					};//end of first
 					
 					function play(){
@@ -360,10 +352,10 @@ directive('carousel',function(){
 							clearInterval(scope.interval);
 							scope.interval=null;
 						}else{
-							
+							animating=false;
+							animateClass="animate";
+							action="else";
 							scope.interval=setInterval(change,3000);
-							
-							
 						}
 					};//end of play
 			}//end of link
@@ -470,7 +462,6 @@ directive('flexbox',function(){
 								 // whether the carousel is currently animating
 								// use Modernizr.prefixed to get the prefixed version of boxOrdinalGroup
 							boxOrdinalGroup = Modernizr.prefixed( "BoxOrdinalGroup" );
-							console.log("bOG="+boxOrdinalGroup);
 							if(boxOrdinalGroup==false){
 								boxOrdinalGroup="msFlexOrder";
 							}

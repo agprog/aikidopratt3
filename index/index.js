@@ -4,7 +4,6 @@ var commons=require('commons');
 var router = express.Router();
 var async=require('async');
 var app=express();
-
 /* GET home page. */
 app.locals.commons = require('commons');
 app.get('/', function(req, res) {
@@ -68,8 +67,10 @@ app.get('/init/',function(req,res){
 					});
 				},
 				actualites:function(callback){
+					//critere de date a rajouter en prog
+					//{date:{$gte:Date.now()}}
 					model=commons.create_model('actualite');
-					model.find({date:{$gte:Date.now()}}).sort({date:'asc'}).exec(function(error,result){
+					model.find().sort({date:'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				},
@@ -97,10 +98,12 @@ app.get('/init/',function(req,res){
 					});//end async.parrallel
 });
 app.get('/actualites/:date',function(req,res){
-	var date=req.params.date;
+	var param=req.params.date;
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	actualite.find({date:{'$gte':new Date(date)}},'first').exec(function(error,results){
+	console.log(new Date(param));
+	actualite.find({date:{$lte:new Date(param)}}).sort({date:"desc"}).exec(function(error,results){
+		commons.stop_mongo();
 		if(error){
 			console.log(error);
 			res.json({id:'error'});
@@ -114,6 +117,7 @@ app.get('/actualites/',function(req,res){
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
 	actualite.find({date:{'$gte':Date.now()}}).sort({date:'asc'}).exec(function(error,results){
+		commons.stop_mongo();
 		if(error){
 			res.send(500);
 		}else{
@@ -129,6 +133,7 @@ app.get('/galeries/',function(req,res){
 	var Galerie=commons.create_model('galerie');
 	var Photo=commons.create_model('photo');
 	Galerie.find({show:true}).sort({order_num:'asc'}).populate('photos').exec(function(error,results){
+		commons.stop_mongo();
 		console.log(results);
 		if(error){
 			res.send(500);
@@ -145,6 +150,7 @@ app.get('/galeries/:id',function(req,res){
 	var Galerie=commons.create_model('galerie');
 	var Photo=commons.create_model('photo');
 	Galerie.findOne({_id:req.params.id}).populate('photos').exec(function(error,result){
+		commons.stop_mongo();
 		if(error){
 			res.send(500);
 		}else{
@@ -160,6 +166,7 @@ app.get('/presse/',function(req,res){
 	var Galerie=commons.create_model('galerie');
 	var Photo=commons.create_model('photo');
 	Galerie.findOne({slug:'presse'}).populate('photos').exec(function(error,result){
+		commons.stop_mongo();
 		if(error){
 			res.send(500).end();
 		}else{
