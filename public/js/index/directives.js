@@ -76,8 +76,9 @@ angular.module('index.directives', []).
 							scope.markerlink();
 						});
 						element.find('#select-m-'+scope.instance).on('change',function(event){
-							scope.days=calendarSrv.days(scope.currentyear,scope.currentmonth);
+							scope.refresh();
 							scope.$digest();
+							scope.markerlink();
 						});
 						element.find('#lessone-y-'+scope.instance).on('click',function(event){
 							if(scope.currentyear-1 >1900){
@@ -156,6 +157,7 @@ angular.module('index.directives', []).
 						var coordonates=new google.maps.LatLng(x,y);
 						var mapOptions={
 							center:coordonates,
+							disableDefaultUI:true,
 							mapTypeId:google.maps.MapTypeId.ROADMAP,
 							zoom:13
 						};
@@ -185,27 +187,98 @@ directive('carousel',function(){
 			replace:true,
 			templateUrl:'/static/js/index/templates/carousel.html',
 			link:function(scope,element,attrs){
-					var prefixs=['-o-','-moz-','-webkit-'];
-					scope.current=0;
-					try{scope.sens}catch(err){scope.sens=1;}
+					var prefixs=['o','ms','moz','webkit'];
+					var animating=false;
+					var reverse=false; // indication de sens
+					var action="else"; // choice of last, first or else
+					try{scope.sens=parseInt(scope.sens);}catch(err){scope.sens=1;}
 					try{scope.defilement}catch(err){scope.defilement='v';}
 					try{scope.instance}catch(err){scope.instance=0;}
-					scope.ecart=270;
-					element.on('mouseover',hover);
-					element.on('mouseleave',leave);
-					element.find('.commands-first').on('click',first);
-					element.find('.commands-less-one').on('click',less_one);
-					element.find('.commands-play').on('click',play);
-					element.find('.commands-plus-one').on('click',plus_one);
-					element.find('.commands-last').on('click',last);
-					scope.interval=setInterval(change,3000);
+					var animateClass='animate';
+					var liste_slides_id=["#list-slides",scope.defilement,scope.instance].join("-");
+					function init(){
+						try{
+							scope.current=0;
+							scope.ecart=270;
+							element.on('mouseover',hover);
+							element.on('mouseleave',leave);
+							element.find('.commands-first').on('click',first);
+							element.find('.commands-less-one').on('click',less_one);
+							element.find('.commands-play').on('click',play);
+							element.find('.commands-plus-one').on('click',plus_one);
+							element.find('.commands-last').on('click',last);
+							for(var i=0; i<prefixs.length;i++){
+								element.find(liste_slides_id).bind(prefixs[i]+'TransitionEnd',complete);
+							}
+							element.find(liste_slides_id).bind('transitionend',complete);
+							scope.interval=setInterval(change,3000);
+							clearInterval(pend);
+						}catch(error){
+							console.log('pending');
+						}
+					}
 					
+					var pend=setInterval(init,20);
+					/*! attention la fonction switchdiv peut etre appelee a partir de change() ou complete() */
+					function switchdiv(dep){
+						var target=document.querySelectorAll(".zone-v-0");
+						if(dep == 0){
+							document.querySelector(liste_slides_id+">div").appendChild(target[0]);
+						}else{
+							document.querySelector(liste_slides_id+">div").insertBefore(target[dep],target[0]);
+						}		
+					};
+					function complete(){
+						//retire la classe animate
+						
+						if(animating){
+							if(parseInt(scope.sens) == 1){
+								switchdiv(0);
+							}else{
+								switchdiv(scope.slides.length-1);
+							}
+							scope.current+=parseInt(scope.sens);
+							/* Mise a jour du flag action  */
+							switch(action){
+								case "first":
+									if(scope.current == 0){
+										clearInterval(scope.interval);
+										scope.interval = null;
+										action="else";
+										if(reverse == true){
+											scope.sens=(-1*parseInt(scope.sens)).toString();
+											reverse=false;
+										}
+									}
+									break;
+								case "last":
+									if(scope.current==scope.slides.length-1){
+										clearInterval(scope.interval);
+										scope.interval = null;
+										action="else";
+									}
+									break;
+								default:
+									if(reverse == true){
+										scope.sens=(-1*parseInt(scope.sens)).toString();
+										reverse=false;
+									}
+							}
+							
+							
+							document.querySelector(liste_slides_id).classList.remove(animateClass);
+							document.querySelector(liste_slides_id).removeAttribute('style');
+							animating=false;
+							/* Mise a jour de la valeur current */
+							
+							if(scope.current<0){scope.current=scope.slides.length-1}
+							if(scope.current>scope.slides.length-1){scope.current=0}
+							
+						}
+						console.log('complete');
+					};//end of complete
 					function hover(){
 						try{
-							document.querySelector(["#container",scope.defilement,scope.instance].join('-')).setAttribute("id",["container",scope.defilement,scope.instance,"hover"].join('-'));
-							document.querySelector(["#screen",scope.defilement,scope.instance].join('-')).setAttribute("id",["screen",scope.defilement,scope.instance,"hover"].join('-'));
-							/*document.querySelector(["#less-command",scope.defilement,scope.instance].join('-')).setAttribute("id",["less-command",scope.defilement,scope.instance,"hover"].join('-'));
-							document.querySelector(["#plus-command",scope.defilement,scope.instance].join('-')).setAttribute("id",["plus-command",scope.defilement,scope.instance,"hover"].join('-'));*/
 							document.querySelector(["#carousel-commands",scope.defilement,scope.instance].join('-')).setAttribute("id",["carousel-commands",scope.defilement,scope.instance,"hover"].join('-'));
 						}catch(error){
 							console.log("pending hover");
@@ -213,66 +286,76 @@ directive('carousel',function(){
 					};//end of hover
 					function leave(){
 						try{
-							document.querySelector(["#container",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["container",scope.defilement,scope.instance].join('-'));
-							document.querySelector(["#screen",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["screen",scope.defilement,scope.instance].join('-'));
-							/*document.querySelector(["#less-command",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["less-command",scope.defilement,scope.instance].join('-'));
-							document.querySelector(["#plus-command",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["plus-command",scope.defilement,scope.instance].join('-'));*/
 							document.querySelector(["#carousel-commands",scope.defilement,scope.instance,"hover"].join('-')).setAttribute("id",["carousel-commands",scope.defilement,scope.instance].join('-'));
 						}catch(error){
 							console.log("pending leave");
 						}
 					};//end of leave
 					function change(){
-						if(scope.current<0){scope.current=scope.slides.length-1}
-						if(scope.current>scope.slides.length-1){scope.current=0}
-						/*clearInterval(this.interval);*/
-						var styleTab=Array();
-						if(scope.defilement == 'h'){
-							for(var prefix in prefixs){
-								styleTab.push(prefixs[prefix]+"transform:translateX("+scope.current*-scope.ecart+"px)");
+						if(!animating){
+								var styleTab=Array();
+								if(animateClass != "animate-multi"){animateClass="animate";};
+								
+								var liste_slides=document.querySelector(liste_slides_id);
+								if(scope.defilement == 'h'){
+									styleTab.push('margin-left:'+parseInt(scope.sens) * scope.ecart+'px;');
+								}else{
+									styleTab.push('margin-top:'+ -1*parseInt(scope.sens) * scope.ecart+'px;');
+								}
+								liste_slides.classList.add(animateClass);
+								liste_slides.setAttribute('style',styleTab.join(';'));
+								animating=true;
 							}
-						}else{
-							for(var prefix in prefixs){
-								styleTab.push(prefixs[prefix]+"transform:translateY("+scope.current*-scope.ecart+"px)");
-							}
-						}
-						var liste_slides_id=["#list-slides",scope.defilement,scope.instance].join("-");
-						document.querySelectorAll(liste_slides_id)[0].setAttribute('style',styleTab.join(';'));
-						if(scope.interval != null){
-							scope.current+=parseInt(scope.sens);
-						}
 					};//end of change
 					function less_one(){
-						(scope.current-1<0)?scope.current=scope.slides.length-1:scope.current-=1;
 						clearInterval(scope.interval);
 						scope.interval=null;
+						scope.sens=(-1*parseInt(scope.sens)).toString();
+						reverse=true;
+						action="else";
 						change();
+						
+						
 					};//end of less one
+					
 					function plus_one(){
-						(scope.current+1<scope.slides.length)?scope.current+=1:scope.current=0;
 						clearInterval(scope.interval);
 						scope.interval=null;
+						action="else";
 						change();
 					};//end of plus_one
+					
 					function last(){
-						scope.current=scope.slides.length-1;
-						clearInterval(scope.interval);
-						scope.interval=null;
-						change();
+						if(scope.current<scope.slides.length-1){
+							clearInterval(scope.interval);
+							scope.interval = null;
+							animateClass='animate-multi';
+							action="last";
+							scope.interval=setInterval(change,500);
+						}
 					};//end of last
+					
 					function first(){
-						scope.current=0;
-						clearInterval(scope.interval);
-						scope.interval=null;
-						change();
+						if(scope.current > 0){
+							clearInterval(scope.interval);
+							scope.interval=null;
+							animateClass='animate-multi';
+							action="first";
+							reverse=true;
+							scope.sens=(-1*parseInt(scope.sens)).toString();
+							scope.interval=setInterval(change,500);
+						}
 					};//end of first
+					
 					function play(){
 						if(scope.interval != null){
 							clearInterval(scope.interval);
 							scope.interval=null;
 						}else{
+							animating=false;
+							animateClass="animate";
+							action="else";
 							scope.interval=setInterval(change,3000);
-							
 						}
 					};//end of play
 			}//end of link
@@ -292,7 +375,6 @@ directive('flexbox',function(){
 					var active=0;
 					var container,items,properties,boxOrdinalGroup;
 					function move(e){
-						console.log('move');
 						// prevent the click action
 				        e.preventDefault();
 				        // check if the carousel is mid-animation
@@ -328,7 +410,6 @@ directive('flexbox',function(){
 						    }//end of move
 						
 						    function complete() {
-						    	console.log('complete');
 						        if ( animating ) {
 						            animating = false;
 						            // this needs to be removed so animation does not occur when the ordinal is changed and the carousel reshuffled
@@ -377,11 +458,14 @@ directive('flexbox',function(){
 						try{
 							container = document.getElementById('flexbox');
 							items = document.getElementById('flexbox-ul');
-							active = 0; // the active item (sits far left)
 							properties = {}; // used to calculate scroll distance
 								 // whether the carousel is currently animating
 								// use Modernizr.prefixed to get the prefixed version of boxOrdinalGroup
-							boxOrdinalGroup = Modernizr.prefixed( 'boxOrdinalGroup' );
+							boxOrdinalGroup = Modernizr.prefixed( "BoxOrdinalGroup" );
+							if(boxOrdinalGroup==false){
+								boxOrdinalGroup="msFlexOrder";
+							}
+							console.log("bOG="+boxOrdinalGroup);
 							var transEndEventNames = {
 													'WebkitTransition' : 'webkitTransitionEnd',
 													'MozTransition'    : 'transitionend',
@@ -401,16 +485,15 @@ directive('flexbox',function(){
 				            }
 				            // set the initial ordinal values
 				            changeOrdinal();
-							element.find('a.navigation').bind('mouseover',move);
-							element.find('#flexbox-ul').bind(transitionEnd,complete);
+							element.find('a.navigation').on('click',move);
+							element.find('#flexbox-ul').on(transitionEnd,complete);
 							clearInterval(interval);
-							
 						}catch(error){
 							console.log('pending init');
-							console.log(error);
 						}
+						
 					}//end of _init_
-			var interval=setInterval(init,20);
+			var interval=setInterval(init,50);
 		}//end of link
 	};//end of return
 });//end directive
