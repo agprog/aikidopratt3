@@ -519,8 +519,8 @@ h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
 
 #list-slides-v-0{
 	position:absolute;
-	/*top:-270px;*/
-	top:0;
+	top:-270px;
+	/*top:0;*/
 }
 .slides-0{
 	padding:1em;
