@@ -27,7 +27,7 @@ app.get('/init/:schema/',function(req,res){
 	var model=commons.create_model(req.params['schema']);
 	switch(req.params['schema']){
 		case 'actualite':
-				model.find({visible:false}).sort({date:'desc'}).exec(function(error,results){
+				model.find({visible:true}).sort({date:'desc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);

@@ -30,32 +30,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ dest: './tmp/' }));
 app.use(cookieParser());
-/*var client=redis.createClient(6379,'localhost');
-client.auth(
-        'localhost:6379',
-        function(err) {
-            if (err) {
-                // impossible de se connecter au serveur Redis
-                console.log(err);
-                throw err;
-            }else{
-				console.log("connecté au serveur redis");
-			}
-        });
-app.use(session({
-			secret:'123456',
-			store: new redisStore({
-				client:client
-				})
-		}));*/
 app.use(session({secret:'123456',
 				store:new mongoStore({
 					host:config.db[app.get('env')].host,
 					db:config.db[app.get('env')].dbname,
 					username:config.db[app.get('env')].user,
 					password:config.db[app.get('env')].pass,
-					ttl: 14 * 24 * 60 * 60,
-					autoRemove:'native'
+					ttl: 1 * 24 * 60 * 60,
+					saveUninitialized: false, // don't create session until something stored
+					resave: false, //don't save session if unmodified
+					autoRemove:'interval',
+					autoRemoveInterval:60
 				})
 			}));
 app.use('/', index);
