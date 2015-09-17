@@ -12,7 +12,8 @@ block content
 					div#welcome(ng-bind-html='welcome')
 			div#row1-right-content.content.form.col-xs-12.col-sm-12.col-md-6.col-lg-5
 				section.hpart
-					p.titre-rubrique Manifestations
+					a.a-title(href="/actualites/")
+						p.titre-rubrique Manifestations
 					carousel(sens='1',defilement='v',instance='0',slides='actualites',template='/static/js/index/templates/carousel-content.html')
 				
 				section.hpart

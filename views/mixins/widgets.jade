@@ -62,7 +62,7 @@ mixin input_pwd_valid(name,label,objet,atrbs)
 		+input_pwd(name,label,atrbs)
 		
 mixin check_line(name,label,val,atrbs)
-	p.form_line
+	p.form-line
 		label(for= name)= label
-		input(type='checkbox',name= name,id= name,ng-model= val)&attributes(atrbs)
+		input(type='checkbox',name= name,id= name,ng-model= val,ng-click='check_val($event)')&attributes(atrbs)
 

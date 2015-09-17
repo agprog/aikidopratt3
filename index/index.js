@@ -27,7 +27,7 @@ app.get('/init/:schema/',function(req,res){
 	var model=commons.create_model(req.params['schema']);
 	switch(req.params['schema']){
 		case 'actualite':
-				model.find({date:{$gte:Date.now()}}).sort({date:'desc'}).exec(function(error,results){
+				model.find({visible:false}).sort({date:'desc'}).exec(function(error,results){
 					commons.stop_mongo();
 					if(error){
 						res.send(500);
@@ -70,7 +70,7 @@ app.get('/init/',function(req,res){
 					//critere de date a rajouter en prog
 					//{date:{$gte:Date.now()}}
 					model=commons.create_model('actualite');
-					model.find().sort({date:'asc'}).exec(function(error,result){
+					model.find({visible:true}).sort({"date":'asc'}).exec(function(error,result){
 						callback(error,result);
 					});
 				},
@@ -91,7 +91,7 @@ app.get('/init/',function(req,res){
 					commons.stop_mongo();
 					if(error){
 						console.log(error.message);
-						res.send(500);
+						res.status(500);
 					}else{
 						res.json(results);
 					}
@@ -101,8 +101,8 @@ app.get('/actualites/:date',function(req,res){
 	var param=req.params.date;
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	console.log(new Date(param));
-	actualite.find({date:{$lte:new Date(param)}}).sort({date:"desc"}).exec(function(error,results){
+	console.log(param);
+	actualite.find({visible:true,date:{"$gte":new Date(param)}}).sort({date:"desc"}).exec(function(error,results){
 		commons.stop_mongo();
 		if(error){
 			console.log(error);
@@ -116,7 +116,7 @@ app.get('/actualites/:date',function(req,res){
 app.get('/actualites/',function(req,res){
 	commons.start_mongo();
 	var actualite=commons.create_model('actualite');
-	actualite.find({date:{'$gte':Date.now()}}).sort({date:'asc'}).exec(function(error,results){
+	actualite.find({visible:true}).sort({date:'asc'}).exec(function(error,results){
 		commons.stop_mongo();
 		if(error){
 			res.send(500);

@@ -25,11 +25,12 @@ var schema={
 								file     : {type:String,default:''},
 								location : {type:String,default:''},
 								coordonnates : {type:String,default:''},
-								date     : {type:Date,get:dateToStr,date:true},
+								date     : {type:Date,get:dateToStr},
 								start    : {type:String},
 								duration : {type:Number,default:1},
 								category : {type:String,default:''},
-								tags     : {type:String,default:''}
+								tags     : {type:String,default:''},
+								visible  : {type:Boolean,default:true}
 								}),
 
 	coursSchema     : mongoose.Schema({
@@ -64,7 +65,7 @@ var schema={
 								thumbnail: {type:String,default:''},
 								legend  : {type:String,default:''},
 								path    : {type:String,default:''},
-								show    : {type:Boolean,default:false},
+								show    : {type:Boolean,default:true},
 								photos  : [{type:Schema.Types.ObjectId,ref:'photo'}]
  							}),
  	userSchema		: mongoose.Schema({

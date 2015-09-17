@@ -18,5 +18,7 @@ form#actualite-form(class="right-form",action="/admin/actualite/put/",enctype="m
 	+input_line('duration','Durée :','{{objet.duration}}',{})
 	+input_line('category','Catégorie','{{objet.category}}',{})
 	+input_line('tags','Mots clés :', '{{objet.tags}}',{})
+	+check_line('check_visible','Afficher : ','objet.visible',{})
+	input(type='hidden',id='visible',name='visible',value="#{objet.visible}")
 	p.form-line
 		input(type="submit",id="submit",name="submit",value="Valider")

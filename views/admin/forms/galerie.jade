@@ -10,6 +10,7 @@ form#galerie-form(class="right-form",action="/admin/galerie/put/",enctype="multi
 	+input_line('order_num',"Numéro d'ordre",'{{objet.order_num}}',{})
 	+input_file('thumbnail','Vignette :','/uploads/galeries','{{objet.thumbnail}}',{})
 	+text_line('legend','Légende :','{{objet.legend}}',{})
-	+check_line('show','Page accueil : ','objet.show',{})
+	+check_line('check_show',"Afficher sur page d'accueil : ","objet.show",{})
+	input(type='hidden',id='show',name='show',value="#{objet.show}")
 	p.form-line
 		input(type="submit",id="submit",name="submit",value="Valider")

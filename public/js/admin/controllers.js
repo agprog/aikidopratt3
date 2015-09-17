@@ -43,6 +43,16 @@ angular.module('admin.controllers',[])
 		};// fin remplissage formulaire
 		/*!** */
 		/* *** */
+		/*! *** CheckVal change la valeur d'un input type checkbox car angular a du mal a gerer'
+		 *! *** */
+		$scope.check_val=function($event){
+			var elt=document.getElementById('visible');
+			if($event.target.checked){
+				elt.setAttribute('value',true);
+			}else{
+				elt.setAttribute('value',false);
+			}
+		};
 		/*! *** Get recupere un objet *** */
 		/*! *** */
 		$scope.getObjet=function($event){
@@ -142,6 +152,15 @@ angular.module('admin.controllers',[])
 			$scope.form_title='Ajouter '+$scope.safename;
 			fillFormSrv.addForm($event,objet);
 		};// fin remplissage formulaire
+		
+		$scope.check_val=function($event){
+			var elt=document.getElementById('show');
+			if($event.target.checked){
+				elt.setAttribute('value',true);
+			}else{
+				elt.setAttribute('value',false);
+			}
+		};
 		/*! *** Get recupere un objet *** */
 		/*! *** */
 		$scope.getObjet=function($event){
