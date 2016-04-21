@@ -14,18 +14,28 @@ angular.module('admin.controllers',[])
 		/*! *** raz scope *** */
 		$scope.nb_ids=0;
 		$scope.ids="";
+		$scope.reverse=false;
 		//initialisation de l'objet vide
 		$scope.showform='add';
-		$scope.schema=document.getElementById("schema").value;
+		$scope.schema=$("#schema").val();
 		$scope.safename=defaultsSrv[$scope.schema].safename;
 		$scope.pluralize=defaultsSrv[$scope.schema].pluralize;
 		$scope.form_title='Ajouter '+$scope.safename;
 		$scope.objet=defaultsSrv[$scope.schema];
+		$scope.liste=[];
+		$scope.sort='created';
+		
+		getSrv("/admin/liste/"+$scope.schema)
+		.success(function(response){
+				$scope.csrf_token=$("input[name='csrfmiddlewaretoken']").val();
+				$scope.liste=response;
+		});
 		/*!*** */
 		/*! *** Retour après selection d'un élément pour une action ***/
 		/*! *** en lot. *** */
 		/*!*** */
 		$scope.select_elt=function(id){
+			console.log(id);
 			var tab_ids=selectIdSrv.tab_ids(id,$scope.ids);
 			$scope.ids=tab_ids.join(',');
 			$scope.nb_ids=tab_ids.length;
@@ -45,6 +55,7 @@ angular.module('admin.controllers',[])
 		/* *** */
 		/*! *** CheckVal change la valeur d'un input type checkbox car angular a du mal a gerer'
 		 *! *** */
+		 
 		$scope.check_val=function($event){
 			var elt=document.getElementById('visible');
 			if($event.target.checked){
@@ -55,6 +66,7 @@ angular.module('admin.controllers',[])
 		};
 		/*! *** Get recupere un objet *** */
 		/*! *** */
+		
 		$scope.getObjet=function($event){
 			$event.preventDefault();
 			getSrv($event.target.getAttribute('href'))
@@ -67,7 +79,29 @@ angular.module('admin.controllers',[])
 				$scope.objet=response;
 			});
 		};
-		
+		/*! *** fonction de filtre sur les entetes de tableau
+		 * */
+		$scope.order=function(field){
+			$scope.sort=field;
+			if($scope.reverse){
+				$scope.sort="-"+$scope.sort;
+				$scope.reverse=false;
+				$(".fleche-down").removeClass("fleche-down").addClass("fleche-up");
+			}else{
+				$scope.reverse=true;
+				$(".fleche-up").removeClass("fleche-up").addClass("fleche-down");
+			}
+		}
+		/*! *** fonction de confirmation avant supression
+		 * */
+		$scope.confirmObjet=function($event,id){
+			$event.preventDefault();
+			var params = "ids="+id;
+			postSrv($event.target.getAttribute('href'),params)
+			.success(function(response){
+				$("html").empty().html(response);
+			});
+		}
 	}])//fin mainCtl
 	.controller('GeneralitesCtl',['$scope','postSrv',function($scope,postSrv){
 		var objet="general";
@@ -120,70 +154,15 @@ angular.module('admin.controllers',[])
 				});
 		};
 	}])
-	.controller('GaleriesCtl',['$scope','getSrv','postSrv','defaultsSrv','fillFormSrv',function($scope,getSrv,postSrv,defaultsSrv,fillFormSrv){
-		$scope.msg="";
-		$scope.nb_ids="0";
-		$scope.ids="";
-		//initialisation de l'objet vide
-		$scope.objet=defaultsSrv['galerie'];
-		$scope.isloading=false;
-		$scope.showform='add';
-		$scope.safename=defaultsSrv['galerie'].safename;
-		$scope.pluralize=defaultsSrv['galerie'].pluralize;
-		$scope.form_title='Ajouter '+$scope.safename;
-		/*!*** */
-		/*! *** Retour après selection d'un élément pour une action ***/
-		/*! *** en lot. *** */
-		/*!*** */
-		$scope.select_elt=function(id){
-			var tab_ids=selectIdSrv.tab_ids(id,$scope.ids);
-			$scope.ids=tab_ids.join(',');
-			$scope.nb_ids=tab_ids.length;
-		};// fin select_elt
-		
-		/*!*** */
-		/*! *** Remplit formulaire avec données  ***  */
-		/*!*** */
-		$scope.add=function($event,objet){
-			$scope.id=objet._id;
-			$scope.objet=defaultsSrv[$scope.schema];
-			$scope.showform='add';
-			$scope.safename=defaultsSrv['galerie'].safename;
-			$scope.form_title='Ajouter '+$scope.safename;
-			fillFormSrv.addForm($event,objet);
-		};// fin remplissage formulaire
-		
-		$scope.check_val=function($event){
-			var elt=document.getElementById('show');
-			if($event.target.checked){
-				elt.setAttribute('value',true);
-			}else{
-				elt.setAttribute('value',false);
-			}
-		};
-		/*! *** Get recupere un objet *** */
-		/*! *** */
-		$scope.getObjet=function($event){
-			$event.preventDefault();
-			getSrv($event.target.getAttribute('href'))
-			.success(function(response){
-				$scope.id=response.id;
-				$scope.addgalerie=false;
-				$scope.showform='edit';
-				$scope.form_title='Modifier '+$scope.safename;
-				$("#id").val(response.id);
-				$("#csrf_token").val(response.csrf_token);
-				$("#confirm_csrf").val(response.csrf_token);
-				$scope.objet=response;
-			});
-			
-		};//fin get
+	.controller('GaleriesCtl',['$scope','postSrv',function($scope,postSrv){
 		/*!*** deletephoto ***/
 		$scope.deletePhoto=function($event){
 			/*$event.preventDefault();*/
-			var id=$event.target.getAttribute('data-id');
+			var id_photo=$event.target.getAttribute('data-id');
+			var order_num=$event.target.getAttribute('data-order');
+			var id_galerie=$event.target.getAttribute("data-galerie");
 			var name=$event.target.getAttribute('data-name');
-			postSrv('/admin/galerie/photo/delete/','id='+id)
+			postSrv('/admin/galerie/photo/delete/','id_photo='+id_photo+'&order_num='+order_num+'&galerie='+id_galerie)
 			.success(function(response){
 				$scope.isloading=false;
 				$scope.msg="La photo a été correctement supprimée."

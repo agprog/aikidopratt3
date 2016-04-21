@@ -46,6 +46,11 @@ app.get('/', function(req, res) {
 											});
 							});
 });
+app.get('/liste/:schema',function(req,res){
+	users.is_login(req,res,function(){
+							handlers.liste(req,res,req.params);
+						});
+});
 app.post('/galerie/photo/add/',function(req,res){
 	users.is_login(req,res,function(){
 							handlers.photo_add(req,res);
@@ -57,6 +62,15 @@ app.post('/galerie/photo/delete/',function(req,res){
 				res.status(403).send('Erreur csrf').end();
 			}else{
 				handlers.photo_delete(req,res);
+			}
+	});
+});
+app.post('/galerie/changeorder',function(req,res){
+	users.is_login(req,res,function(){
+		if(commons.csrf_check(req) == false && config.environment != 'dev'){
+				res.status(403).send('Erreur csrf').end();
+			}else{
+				handlers.photo_changeorder(req,res);
 			}
 	});
 });

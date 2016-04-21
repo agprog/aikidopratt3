@@ -41,6 +41,17 @@ module.exports={
 				});//fin async
 				
 	},//fin function objet
+	liste:function(req,res,params){
+		commons.start_mongo();
+		var model=commons.create_model(params['schema']);
+		model.find().sort().exec(function(err,result){
+									if(err){
+										return res.send(err.message);
+									}else{
+										return res.json(result);
+									}
+		});
+	},//fin function liste
 	get:function(req,res,params){
 		commons.start_mongo();
 		var model=commons.create_model(params['schema']);
@@ -75,7 +86,7 @@ module.exports={
 						params['showform']='edit';
 						__render_admin(req,res,results.liste,results.objet,params);
 					}else{
-						console.log(__create_datas(req,params,model,results.objet));
+						/*console.log(__create_datas(req,params,model,results.objet));*/
 						res.json(__create_datas(req,params,model,results.objet));
 					}
 				}else{
@@ -173,6 +184,7 @@ module.exports={
 	confirm:function(req,res,params){
 		commons.start_mongo();
 		var ids=req.body['ids'].split(',');
+		console.log(ids);
 		var model=commons.create_model(params['schema']);
 		model.find({_id:{$in:ids}}).exec(function(err,liste){
 									commons.stop_mongo();
@@ -270,12 +282,12 @@ module.exports={
 												}else{
 													doc[req.body.field]=req.body.value;
 													doc.save(function(error){
-															commons.stop_mongo();
 															if(error){
 																throw error;
 															}else{
 																res.send("la modification a ete effectuee "+req.body.field+":"+req.body.value);
 															}
+															commons.stop_mongo();
 														});
 												}
 											});
@@ -292,7 +304,7 @@ module.exports={
 										message='la clé '+req.body.id+' a été correctement supprimée';
 									}
 									commons.stop_mongo();
-									console.log("message="+message);
+									/*console.log("message="+message);*/
 									res.send(message);
 								});//end model find
 		
@@ -323,6 +335,7 @@ module.exports={
 				galerie=result;
 				nb_photos=galerie.photos.length-1;
 				async.map(tab_files,AsyncCropAndSave,function(err,results){
+					commons.stop_mongo();
 					res.json(galerie.photos);
 				});
 			});//fin functionfindOne
@@ -366,13 +379,52 @@ module.exports={
 		}//fin if request.files
 	},//fin methode photo_add
 	photo_delete:function(req,res){
+		var id_photo=req.body.id_photo;
+		var order_num=req.body.order_num;
+		var id_galerie=req.body.galerie;
 		commons.start_mongo();
 		var model=commons.create_model('photo');
-		async.series({
-						del    : function(callback){
-							model.findOneAndRemove({_id:req.body.id}).exec(function(err,doc){
+		
+		async.waterfall([
+						function(callback){ /*! fonction servant a trouver le nombre maximal de photos dans une galerie */
+							model.find({"_galerie":id_galerie}).exec(function(err,list){
+								if(err){
+									message=err.message;
+								}else{
+									callback(err,commons.range(order_num,(list.length-1)));
+								}
+							});
+							
+						},
+						function(interval,callback){ /*! fonction servant à décaler les autres photos */
+							function _save(photo,callback){ /* fonction interne permettant d'enregistrer le chgt du numero d'ordre */
+								photo.order_num-=1;
+								photo.save(function(err,result){
+									if(err){
+										console.log("erreur decalage photo="+err.message);
+									}else{
+										/*console.log("la photo "+photo.order_num+" a été décalée");*/
+									}
+								});
+							}
+							model.find({'_galerie':id_galerie,"order_num":{"$in":interval}}).exec(function(err,liste){
+								if(err){
+									callback(null,false);
+								}else{
+									if(order_num < interval[1]){
+										async.map(liste,_save,function(err,result){
+											/*console.log("les photos ont été décalées");*/
+										});
+									}
+									callback(null,true);
+								}
+								});
+						},
+						function(result,callback){ /*! fonction servant a supprimer la photo concernée */
+							model.findOneAndRemove({_id:id_photo}).exec(function(err,doc){
 									if(err){ 
 										message=err.message;
+										console.log("suppression="+message);
 									}else{
 										/*! effacement de la photo concernée */
 										var rep=config.UPLOADS_DIR+'galeries/'+doc._galerie+'/';
@@ -381,22 +433,73 @@ module.exports={
 										message='la photo '+doc.name+' a été correctement supprimée';
 										callback(err,doc);
 									}
-									
 								});//end model find
-						}
-					},function(error,results){
+						},
+						
+					]
+					,function(error,results){
 						if(error){
 							commons.stop_mongo();
 							res.send(error.message);
 						}else{
-							var id=results['del']._galerie;
-							model.find({_galerie:id}).exec(function(err,list){
+							model.find({"_galerie":id_galerie}).sort("order_num").exec(function(err,liste_photos){
 								commons.stop_mongo();
-								res.json(list);
+								res.json(liste_photos);
 							});
 							
 						}
 					});
+	},//fin methode photo_delete
+	/**
+	 * methode changeorder
+	 * @brief permet de modifier le numero d'ordre des photos dans la base de données
+	 * */
+	photo_changeorder:function(req,res){
+		commons.start_mongo();
+		var tableau;
+		var initial=parseInt(req.body.initial);
+		var final=parseInt(req.body.final);
+		/*!** gestion du sens de deplacement **/
+		var sens=1;
+		if(initial < final ){sens=-1;}
+		
+		var model=commons.create_model('photo');
+		async.waterfall([
+			function(callback){
+					model.find({'_galerie':req.body.galerie,
+								'order_num':{ '$in' : commons.range(initial,final)} }).sort({'order_num':1}).exec(function(error,liste){
+																callback(null,liste);
+													});
+					},
+			function(liste,callback){
+				function _switchnum(photo,callback){
+					photo.order_num=photo.order_num+sens;
+					photo.save(function(err,doc){
+						/*console.log("la photo "+photo.order_num+" a été décalée");*/
+						callback(null,true);
+					});
+				}
+				
+				var liste_a_decaler;
+				var last;
+				
+				if(sens == 1){
+					liste_a_decaler=liste.slice(0,liste.length-1);
+					last=liste[liste.length-1];
+				}else{
+					liste_a_decaler=liste.slice(1,liste.length);
+					last=liste[0];
+				}
+				
+				async.map(liste_a_decaler,_switchnum,function(err,result){
+						last.order_num = final;
+					last.save(function(err,doc){
+						/*console.log("decalage effectué");*/
+					});
+					if(err){console.log(err.message);}else{res.json("les photos ont été décalées");}
+				});
+			}
+		]);
 	}
 }// fin module exports
 /*!----- retourne le modele desire ou une erreur ---*/

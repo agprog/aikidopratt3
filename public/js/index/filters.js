@@ -27,7 +27,9 @@ angular.module('index.filters', []).
 	.filter('setActuMarkersFlt',['calendarSrv',function(calendarSrv){
 		return function(values,days,year,month){
 			var first_index=calendarSrv.first_index(year,month);
+			console.log(days.length);
 			angular.forEach(values,function(value,key){
+				console.log("key"+key+"value"+value.date.toString());
 				var re=new RegExp('^'+year+'-'+('00'+(parseInt(month)+1)).slice(-2));
 				try{
 					console.log(year+'-'+('00'+(parseInt(month)+1)).slice(-2));

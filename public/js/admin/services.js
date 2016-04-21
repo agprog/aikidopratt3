@@ -9,7 +9,7 @@ angular.module('admin.services', [])
     .value('version', '0.1')
     .value('application',{})
     .value('defaultsSrv',{
-						'actualite':{safename:'actualité',pluralize:'actualités',title:'',slug:'',content:'',excerpt:'',link_:'',location:'',addres_1:'',addres_2:'',ville:'',date:null,start:null,duration:0,category:'',tags:''},
+						'actualite':{safename:'actualité',pluralize:'actualités',title:'',slug:'',content:'',excerpt:'',link_:'',location:'',addres_1:'',addres_2:'',ville:'',date:null,start:null,duration:0,category:'',tags:'',show:true},
 						'cours':{safename:'cours',pluralize:'cours',title:'',slug:'',content:'',jour:'0',addres_1:'',addres_2:'',ville:''},
 						'galerie':{safename:'galerie',pluralize:'galeries photos',title:'',slug:'','order_num':'',legend:'',photos:[],thumbnail:'thumbnail.png',show:false},
 						'user':{safename:'utilisateur',pluralize:'utilisateurs',firstname:'',lastname:'',email:'',role:'membre',password:'',confirm:''}

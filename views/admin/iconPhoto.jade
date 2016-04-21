@@ -1,7 +1,7 @@
 div(id="icone-photo-#{photo._id}",class="icone-photo")
 	input(type="hidden",id="id-photo-#{photo._id}",class="id-photo",value="#{photo._id}")
 	p(id="supp-#{photo._id}",class="p-supp")
-		a(id="a-supp-#{photo._id}",class="a-supp-photo",ng-click="deletePhoto('#{photo._id}');") &nbsp;X
+		a(data-id="{{photo._id}}",data-name="{{photo.name}}",data-order="{{photo.order_num}}",data-galerie="{{photo._galerie}}",id="a-supp-#{photo._id}",class="a-supp-photo",ng-click="deletePhoto('#{photo._id}');") &nbsp;X
 	table
 		tr
 			td.photo

@@ -21,11 +21,13 @@ angular.module('index.directives', []).
 			controller:function($scope){
 				var date=new Date();
 				var markers=[];
+				console.log($scope.dates);
 				$scope.currentmonth=date.getMonth();
 				$scope.currentyear=date.getFullYear();
 				$scope.refresh=function(){
 					$scope.months=calendarSrv.months($scope.currentyear,$scope.currentmonth);
 					$scope.days=calendarSrv.days($scope.currentyear,$scope.currentmonth);
+					/*! *** requete pour mettre a jour scope.dates *** */
 					$scope.days=$filter('setActuMarkersFlt')($scope.dates,$scope.days,$scope.currentyear,$scope.currentmonth);
 				}
 				$scope.markerlink=function(){
