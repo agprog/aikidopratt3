@@ -38,7 +38,7 @@ table
 		td.center
 			{{elt.created}}
 		td.left
-			a(href="/admin/{{schema}}/{{elt.id}}/",ng-click='getObjet($event);') {{elt.title}}
+			a(href="/admin/{{schema}}/{{elt.id}}",ng-click='getObjet($event);') {{elt.title}}
 		td.action.center
 			a(href="/admin/{{schema}}/{{elt.id}}/",ng-click='getObjet($event);') éditer
 		td.action.center
