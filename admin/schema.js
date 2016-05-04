@@ -1,4 +1,4 @@
-
+var async=require('async');
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
@@ -6,6 +6,7 @@ function dateToStr(value){
 	var commons=require('commons');
 	return commons.datetostr(value);
 }
+
 var schema={
 	
 	generalSchema   : mongoose.Schema({
@@ -59,9 +60,11 @@ var schema={
  	galerieSchema	: mongoose.Schema({
 								created : {type:Date,default:Date.now(),get:dateToStr},
 								order_num:{type:Number,default:0},
-								title   : {type:String,default:''},
+								title   : {type:String,default:'',
+											required:'Un titre est requis pour une galerie photo'},
 								theme   : {type:String,default:''},
-								slug    : {type:String,default:''},
+								slug    : {type:String,default:'',
+											required:'Un slug est requis pour une galerie photo'},
 								thumbnail: {type:String,default:''},
 								legend  : {type:String,default:''},
 								path    : {type:String,default:''},
@@ -87,8 +90,11 @@ schema.coursSchema.set('toJSON',{getters:true});
 schema.coursSchema.set('toObject',{getters:true});
 schema.userSchema.set('toObject',{getters:true});
 schema.userSchema.set('toJSON',{getters:true});
-schema.galerieSchema.path('thumbnail').validate(function(val){return val !=""},"Une vignette est requise pour illustrer la galerie.");
+/*schema.galerieSchema.path('thumbnail').validate(function(val){return val !=""},"Une vignette est requise pour illustrer la galerie.");*/
 schema.galerieSchema.set('toObject',{getters:true});
+schema.galerieSchema.options.toObject.transform=function(doc,ret,options){
+	delete ret._id;
+};
 schema.galerieSchema.set('toJSON',{getters:true});
 
 

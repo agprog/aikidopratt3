@@ -17,6 +17,8 @@ form#user-form(class="right-form",action="/admin/user/put/",enctype="multipart/f
 		+input_pwd_valid('password','Mot de passe : ',objet,{})
 		+input_pwd('confirm','Confirmation : ',{})
 	+select_line('role','Role :',["admin","membre"],'{{objet.role}}',{'ng-model':'objet.role','ng-init':"objet.role='membre'"})
+	script
+		| var content = !{JSON.stringify(objet)}
 	p.form-line
 		input(type="submit",id="submit",name="submit",value="Valider")
 

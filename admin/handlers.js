@@ -29,12 +29,22 @@ module.exports={
 												cb(err,result);
 											});
 						}
-					}//end liste
+					},//end liste
+					count:function(cb){
+						model.aggregate({$group:{_id:null,sum:{$sum:1}}}).exec(function(err,result){
+											commons.stop_mongo();
+											cb(err,result);
+										});//fin aggregate
+					}//end count
 				},
 				function(err,results){
 					commons.stop_mongo();
 					if(err){
 						results.liste=[];
+					}
+					if(params['schema']=='galerie'){
+						console.log(results.count[0].sum);
+						objet.order_num=results.count[0].sum;
 					}
 					params['showform']='add';
 					__render_admin(req,res,results.liste,objet,params);
@@ -55,6 +65,7 @@ module.exports={
 	get:function(req,res,params){
 		commons.start_mongo();
 		var model=commons.create_model(params['schema']);
+		
 		if(params['populate']){
 			var Photo=commons.create_model(params['populate'].schema);
 		}
@@ -104,18 +115,36 @@ module.exports={
 					model.find().exec(function(err,result){
 										cb(err,result);
 								});
-					}//fin liste
+					},//fin liste
+				count:function(result,cb){
+					model.aggregate({$group:{_id:null,sum:{$sum:1}}}).exec(function(err,result){
+											commons.stop_mongo();
+											cb(err,result);
+										});//fin aggregate
+					}//fin count
 				},
 				function(errors,results){
 					commons.stop_mongo();
 					params['showform']='add';
-					__render_admin(req,res,results.liste,new model(),params);
+					var objet=new model();
+					if(params['schema'] == 'galerie'){objet.order_num=results.count[0].sum;};
+					__render_admin(req,res,results.liste,objet,params);
 				}
 			);//fin async
 		}else{
-			commons.stop_mongo();
-			datas=__create_datas(req,params,model,new model());
-			res.json(datas).end();
+			async.waterfall([
+				function(cb){
+					model.aggregate({$group:{_id:null,sum:{$sum:1}}}).exec(function(err,result){
+											cb(err,result);
+										});//fin aggregate
+				},
+				function(result,cb){
+					var objet=new model();
+					if(params['schema'] == 'galerie'){objet.order_num=result[0].sum};
+					datas=__create_datas(req,params,model,objet);
+					commons.stop_mongo();
+					res.json(datas).end();
+				}]);
 		}
 	},
 	put:function(req,res,params){
@@ -132,7 +161,7 @@ module.exports={
 			}
 		}
 		/*!************ TRAITE L'UPLOAD *****************/
-		if(req.files && params['schema']!='galerie'){
+		if(req.files && params['schema'] != 'galerie'){
 			for(file in req.files){
 				commons.upload(req.files[file],'docs');
 				req.body.file=req.files[file].originalname;
@@ -165,15 +194,17 @@ module.exports={
 				objet.save(function(invalid,doc){
 							commons.stop_mongo();
 							if(invalid || params['errors']){
-								objet=objet.toObject();
+								/*objet=objet.toObject({'hide':'_id','transform':true});*/
 								if(params['errors']){
 									for(var err in params['errors']){
-										invalid.errors[err]=params['errors'][err];
+										if(invalid){
+											invalid.errors[err]=params['errors'][err];
+										}
 									}
 								}
 								req.sessionStore.flash=__create_errors(invalid.errors,objet);
-								console.log(invalid.errors);
 								__render_admin(req,res,results.liste,objet,params);
+								/*res.json(params);*/
 							}else{
 								req.sessionStore.flash="L'enregistrement a été correctement effectué;.";
 								res.redirect("/"+params['dir']+"/"+params['schema']+"/");
@@ -184,7 +215,7 @@ module.exports={
 	confirm:function(req,res,params){
 		commons.start_mongo();
 		var ids=req.body['ids'].split(',');
-		console.log(ids);
+		/*console.log(ids);*/
 		var model=commons.create_model(params['schema']);
 		model.find({_id:{$in:ids}}).exec(function(err,liste){
 									commons.stop_mongo();
@@ -493,7 +524,7 @@ module.exports={
 				
 				async.map(liste_a_decaler,_switchnum,function(err,result){
 						last.order_num = final;
-						last.save(function(err,doc){
+					last.save(function(err,doc){
 						/*console.log("decalage effectué");*/
 					});
 					if(err){console.log(err.message);}else{res.json("les photos ont été décalées");}
@@ -505,14 +536,14 @@ module.exports={
 /*!----- retourne le modele desire ou une erreur ---*/
 
 function __render_admin(req,res,liste,objet,params){
-	var datas={title:params['espace']+'|Liste des '+params['schema']+'s',
-				showform:params['showform'],
-				schema:params['schema'],
-				form:"/forms/"+params['schema'],
-				objet:objet,
-				liste:liste,
-				ids:(req.body['ids'])?req.body['ids']:null,
-				context:commons.contextCreate(req,params['dir'])
+	var datas={'title':params['espace']+'|Liste des '+params['schema']+'s',
+				'showform':params['showform'],
+				'schema':params['schema'],
+				'form':"/forms/"+params['schema'],
+				'liste':liste,
+				'objet':objet,
+				'ids':(req.body['ids'])?req.body['ids']:null,
+				'context':commons.contextCreate(req,params['dir'])
 				};
 	res.render(params['dir']+'/'+params['template'],datas);
 }
@@ -548,4 +579,18 @@ function __create_datas(req,params,model,objet){
 		}
 	}
 	return datas;
+}
+function __newOrderValue(schema){
+	var commons=require('commons');
+	commons.start_mongo();
+	var model=commons.create_model(schema);
+	async.waterfall([
+		function(cb){
+				
+			}
+		,function(result,cb){
+			console.log("jaime''"+result[0].sum);
+			return result[0].sum;
+		}
+	]);//fin parralel
 }

@@ -58,40 +58,25 @@ angular.module('admin.services', [])
 					};
 	}])
 	.service('fillFormSrv',['postSrv','$q',function(postSrv,$q){
-		this.addForm=function(event,objet){
+		this.addForm=function(event,instance,objet){
 			event.preventDefault();
 			var post=postSrv('/admin/'+objet+'/add/',"",objet);
 				post.success(function(jdatas){
-					console.log(jdatas);
 					document.querySelector("#id").value=jdatas._id;
 					document.querySelector("#csrf_token").value=jdatas.csrf_token;
-					document.querySelector("#confirm_csrf").value=jdatas.response.csrf_token;
+					try{
+						document.querySelector("#confirm_csrf").value=jdatas.csrf_token;
+					}catch(err){
+						console.log("no confirm csrf in this request");
+					}
+					/*! met a jour l'objet du scope'*/
+					for(var field in jdatas){
+						if(instance[field] !== 'undefined'){
+							instance[field]=jdatas[field];
+						}
+					}
 				});
 			}
-			/*this.addForm=function(event,objet){
-				event.preventDefault();
-				var post=postSrv('/admin/'+objet+'/add/',"",objet);
-				post.success(function(jdatas){
-					var form=new Datas("#"+objet+"-form");
-					form.fill(jdatas);
-				});
-			},
-			this.addFormPromise=function(event,objet){
-				event.preventDefault();
-				/*var deferred=$q.defer();
-				var post=postSrv('/admin/'+objet+'/add/',"",objet);
-				post.success(function(jdatas){
-								deferred.resolve(true);
-								var form=new Datas("#"+objet+"-form");
-								form.fill(jdatas);
-							})
-					.error(function(msg,code){
-								deferred.reject(false);
-								$log(msg);
-								});
-					return deferred.promise;
-		};*/
-		
 	}])
 	.service('uploadSrv',['$http',function($http){
 		this.post=function(url,datas){

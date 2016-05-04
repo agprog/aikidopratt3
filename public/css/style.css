@@ -185,7 +185,7 @@ body {font-size:0.8em;
 	background-repeat:no-repeat;
 	}
 h1{font-family:tempus;font-size:2.5em;text-align:center;font-weight:600;}
-#connect{position:fixed;top:0;/*max-width:1115px*/;width:100%;margin:0 auto;background-color:#000;height:30px;z-index:1040;}
+#connect{position:fixed;top:0;left:0;/*max-width:1115px*/;width:100%;margin:0;background-color:#000;height:30px;z-index:1040;}
 #connect-block{float:right;color:#fff;width:17%;height:30px;}
 #connect-block>span{display:block;height:30px;line-height:30px;margin-left:2%;}
 #connect-block>span>a:hover{color:#fff;}

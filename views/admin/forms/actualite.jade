@@ -20,5 +20,7 @@ form#actualite-form(class="right-form",action="/admin/actualite/put/",enctype="m
 	+input_line('tags','Mots clés :', '{{objet.tags}}',{})
 	+check_line('check_visible','Afficher : ','objet.visible',{})
 	input(type='hidden',id='visible',name='visible',value="#{objet.visible}")
+	script
+		| var content = !{JSON.stringify(objet)}
 	p.form-line
 		input(type="submit",id="submit",name="submit",value="Valider")

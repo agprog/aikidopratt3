@@ -26,13 +26,14 @@ block content
 							div(class="icone-photo",id="icone-photo-{{photo._id}}",data-order="{{photo.order_num}}",ng-repeat="photo in objet.photos | orderBy: 'order_num'")
 								input(type="hidden",class="id-photo",id="id-photo-{{photo._id}}",value="{{photo._id}}")
 								p(id="supp-{{photo._id}}",class="p-supp")
+									label(for="order_num-{{photo._id}}",class="order-num-label") ordre&nbsp;:&nbsp;
+									input(type="text", class="order-num",name="order_num-{{photo._id}}",data-id="{{photo._id}}",data-field="order_num",ng-keyup="updatePhoto($event);",value="{{photo.order_num}}")
 									a(data-id="{{photo._id}}",data-name="{{photo.name}}",data-galerie="{{photo._galerie}}",data-order="{{photo.order_num}}",class="a-supp-photo",ng-click="deletePhoto($event)") &nbsp;X
 								table
 									tr
 										td(class="photo")
 											img(src="/uploads/galeries/{{photo._galerie}}/thumbnails/{{photo.name}}",alt="photo de {{photo.legend}}",draggable="false")
 											p(class="photo-legend")
-												input(type="text",data-id="{{photo._id}}",data-name="{{photo.name}}",class="legend",name="legend-{{photo._id}}",value='{{photo.legend}}',ng-keyup="updatePhoto($event)")
+												input(type="text",data-id="{{photo._id}}",data-field="legend",data-name="{{photo.name}}",class="legend",name="legend-{{photo._id}}",value='{{photo.legend}}',ng-keyup="updatePhoto($event)")
 						add_photo
 		include ../footer
-		

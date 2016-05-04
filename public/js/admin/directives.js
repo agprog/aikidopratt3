@@ -33,6 +33,7 @@ angular.module('admin.directives', []).
 					elts.attr('draggable','draggable');
 					elts.addClass('elt');
 					jQuery(elts).wrap(function(ind){return "<div id='cell-"+ind+"' class='cell' data-position='"+ind+"'></div>"});
+					jQuery(elts).map(function(ind){return $(elts[ind]).find(".order-num").attr('id','order-num-'+ind)});
 					element.append("<div id='hidden-cell' style='display:none;'></div>");
 					   /*!** position dynamique de l'element au cours du drag **/
 					elts.find("img").on({'dragstart':function(event){
@@ -55,22 +56,34 @@ angular.module('admin.directives', []).
 								'dragenter':function(event){
 											/*event.preventDefault();*/
 											event.stopPropagation();
-											/** 
+											/**
+											 * @brief la fonction order_write modifie les donnees order_num sur chaque element
+											 * 
+											 * */
+											 var __order_write=function(target){
+															jQuery("#cell-"+target).find(".a-supp-photo").attr("data-order",target);
+															jQuery("#cell-"+target).find(".order-num").attr({'value':target,'id':"order-num-"+target});
+											}											/** 
 											* @brief  la fonction shift permet de décaler 
 											* les éléments au moment du drag and drop
 											*/   
-											var shift=function(direction){
-													jQuery("#hidden-cell").html(jQuery("#cell-"+slidebegin).children()[0]);
+											var shift=function(begin,end){
+													var direction=end-begin;
+													jQuery("#hidden-cell").html(jQuery("#cell-"+begin).children()[0]);
 													if(direction>0){ 
-														for(var i=slidebegin;i<slideend;i++){  
-														   jQuery("#cell-"+i).html(jQuery("#cell-"+(i+1)).children()[0]);   
+														for(var i=begin;i<end;i++){
+															jQuery("#cell-"+i).html(jQuery("#cell-"+(i+1)).children()[0]);
+															__order_write(i);
 														}
 													}else if(direction<0){
-														for(var i=slidebegin;i>slideend;i--){ 
-														   jQuery("#cell-"+i).html(jQuery("#cell-"+(i-1)).children()[0]);   
+														for(var i=begin;i>end;i--){
+															jQuery("#cell-"+i).html(jQuery("#cell-"+(i-1)).children()[0]);
+															__order_write(i);
 														}
 													}
-													jQuery("#cell-"+slideend).html(jQuery("#hidden-cell").children()[0]);
+													jQuery("#cell-"+end).html(jQuery("#hidden-cell").children()[0]);
+													__order_write(end);
+													/*(direction>0)?__order_write(end,begin):__order_write(end,begin);*/
 													
 											}//end of shift
 											if(onwork == false){
@@ -80,7 +93,7 @@ angular.module('admin.directives', []).
 												var slideend=parseInt(target.attr('data-position'));
 												
 												if(slideend != slidebegin){
-													shift(slideend-slidebegin);
+													shift(slidebegin,slideend);
 													return true;
 												}else{
 													onwork=false;
@@ -181,15 +194,19 @@ angular.module('admin.directives', []).
 			link: function (scope, element, attrs) {
 				// DOM manipulation/events here!
 				element.bind('click',function(){
-					//on cree la nouvelle entree dans la base
-					postSrv("/admin/generalite/add/","type="+scope.typefield,'general').success(function(response){
-																		scope.id=response;
-																	});
-					//on cree le nouveau template dans la page
-					$http.get("/static/js/admin/templates/"+scope.typefield+"_general.html")
-							.then(function(response){
-								$("#liste-generalites").append($compile(response.data)(scope));
-							});
+					if(scope.typefield == 'input' || scope.typefield == 'textarea'){
+						//on cree la nouvelle entree dans la base
+						postSrv("/admin/generalite/add/","type="+scope.typefield,'general').success(function(response){
+																			scope.id=response;
+																		});
+						//on cree le nouveau template dans la page
+						$http.get("/static/js/admin/templates/"+scope.typefield+"_general.html")
+								.then(function(response){
+									$("#liste-generalites").append($compile(response.data)(scope));
+								});
+					}else{
+						alert("Vous devez choisir un type de champ input ou textarea");
+					}
 					
 				});
 			}

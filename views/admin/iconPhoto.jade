@@ -1,11 +1,12 @@
 div(id="icone-photo-#{photo._id}",class="icone-photo")
 	input(type="hidden",id="id-photo-#{photo._id}",class="id-photo",value="#{photo._id}")
 	p(id="supp-#{photo._id}",class="p-supp")
+		input(type="text",name="order_num",ng-keyup="updatePhoto($event);",value="{{photo.order_num}}")
 		a(data-id="{{photo._id}}",data-name="{{photo.name}}",data-order="{{photo.order_num}}",data-galerie="{{photo._galerie}}",id="a-supp-#{photo._id}",class="a-supp-photo",ng-click="deletePhoto('#{photo._id}');") &nbsp;X
 	table
 		tr
 			td.photo
 				img(src="/uploads/galeries/#{photo._galerie}/thumbnails/#{photo.name}",alt="photo de #{photo.legend}",draggable="false")
 	p.photo-legend
-		input(type="text",id="legend-#{photo._id}",class="legend",name="legend-#{photo._id}",value="#{photo.legend}",ng-keyup="updateLegend('#{photo._id}');")
+		input(type="text",id="legend-#{photo._id}",class="legend",name="legend-#{photo._id}",value="#{photo.legend}",ng-keyup="updatePhoto('#{photo._id}');")
 

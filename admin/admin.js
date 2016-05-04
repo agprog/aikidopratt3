@@ -167,7 +167,8 @@ app.post('/:schema/put/',function(req,res){
 				res.status(403).send('Erreur csrf').end();
 			}else{
 				_conf_params(req.params.schema);
-				if(req.params.schema=='user' && req.body.show_form=='add'){
+				
+				if(req.params.schema =='user' && req.body.show_form == 'add'){
 					/*!*** valide les champs mots de passes ***/
 					/*! si pas ok rajoute un champ errors à params ***/
 					/*! ce comportement simule une validation type formulaire ***/
@@ -184,10 +185,12 @@ app.post('/:schema/put/',function(req,res){
 					}else{
 						req.body.password=commons.create_sha1(req.body.password);
 					}
-				}else if(req.params.schema=='galerie'){
+					handlers.put(req,res,params);
+				}else if(req.params.schema == 'galerie'){
 					/*! verification de la presence de la vignette dans le bon format */
-					var rep='/galeries/'+req.body.id;
+					var rep='galeries/'+req.body.id;
 					var dest=config.UPLOADS_DIR+rep+"/thumbnail.jpg";
+					var error_thumbnail={};
 					try{
 						if(/^image\/(png|PNG|jpg|JPG|jpeg|JPEG)$/.test(req.files['thumbnail'].mimetype)){
 							/*! copie le thumbnail dans la galerie avec un convert en jpg */
@@ -208,31 +211,35 @@ app.post('/:schema/put/',function(req,res){
 																						}
 																					});
 						}else{
-							var error_thumbnail={message:'Le format de la vignette est invalide.',
+							error_thumbnail={message:'Le format de la vignette est invalide.',
 												name:'ValidatorError',
 												path:'thumbnail',
 												type:'format',
 												value:''
 											};
-							params['errors']={thumbnail:error_thumbnail};
+							params['errors']={thumbnail:error_thumbnail}
+							handlers.put(req,res,params);
 						}
-					}catch(error){
-						fs.readFile(dest,function(error,result){
+					}catch(Exception){
+							fs.readFile(dest,function(error,result){
 							if(result){
 								handlers.put(req,res,params);
 							}else{
-								params['errors']={message:'Il faut une vignette pour illustrer la galerie.',
+								error_thumbnail={message:'Il faut une vignette pour illustrer la galerie.',
 												name:'ValidatorError',
 												path:'thumbnail',
 												type:'required',
 												value:''
 											};
+								params['errors']={thumbnail:error_thumbnail};
+								handlers.put(req,res,params);
 							}
 						});
 					}
+
 				}else{
 					handlers.put(req,res,params);
-			}
+				}
 		}
 	});
 });

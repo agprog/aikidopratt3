@@ -21,7 +21,21 @@ angular.module('admin.controllers',[])
 		$scope.safename=defaultsSrv[$scope.schema].safename;
 		$scope.pluralize=defaultsSrv[$scope.schema].pluralize;
 		$scope.form_title='Ajouter '+$scope.safename;
+		$scope.messageshow=false;
+		$scope.confirmshow=false;
+		/*if($(".error").length > 0){*/
 		$scope.objet=defaultsSrv[$scope.schema];
+		if(window.content!=null){
+			for(var field in window.content){
+				if($scope.objet[field] !== 'undefined'){
+					$scope.objet[field]=window.content[field];
+				}
+			}
+		}
+		/*}else{
+			
+		}*/
+		console.log($scope.objet);
 		$scope.liste=[];
 		$scope.sort='created';
 		
@@ -48,7 +62,7 @@ angular.module('admin.controllers',[])
 			$scope.objet=defaultsSrv[$scope.schema];
 			$scope.showform='add';
 			$scope.form_title='Ajouter '+$scope.safename;
-			fillFormSrv.addForm($event,objet);
+			fillFormSrv.addForm($event,$scope.objet,objet);
 			
 		};// fin remplissage formulaire
 		/*!** */
@@ -56,9 +70,9 @@ angular.module('admin.controllers',[])
 		/*! *** CheckVal change la valeur d'un input type checkbox car angular a du mal a gerer'
 		 *! *** */
 		 
-		$scope.check_val=function($event){
+		$scope.check_val=function(event){
 			var elt=document.getElementById('visible');
-			if($event.target.checked){
+			if(event.target.checked){
 				elt.setAttribute('value',true);
 			}else{
 				elt.setAttribute('value',false);
@@ -177,14 +191,15 @@ angular.module('admin.controllers',[])
 			$event.preventDefault();
 			var id=$event.target.getAttribute('data-id');
 			var value=$event.target.value;
-			postSrv('/admin/galerie/photo/update/','id='+id+'&field=legend&value='+value)
+			var field=$event.target.getAttribute('data-field');
+			postSrv('/admin/galerie/photo/update/','id='+id+'&field='+field+'&value='+value)
 			.success(function(response){
 				$scope.msg="La photo a été mise à jour."
 			})
 			.error(function(error){
 				console.log(error);
 			});
-		};
+		};//fin updatePhoto
 	}])
 	.controller('AddFormCtl',['$scope',function($scope){
 		var objet="actualite";

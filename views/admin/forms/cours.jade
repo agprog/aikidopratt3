@@ -16,5 +16,7 @@ form#cours-form(class="right-form",action="/admin/cours/put/",enctype="multipart
 	+input_line('ville','Ville','{{objet.ville}}',{})
 	+input_line('telephone','Téléphone','{{objet.telephone}}',{})
 	+input_line('coordonnates','Coordonnées :','{{objet.coordonnates}}',{})
+	script
+		| var content = !{JSON.stringify(objet)}
 	p.form-line
 		input(type="submit",id="submit",name="submit",value="Valider")
