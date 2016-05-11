@@ -45,9 +45,11 @@ module.exports = {
 	MAIL_SERVICE:'Gmail',
 	MAIL_USE_TLS:true,
 	MAIL_EMAIL:'aikidopratt@yahoo.fr',
-	MAIL_HOST:'smtp.mandrillapp.com',
+	/*MAIL_HOST:'smtp.mandrillapp.com',*/
+	MAIL_DOMAIN:'mg.aikido-pratt.rhcloud.com',
 	MAIL_USER:'aikidopratt@yahoo.fr',
-	MAIL_PASS:'JSOcpKIZtD369H7RVHK9Sw',
+	/*!MAIL_PASS:'JSOcpKIZtD369H7RVHK9Sw' mandrill api key'*/,
+	MAIL_PASS:'key-eea6844676b98647a7de8f8734a0e4f1',
 	MAIL_PORT:587
 	};
 

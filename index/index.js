@@ -4,6 +4,7 @@ var commons=require('commons');
 var router = express.Router();
 var async=require('async');
 var app=express();
+var mailgun=require('mailgun-js')({apiKey:config.MAIL_PASS,domain:config.MAIL_DOMAIN});
 /* GET home page. */
 app.locals.commons = require('commons');
 app.get('/', function(req, res) {
@@ -273,13 +274,9 @@ app.post('/send/',function(req,res){
 				var content=req.body.firstname+" "+req.body.lastname+" <"+req.body.email+"> a écrit : \n"+
 							req.body.content;
 							
-				var message={
-					from_email:req.body.email,
-					from_name:req.body.firstname+" "+req.body.lastname,
-					to:[{email:config.MAIL_EMAIL,
-						name:'Administrateur',
-						type:'to'
-						}],
+				var datas={
+					from:req.body.firstname+" "+req.body.lastname+" <"+req.body.email+">",
+					to:config.MAIL_EMAIL,
 					headers:{
 						"Reply-To":req.body.email
 					},
@@ -287,22 +284,24 @@ app.post('/send/',function(req,res){
 					text:escape(content),
 					html:content
 					};
-				mandrill_client.messages.send({message:message},function(info){
+				mailgun.messages.send(datas,function(error,info){
+					if(info){
 						req.sessionStore.flash="Votre message a correctement été envoyé, \
 												nous y répondrons le plus rapidement possible.";
 						res.redirect('/contact/');
-				},function(error){
-					var message="Une erreur a été rencontrée lors de l'envoi, \
-									merci de vérifier votre adresse email et réessayer.\n"+
-									error.message;
-									;
-						req.sessionStore.flash=message;
-						res.render('contact',{title:'Contact',
-									contact:contact,
-									texte:texte,
-									message:message,
-									context:commons.contextCreate(req,'index')
-									});
+					}else{
+						var message="Une erreur a été rencontrée lors de l'envoi, \
+										merci de vérifier votre adresse email et réessayer.\n"+
+										error.message;
+										;
+							req.sessionStore.flash=message;
+							res.render('contact',{title:'Contact',
+										contact:contact,
+										texte:texte,
+										message:message,
+										context:commons.contextCreate(req,'index')
+										});
+					}
 				});
 			}
 	}//fin csrf check
