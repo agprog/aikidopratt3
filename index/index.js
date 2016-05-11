@@ -4,7 +4,7 @@ var commons=require('commons');
 var router = express.Router();
 var async=require('async');
 var app=express();
-var mailgun=require('mailgun-js')({apiKey:config.MAIL_PASS,domain:config.MAIL_DOMAIN});
+
 /* GET home page. */
 app.locals.commons = require('commons');
 app.get('/', function(req, res) {
@@ -260,8 +260,8 @@ app.post('/send/',function(req,res){
 			}else{
 				/* **** on envoie le mail  ****/
 				(!req.body.subject)?subject='pas de sujet':subject=req.body.subject;
-				var mandrill=require('mandrill-api');
-				var mandrill_client=new mandrill.Mandrill(config.MAIL_PASS);
+				/*var mandrill=require('mandrill-api');
+				var mandrill_client=new mandrill.Mandrill(config.MAIL_PASS);*/
 				/*var transporter=mail.createTransport({
 					host:config.MAIL_HOST,
 					port:config.MAIL_PORT,
@@ -271,6 +271,7 @@ app.post('/send/',function(req,res){
 						pass:config.MAIL_PASS
 					}
 					});*/
+				var mailgun=require('mailgun-js')({apiKey:config.MAIL_PASS,domain:config.MAIL_DOMAIN});
 				var content=req.body.firstname+" "+req.body.lastname+" <"+req.body.email+"> a écrit : \n"+
 							req.body.content;
 							
@@ -284,7 +285,7 @@ app.post('/send/',function(req,res){
 					text:escape(content),
 					html:content
 					};
-				mailgun.messages.send(datas,function(error,info){
+				mailgun.messages().send(datas,function(error,info){
 					if(info){
 						req.sessionStore.flash="Votre message a correctement été envoyé, \
 												nous y répondrons le plus rapidement possible.";
