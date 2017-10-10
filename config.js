@@ -9,7 +9,7 @@ module.exports = {
 				dbname  : "aikido"
 			},
 		production:
-				{host  : "mongodb-1-3n56r",
+				{host  : "172.30.174.146",
 				user    : "admin",
 				pass    : "Dgps--mhCgSI",
 				port    : "27017",
