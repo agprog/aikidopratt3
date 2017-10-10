@@ -38,7 +38,7 @@ block content
 					div#links.links
 						for photo in galery.photos
 							a(href="/uploads/galeries/#{galery._id}/#{photo.name}",class='content-galery-detail',title="#{photo.legend}",data-gallery)
-								img(src="/uploads/galeries/#{galery._id}/thumbnails/#{photo.name}" alt="photo #{photo.legend}")
+								img(src="/uploads/galeries/#{galery._id}/thumbnails/#{photo.name}" alt="photo #{photo.name}")
 								p.legend-galery #{photo.legend}
 				div.footer
 					script(src="/static/js/index/blueimp-gallery.js")
