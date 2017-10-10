@@ -16,7 +16,7 @@ module.exports = {
 				dbname  : "aikido",
 				}
 		},
-	/*! **** LISTE DES APPLICATIONS ***/
+	/*! **** LISTE DES APPLICATIONeS ***/
 	apps : ['admin'
 		
 		   ],
